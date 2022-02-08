@@ -1,0 +1,21 @@
+{
+  "name": "xutils",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "lint": "eslint .",
+    "test": "jest --detectOpenHandles --coverage",
+    "build": "tsc && cp package.json dist/"
+  },
+  "author": "",
+  "types": "index.d.ts",
+  "dependencies": {
+    "cli-color": "^2.0.0",
+    "tslib": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/cli-color": "^2.0.1"
+  }
+}
