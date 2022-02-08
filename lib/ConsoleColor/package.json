@@ -1,0 +1,5 @@
+{
+  "name": "console-color",
+  "main": "console-color.node.ts",
+  "browser": "console-color.browser.ts"
+}

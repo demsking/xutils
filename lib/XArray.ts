@@ -1,4 +1,4 @@
-export const Arrays = Object.freeze({
+export const XArray = {
   switch(array: any[], from: number, to: number) {
     [array[from], array[to]] = [array[to], array[from]];
   },
@@ -48,4 +48,13 @@ export const Arrays = Object.freeze({
 
     return !array1.some((item) => !array2.includes(item));
   },
-});
+  remove(array: unknown[], itemToRemove: unknown): number {
+    const index = array.findIndex((item) => item === itemToRemove);
+
+    if (index > -1) {
+      array.splice(index, 1);
+    }
+
+    return index;
+  },
+};

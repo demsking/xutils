@@ -1,20 +1,4 @@
-export declare const global: {
-  trace: ITrace;
-};
-
-export * from './system';
-
-export { IAccess, IAuthCore, IUserCore } from './auth';
-
-export { IAdsnetworkCore } from './adsnetwork';
-
-export { IBlogCore } from './blog';
-
-export { IDesignerCore } from './designer';
-
-export { INavigationCore } from './navigation';
-
-export { IStorageCore } from './storage';
+export * from './IClient';
 
 export type Nullable<T> = T | null;
 

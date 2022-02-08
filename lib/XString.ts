@@ -2,7 +2,7 @@ const RE_TRIMLINES = /(.+)(\n|\r\n)?/g;
 const CHAR_CODE_A = 'A'.charCodeAt(0);
 const CHAR_CODE_Z = 'Z'.charCodeAt(0);
 
-export default {
+export const XString = {
   trimlines(str: string, separator = ''): string {
     if (!str) {
       return '';
@@ -37,5 +37,22 @@ export default {
 
       return tokens;
     }, [] as string[]).join('');
+  },
+  unCamelCase(str: string, separator = ' ') {
+    const lowercase = str.toLowerCase();
+    const chars = [];
+
+    for (let i = 0; i < str.length; i++) {
+      const charLower = lowercase.charAt(i);
+      const charString = str.charAt(i);
+
+      if (charString !== charLower) {
+        chars.push(separator);
+      }
+
+      chars.push(charLower);
+    }
+
+    return chars.join('');
   },
 };
