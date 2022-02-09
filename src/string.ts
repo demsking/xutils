@@ -56,6 +56,7 @@ export function unCamelCase(str: string, separator = ' ') {
   for (let index = 0; index < str.length; index++) {
     const code = str.charCodeAt(index);
 
+    // eslint-disable-next-line camelcase
     if ((code >= CHAR_CODE_a && code <= CHAR_CODE_z) || (code >= CHAR_CODE_0 && code <= CHAR_CODE_9)) {
       tokens.push(str.charAt(index));
     } else if (code >= CHAR_CODE_A && code <= CHAR_CODE_Z) {
@@ -64,7 +65,7 @@ export function unCamelCase(str: string, separator = ' ') {
       }
 
       tokens.push(String.fromCharCode(code + 32));
-     } else if (index) {
+    } else if (index) {
       tokens.push(separator);
     }
   }

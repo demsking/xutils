@@ -6,6 +6,7 @@ pkgs.mkShell {
     pkgs.tmux
     pkgs.vim
     pkgs.nodejs
+    pkgs.nodePackages.nodemon
     pkgs.yarn
     pkgs.jq
   ];
