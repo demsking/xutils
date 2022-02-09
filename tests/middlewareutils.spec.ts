@@ -4,7 +4,7 @@ import { Trace } from '../src/Trace/trace.node';
 
 import MiddlewareUtils from '../src/MiddlewareUtils';
 
-jest.mock('../lib/Trace');
+jest.mock('../src/Trace');
 
 const trace = new Trace('@platform/core');
 
