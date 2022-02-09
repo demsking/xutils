@@ -1,8 +1,19 @@
 /* eslint-disable radar/no-duplicate-string */
 
-import { toKebabCase, unCamelCase } from '../src/string';
+import { toKebabCase, trimlines, unCamelCase } from '../src/string';
 
 describe('string', () => {
+  describe('trimlines(str: string, separator = \'\'): string', () => {
+    it.only.each([
+      ['hello', undefined, 'hello'],
+      ['hello\nworld', undefined, 'helloworld'],
+      ['hello\nworld', '', 'helloworld'],
+      ['hello\nworld\n', ' ', 'hello world'],
+    ])('trimlines("%s", %s) === "%s"', (input, separator, expected) => {
+      expect(trimlines(input, separator)).toBe(expected);
+    });
+  });
+
   describe('toKebabCase(str: string): string', () => {
     it.only.each([
       ['hello', 'hello'],

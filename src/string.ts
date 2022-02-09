@@ -9,10 +9,6 @@ const CHAR_CODE_A = 'A'.charCodeAt(0);
 const CHAR_CODE_Z = 'Z'.charCodeAt(0);
 
 export function trimlines(str: string, separator = ''): string {
-  if (!str) {
-    return '';
-  }
-
   let index = 0;
   const output: string[] = [];
 
