@@ -1,5 +1,5 @@
  type CompressFileOptions = {
-  width: number;
+  width?: number;
   height?: number;
 };
 
@@ -27,7 +27,9 @@ function compressFromDataurl(dataurl: string, options: CompressOptions): Promise
     image.addEventListener('load', () => {
       const canvas = document.createElement('canvas');
 
-      canvas.width = Math.min(image.width, options.width);
+      canvas.width = options.width
+        ? Math.min(image.width, options.width)
+        : image.width;
 
       if (options.height) {
         canvas.height = options.height;

@@ -1,7 +1,11 @@
 # You can override the included template(s) by including variable overrides
-# See https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
+# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
+# Secret Detection customization: https://docs.gitlab.com/ee/user/application_security/secret_detection/#customizing-settings
+# Dependency Scanning customization: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-the-dependency-scanning-settings
+# Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
 # Note that environment variables can be set in several places
-# See https://docs.gitlab.com/ee/ci/variables/#priority-of-environment-variables
+# See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
+
 image: node:16.1.0-alpine3.13
 
 stages:
@@ -13,8 +17,6 @@ stages:
 
 code quality:
   stage: test
-  only:
-    - merge_requests
   script:
     - yarn install --ignore-scripts
     - yarn add --dev eslint eslint-formatter-gitlab
@@ -23,32 +25,15 @@ code quality:
     reports:
       codequality: gl-codequality.json
 
-api tests:
-  stage: test
-  only:
-    - merge_requests
-  script:
-    - yarn global add jest@26.6.3 typescript@4.2.3
-    - yarn install
-    - cd packages/core && yarn install
-    - cd ../services/api && yarn test
-  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
-
 auth tests:
   stage: test
-  only:
-    - merge_requests
   script:
-    - yarn global add jest@26.6.3 typescript@4.2.3
     - yarn install
-    - cd packages/core && yarn install
-    - cd ../services/auth && yarn test
+    - yarn test
   coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
 
 dependencies:
   stage: dependencies
-  only:
-    - merge_requests
   script:
     - yarn install
     - yarn outdated
@@ -66,12 +51,9 @@ sast:
 
 build:
   stage: build
-  only:
-    - merge_requests
   script:
-    - npm i -g lerna
-    - lerna bootstrap
-    - lerna run build
+    - yarn install
+    - yarn build
 
 include:
   - template: Security/SAST.gitlab-ci.yml

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "allowJs": true,
+    "allowJs": false,
     "target": "es6",
     "module": "commonjs",
     "strict": true,
@@ -8,26 +8,27 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false,
     "experimentalDecorators": true,
     "sourceMap": true,
     "skipLibCheck": true,
     "baseUrl": ".",
     "outDir": "dist",
     "types": [
-      "node",
-      "jest"
+      "jest",
+      "node"
     ],
-    "paths": {},
     "lib": [
       "ES2019",
-      "DOM"
+      "DOM",
+      "DOM.Iterable"
     ],
     "typeRoots": [
-      "."
+      "./typings"
     ]
   },
   "include": [
-    "**/*.ts"
+    "lib/**/*.ts"
   ],
   "exclude": [
     "dist",

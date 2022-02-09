@@ -1,12 +1,11 @@
-import { Objects } from '../../system/lib/Objects';
-import { JsonSchema } from '../../system';
+import { Objects } from './Objects';
 
 const Filters = {
   object: (item: unknown) => typeof item === 'object' && item !== null
 };
 
 export default {
-  generateEmptyValue<T = unknown>(schema: JsonSchema, useDefault = false): T {
+  generateEmptyValue<T = unknown>(schema: Record<string, any>, useDefault = false): T {
     if (useDefault) {
       if (typeof schema.default !== 'undefined') {
         return schema.default;
@@ -18,13 +17,13 @@ export default {
     }
 
     if (schema.allOf) {
-      const dataItems = schema.allOf.map((pieceSchema) => this.generateEmptyValue(pieceSchema, useDefault));
+      const dataItems = schema.allOf.map((pieceSchema: any) => this.generateEmptyValue(pieceSchema, useDefault));
       const hasObject = dataItems.some(Filters.object);
 
       if (hasObject) {
         return dataItems
           .filter(Filters.object)
-          .reduce((data: T, item) => Objects.merge(data, item as T) as T, {} as T);
+          .reduce((data: T, item: T) => Objects.merge(data, item) as T, {} as T);
       }
 
       return dataItems[0] as T;

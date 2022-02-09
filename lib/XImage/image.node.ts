@@ -1,14 +1,13 @@
-import * as fs from 'fs/promises';
+import os from 'os';
+import fs from 'fs/promises';
 import Jimp from 'jimp';
-
-import { FS } from '../fs';
 
 const download = require('image-downloader');
 
 export const XImage = {
   async parseBase64(imageUrl: string, resizeWidth?: number) {
     try {
-      let { filename } = await download.image({ url: imageUrl, dest: FS.TEMPDIR });
+      let { filename } = await download.image({ url: imageUrl, dest: os.tmpdir() });
 
       if (resizeWidth) {
         const image = await Jimp.read(filename);

@@ -1,6 +1,7 @@
-import { Objects } from '../../lib/Objects';
+import 'jest';
+import { Objects } from '../lib/Objects';
 
-describe('lib', () => {
+describe('Objects', () => {
   describe('Objects.isObject(object: Record<string, any>): boolean', () => {
     it.only.each([
       ['', false],
@@ -10,7 +11,7 @@ describe('lib', () => {
       [12, false],
       [[], false],
       [{}, true],
-    ])('Objects.isObject(%j) === %s', (object, expectedResult) => {
+    ])('Objects.isObject(%j) === %s', (object: unknown, expectedResult: boolean) => {
       expect(Objects.isObject(object)).toBe(expectedResult);
     });
   });

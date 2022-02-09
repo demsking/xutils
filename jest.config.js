@@ -1,5 +1,6 @@
 const { name: displayName } = require('./package.json');
 
+/** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
 module.exports = {
   displayName,
   expand: true,
@@ -7,22 +8,11 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   roots: ['<rootDir>'],
-  transform: {
-    '^.+\\.ts$': 'ts-jest',
-  },
   testMatch: [
-    '<rootDir>/**/tests/specs/**/*.spec.ts',
+    '<rootDir>/tests/**/*.spec.ts',
   ],
-  setupFilesAfterEnv: [
-    './jest.setup.js',
-  ],
+  setupFilesAfterEnv: [],
   collectCoverageFrom: [
-    '**/*.{js,ts}',
-    '!**/node_modules/**',
-    '!**/dist/**',
-    '!**/tests/**',
-    '!**/typings/**',
-    '!**/coverage/**',
-    '!**/jest.*',
+    'lib/**/*.{js,ts}',
   ],
 };

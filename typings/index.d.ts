@@ -1,4 +1,6 @@
 export * from './IClient';
+export * from './IServer';
+export * from './ITrace';
 
 export type Nullable<T> = T | null;
 
@@ -75,12 +77,3 @@ type Kebab<T extends string> = T extends `${infer L}${Upper}${infer R}` ?
     T extends `${L}${infer U}${R}` ? `${L}-${Lowercase<U>}${Kebab<R>}` : T : T;
 
 export type KebabKeys<T> = { [K in keyof T as K extends string ? Kebab<K> : K]: T[K] };
-
-/**
- * Tracing interface
- */
-export interface ITrace {
-  info(msg: string): void;
-  warn(msg: string): void;
-  error(msg: string): void;
-}

@@ -1,15 +1,13 @@
 import { Response } from 'express';
-import { HttpError } from '../../lib/HttpError';
-import { global } from '../../..';
-import { Trace } from '../../lib/Trace';
+import { HttpError } from '../lib/HttpError';
+import { Trace } from '../lib/Trace/trace.node';
 
-import MiddlewareUtils from '../../lib/MiddlewareUtils';
+import MiddlewareUtils from '../lib/MiddlewareUtils';
 
-jest.mock('../../lib/Trace');
+jest.mock('../lib/Trace');
 
-global.trace = new Trace('@platform/core');
+const trace = new Trace('@platform/core');
 
-const trace = global.trace;
 const res = {
   sendStatus: jest.fn(),
   status: jest.fn(),

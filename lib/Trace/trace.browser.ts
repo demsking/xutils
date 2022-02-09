@@ -1,20 +1,28 @@
-function parse(type: string, msg: string): string {
-  const timestamp = new Date().toISOString();
+import { ITrace } from '../../typings';
+import { ConsoleColor } from '../ConsoleColor';
 
-  return `${timestamp} ${type} - ${msg}\n`;
-}
+export class Trace implements ITrace {
+  name: string;
 
-export const Trace = {
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  protected parse(type: string, msg: string): string {
+    const timestamp = new Date().toISOString();
+
+    return `${timestamp} ${this.name} ${type} - ${msg}`;
+  }
+
   info(msg: string, prefix = 'INFO'): void {
-    console.info(parse(prefix, msg));
-  },
-  log(msg: string, prefix = 'INFO'): void {
-    console.info(parse(prefix, msg));
-  },
+    console.info(this.parse(prefix, msg));
+  }
+
   warn(msg: string, prefix = 'WARN'): void {
-    console.error(parse(prefix, msg));
-  },
+    console.info(this.parse(ConsoleColor.yellow(prefix), msg));
+  }
+
   error(msg: string, prefix = 'ERROR'): void {
-    console.error(parse(prefix, msg));
-  },
-};
+    console.error(this.parse(ConsoleColor.red(prefix), msg));
+  }
+}

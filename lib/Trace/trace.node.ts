@@ -1,22 +1,28 @@
-import color from 'cli-color';
+import { ITrace } from '../../typings';
+import { ConsoleColor } from '../ConsoleColor';
 
-function parse(type: string, msg: string): string {
-  const timestamp = new Date().toISOString();
+export class Trace implements ITrace {
+  name: string;
 
-  return `${timestamp} ${type} - ${msg}\n`;
-}
+  constructor(name: string) {
+    this.name = name;
+  }
 
-export const Trace = {
+  protected parse(type: string, msg: string): string {
+    const timestamp = new Date().toISOString();
+
+    return `${timestamp} ${this.name} ${type} - ${msg}\n`;
+  }
+
   info(msg: string, prefix = 'INFO'): void {
-    process.stdout.write(parse(prefix, msg));
-  },
-  log(msg: string, prefix = 'INFO'): void {
-    process.stdout.write(parse(color.cyan(prefix), msg));
-  },
+    process.stdout.write(this.parse(prefix, msg));
+  }
+
   warn(msg: string, prefix = 'WARN'): void {
-    process.stderr.write(parse(color.yellow(prefix), msg));
-  },
+    process.stderr.write(this.parse(ConsoleColor.yellow(prefix), msg));
+  }
+
   error(msg: string, prefix = 'ERROR'): void {
-    process.stderr.write(parse(color.red(prefix), msg));
-  },
-};
+    process.stderr.write(this.parse(ConsoleColor.red(prefix), msg));
+  }
+}
