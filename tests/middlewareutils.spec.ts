@@ -24,7 +24,7 @@ describe('lib', () => {
         it('res.status should be equal to err.statusCode when err.body is undefined', () => {
           const httpError: HttpError = new HttpError(404);
 
-          MiddlewareUtils.handleError(httpError, res as unknown as Response);
+          MiddlewareUtils.handleError(httpError, res as unknown as Response, trace);
 
           expect(res.status).toHaveBeenCalledTimes(1);
           expect(res.status).toHaveBeenCalledWith(httpError.statusCode);
@@ -36,7 +36,7 @@ describe('lib', () => {
         it('res.status should be equal to err.statusCode when err.body is defined', () => {
           const httpError: HttpError = new HttpError(404, { message: 'Fatal error' });
 
-          MiddlewareUtils.handleError(httpError, res as unknown as Response);
+          MiddlewareUtils.handleError(httpError, res as unknown as Response, trace);
 
           expect(res.status).toHaveBeenCalledTimes(1);
           expect(res.end).toHaveBeenCalledTimes(0);
@@ -55,7 +55,7 @@ describe('lib', () => {
       };
 
       it('res.status should be equal to err.statusCode when err.statusCode is defined', () => {
-        MiddlewareUtils.handleError(err, res as unknown as Response);
+        MiddlewareUtils.handleError(err, res as unknown as Response, trace);
 
         expect(res.status).toHaveBeenCalledTimes(0);
         expect(res.end).toHaveBeenCalledTimes(0);
@@ -65,7 +65,7 @@ describe('lib', () => {
       });
 
       it('res.status should be equal to err.statusCode when err.status is defined', () => {
-        MiddlewareUtils.handleError(err, res as unknown as Response);
+        MiddlewareUtils.handleError(err, res as unknown as Response, trace);
 
         expect(res.status).toHaveBeenCalledTimes(0);
         expect(res.end).toHaveBeenCalledTimes(0);
@@ -73,7 +73,7 @@ describe('lib', () => {
         expect(res.sendStatus).toHaveBeenCalledTimes(1);
         expect(trace.error).toHaveBeenCalledTimes(1);
         expect(trace.error).toHaveBeenCalledWith('405 - message test');
-        expect(res.sendStatus).toHaveBeenCalledWith(err.status);
+        expect(res.sendStatus).toHaveBeenCalledWith(err.statusCode);
       });
 
       it('res.status should be equal to 500 when err.status and err.statusCode are not defined', () => {
@@ -82,7 +82,7 @@ describe('lib', () => {
           message: 'message test',
         };
 
-        MiddlewareUtils.handleError(err, res as unknown as Response);
+        MiddlewareUtils.handleError(err, res as unknown as Response, trace);
 
         expect(res.status).toHaveBeenCalledTimes(0);
         expect(res.end).toHaveBeenCalledTimes(0);

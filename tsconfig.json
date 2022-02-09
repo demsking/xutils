@@ -24,7 +24,8 @@
       "DOM.Iterable"
     ],
     "typeRoots": [
-      "./typings"
+      "./typings",
+      "node_modules/@types"
     ]
   },
   "include": [
