@@ -13,6 +13,6 @@ module.exports = {
   ],
   setupFilesAfterEnv: [],
   collectCoverageFrom: [
-    'lib/**/*.{js,ts}',
+    'src/**/*.{js,ts}',
   ],
 };

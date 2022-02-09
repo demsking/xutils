@@ -1,8 +1,8 @@
 /* eslint-disable radar/no-duplicate-string */
 
-import { toKebabCase } from '../src/String';
+import { toKebabCase, unCamelCase } from '../src/string';
 
-describe('XString', () => {
+describe('string', () => {
   describe('toKebabCase(str: string): string', () => {
     it.only.each([
       ['hello', 'hello'],
@@ -17,6 +17,25 @@ describe('XString', () => {
       ['Hello@world', 'hello-world'],
     ])('toKebabCase("%s") === "%s"', (input, expected) => {
       expect(toKebabCase(input)).toBe(expected);
+    });
+  });
+
+  describe('unCamelCase(str: string, separator = \' \')', () => {
+    it.only.each([
+      ['hello', 'hello', undefined],
+      ['Hello', 'hello', undefined],
+      ['H1ello', 'h1ello', undefined],
+      ['camelCase', 'camel case', undefined],
+      ['camelCase', 'camel case', ' '],
+      ['camelCase', 'camelcase', ''],
+      ['PascalCase', 'pascal-case', '-'],
+      ['Hello World', 'hello-world', '-'],
+      ['Hello_World', 'hello-world', '-'],
+      ['Hello-world', 'hello*world', '*'],
+      ['Hello_world', 'hello-world', '-'],
+      ['Hello@world', 'hello-world', '-'],
+    ])('unCamelCase("%s") === "%s" with separator "%s"', (input, expected, separator) => {
+      expect(unCamelCase(input, separator)).toBe(expected);
     });
   });
 });

@@ -31,8 +31,11 @@ export function trimlines(str: string, separator = ''): string {
 }
 
 export function toKebabCase(str: string): string {
-  return str.split('').reduce((tokens, char, index) => {
-    const code = char.charCodeAt(0);
+  const tokens: string[] = [];
+
+  for (let index = 0; index < str.length; index++) {
+    const char = str.charAt(index);
+    const code = str.charCodeAt(index);
 
     if (code >= CHAR_CODE_A && code <= CHAR_CODE_Z) {
       if (index && tokens[index - 1] !== '-') {
@@ -46,25 +49,29 @@ export function toKebabCase(str: string): string {
     } else {
       tokens.push('-');
     }
+  }
 
-    return tokens;
-  }, [] as string[]).join('');
+  return tokens.join('');
 }
 
 export function unCamelCase(str: string, separator = ' ') {
-  const lowercase = str.toLowerCase();
-  const chars: string[] = [];
+  const tokens: string[] = [];
 
-  for (let i = 0; i < str.length; i++) {
-    const charLower = lowercase.charAt(i);
-    const charString = str.charAt(i);
+  for (let index = 0; index < str.length; index++) {
+    const code = str.charCodeAt(index);
 
-    if (charString !== charLower) {
-      chars.push(separator);
+    if ((code >= CHAR_CODE_a && code <= CHAR_CODE_z) || (code >= CHAR_CODE_0 && code <= CHAR_CODE_9)) {
+      tokens.push(str.charAt(index));
+    } else if (code >= CHAR_CODE_A && code <= CHAR_CODE_Z) {
+      if (index && tokens[index - 1] !== separator) {
+        tokens.push(separator);
+      }
+
+      tokens.push(String.fromCharCode(code + 32));
+     } else if (index) {
+      tokens.push(separator);
     }
-
-    chars.push(charLower);
   }
 
-  return chars.join('');
+  return tokens.join('');
 }
