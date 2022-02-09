@@ -3,7 +3,7 @@
     "allowJs": false,
     "target": "es6",
     "module": "commonjs",
-    "strict": true,
+    "strict": false,
     "importHelpers": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
