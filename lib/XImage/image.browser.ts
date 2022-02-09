@@ -1,4 +1,4 @@
- type CompressFileOptions = {
+type CompressFileOptions = {
   width?: number;
   height?: number;
 };

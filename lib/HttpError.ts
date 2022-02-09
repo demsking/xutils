@@ -75,7 +75,7 @@ export const HttpErrors = {
    * a representation of the result of one or more instance-manipulations
    * applied to the current instance.
    */
-   IMUsed: new HttpError(226, 'IM Used'),
+  IMUsed: new HttpError(226, 'IM Used'),
 
   // 3xx redirection
 

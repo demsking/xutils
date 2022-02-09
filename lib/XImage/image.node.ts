@@ -21,7 +21,9 @@ export const XImage = {
       const image = await fs.readFile(filename);
 
       return 'data:image/jpeg;base64,' + Buffer.from(image).toString('base64');
-    } catch {}
+    } catch {
+      //
+    }
 
     return '';
   },

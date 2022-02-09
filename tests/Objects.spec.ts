@@ -1,4 +1,3 @@
-import 'jest';
 import { Objects } from '../lib/Objects';
 
 describe('Objects', () => {

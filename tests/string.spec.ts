@@ -1,8 +1,9 @@
-import { toKebabCase } from '../lib/XString';
+/* eslint-disable radar/no-duplicate-string */
+
+import { toKebabCase } from '../lib/String';
 
 describe('XString', () => {
   describe('toKebabCase(str: string): string', () => {
-    // eslint-disable-next-line jest/no-focused-tests
     it.only.each([
       ['hello', 'hello'],
       ['Hello', 'hello'],
@@ -14,6 +15,8 @@ describe('XString', () => {
       ['Hello-world', 'hello-world'],
       ['Hello_world', 'hello-world'],
       ['Hello@world', 'hello-world'],
-    ])('toKebabCase("%s") === "%s"', (input, expected) => expect(toKebabCase(input)).toBe(expected));
+    ])('toKebabCase("%s") === "%s"', (input, expected) => {
+      expect(toKebabCase(input)).toBe(expected);
+    });
   });
 });

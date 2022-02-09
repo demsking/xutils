@@ -20,5 +20,5 @@ export const XPromise = {
    */
   async all<T>(items: T[], fn: (item: T, index: number) => Promise<any>) {
     return Promise.all(items.map((item, index) => fn(item, index)));
-  }
+  },
 };

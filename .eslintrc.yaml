@@ -69,6 +69,7 @@ rules:
   import/no-extraneous-dependencies: 'off'
   import/no-named-as-default: 'off'
   import/no-named-as-default-member: 'off'
+  import/no-relative-packages: 'off'
   import/no-unresolved:
     - 2
     - ignore:
@@ -78,6 +79,7 @@ rules:
   import/order: 'off'
   import/prefer-default-export: 'off'
   jest/expect-expect: 'off'
+  jest/no-focused-tests: 'off'
   lines-between-class-members: 'off'
   no-console: error
   no-continue: 'off'
@@ -136,10 +138,6 @@ rules:
         - import
       next:
         - export
-    - blankLine: always
-      prev:
-        - export
-      next: '*'
     - blankLine: any
       prev:
         - const

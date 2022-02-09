@@ -1,7 +1,9 @@
 const RE_TRIMLINES = /(.+)(\n|\r\n)?/g;
 const CHAR_CODE_0 = '0'.charCodeAt(0);
 const CHAR_CODE_9 = '9'.charCodeAt(0);
+// eslint-disable-next-line camelcase
 const CHAR_CODE_a = 'a'.charCodeAt(0);
+// eslint-disable-next-line camelcase
 const CHAR_CODE_z = 'z'.charCodeAt(0);
 const CHAR_CODE_A = 'A'.charCodeAt(0);
 const CHAR_CODE_Z = 'Z'.charCodeAt(0);
@@ -33,11 +35,12 @@ export function toKebabCase(str: string): string {
     const code = char.charCodeAt(0);
 
     if (code >= CHAR_CODE_A && code <= CHAR_CODE_Z) {
-      if (index && tokens[index - 1] != '-') {
+      if (index && tokens[index - 1] !== '-') {
         tokens.push('-');
       }
 
       tokens.push(String.fromCharCode(code + 32));
+    // eslint-disable-next-line camelcase
     } else if ((code >= CHAR_CODE_a && code <= CHAR_CODE_z) || (code >= CHAR_CODE_0 && code <= CHAR_CODE_9)) {
       tokens.push(char);
     } else {

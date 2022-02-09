@@ -48,13 +48,13 @@ describe('lib', () => {
     });
 
     describe('When err is not instanceof HttpError', () => {
-      it('res.status should be equal to err.statusCode when err.statusCode is defined', () => {
-        const err: any = {
-          statusCode: 405,
-          stack: 'stack test',
-          message: 'message test',
-        };
+      const err: any = {
+        statusCode: 405,
+        stack: 'stack test',
+        message: 'message test',
+      };
 
+      it('res.status should be equal to err.statusCode when err.statusCode is defined', () => {
         MiddlewareUtils.handleError(err, res as unknown as Response);
 
         expect(res.status).toHaveBeenCalledTimes(0);
@@ -65,12 +65,6 @@ describe('lib', () => {
       });
 
       it('res.status should be equal to err.statusCode when err.status is defined', () => {
-        const err: any = {
-          status: 405,
-          message: 'message test',
-          stack: 'stack test',
-        };
-
         MiddlewareUtils.handleError(err, res as unknown as Response);
 
         expect(res.status).toHaveBeenCalledTimes(0);

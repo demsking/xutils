@@ -25,7 +25,7 @@ code quality:
     reports:
       codequality: gl-codequality.json
 
-auth tests:
+unit tests:
   stage: test
   script:
     - yarn install

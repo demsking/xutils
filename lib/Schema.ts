@@ -1,7 +1,9 @@
+/* eslint-disable radar/cognitive-complexity */
+
 import { Objects } from './Objects';
 
 const Filters = {
-  object: (item: unknown) => typeof item === 'object' && item !== null
+  object: (item: unknown) => typeof item === 'object' && item !== null,
 };
 
 export default {

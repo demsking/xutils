@@ -1,8 +1,6 @@
-import 'jest';
 import qs from '../lib/qs';
 
 describe('qs', () => {
-  // eslint-disable-next-line jest/no-focused-tests
   describe.only.each([
     [{}, ''],
     [{ key: null }, ''],

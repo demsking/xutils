@@ -140,7 +140,7 @@ export const Objects = Object.freeze({
     return dest;
   },
 
-  get<T extends unknown = unknown>(object: Record<string, any>, path: string): T | undefined {
+  get<T = unknown>(object: Record<string, any>, path: string): T | undefined {
     const paths = parsePath(path);
 
     return paths.length
@@ -189,7 +189,9 @@ export const Objects = Object.freeze({
         cache[cacheKey] = value.toString();
 
         return cacheKey;
-      } else if (value instanceof ToStringEscape) {
+      }
+
+      if (value instanceof ToStringEscape) {
         const cacheKey = `__${key}${index++}__`;
 
         cache[cacheKey] = value.value;
@@ -202,7 +204,7 @@ export const Objects = Object.freeze({
 
     Object.entries(cache).forEach(([cacheKey, cacheValue]) => {
       objectString = objectString.replace(`"${cacheKey}"`, cacheValue);
-    })
+    });
 
     return objectString;
   },

@@ -15,6 +15,7 @@ import MiddlewareUtils from './MiddlewareUtils';
 export const createApp = express;
 
 export type { Express, Request, Response, RequestHandler, Application, Router, IServer };
+
 export * from './HttpError';
 
 const isProduction = process.env.NODE_ENV === 'production';

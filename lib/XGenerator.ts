@@ -18,7 +18,7 @@ export class XGenerator<T> {
     return item;
   }
 
-  *create() {
+  * create() {
     while (true) {
       yield this.items[this.index++];
 

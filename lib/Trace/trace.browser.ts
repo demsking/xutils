@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import { ITrace } from '../../typings';
 import { ConsoleColor } from '../ConsoleColor';
 
