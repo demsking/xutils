@@ -59,7 +59,6 @@ package:
   stage: build
   needs:
     - audit
-    - sast
   script:
     - yarn install
     - yarn build
