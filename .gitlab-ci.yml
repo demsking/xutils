@@ -78,9 +78,6 @@ publish:
   script:
     - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
     - npm publish
-  environment:
-    name: npm
-    url: https://www.npmjs.com/package/@formschema/native
 
 include:
   - template: Security/SAST.gitlab-ci.yml
