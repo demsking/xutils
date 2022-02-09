@@ -1,9 +1,6 @@
 node_modules/
-dist/
-extern/
+lib/
 coverage/
-packages/import-couchdb/
-packages/import-tailwaindcss-blocks/
+.nix-node/
 jest.config.js
-jest.setup.js
 *.min.js

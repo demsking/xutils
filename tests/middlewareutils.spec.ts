@@ -1,8 +1,8 @@
 import { Response } from 'express';
-import { HttpError } from '../lib/HttpError';
-import { Trace } from '../lib/Trace/trace.node';
+import { HttpError } from '../src/HttpError';
+import { Trace } from '../src/Trace/trace.node';
 
-import MiddlewareUtils from '../lib/MiddlewareUtils';
+import MiddlewareUtils from '../src/MiddlewareUtils';
 
 jest.mock('../lib/Trace');
 

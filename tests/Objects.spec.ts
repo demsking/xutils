@@ -1,4 +1,4 @@
-import { Objects } from '../lib/Objects';
+import { Objects } from '../src/Objects';
 
 describe('Objects', () => {
   describe('Objects.isObject(object: Record<string, any>): boolean', () => {

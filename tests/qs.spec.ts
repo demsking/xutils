@@ -1,4 +1,4 @@
-import qs from '../lib/qs';
+import qs from '../src/qs';
 
 describe('qs', () => {
   describe.only.each([

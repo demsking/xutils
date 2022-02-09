@@ -13,7 +13,7 @@
     "sourceMap": true,
     "skipLibCheck": true,
     "baseUrl": ".",
-    "outDir": "dist",
+    "outDir": "lib",
     "types": [
       "jest",
       "node"
@@ -29,10 +29,10 @@
     ]
   },
   "include": [
-    "lib/**/*.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
-    "dist",
+    "lib",
     "coverage",
     "node_modules",
     "**/__mocks__"

@@ -8,7 +8,7 @@
     "lint": "eslint .",
     "test": "jest --detectOpenHandles --coverage",
     "watch": "jest --detectOpenHandles --no-coverage --watchAll",
-    "build": "tsc && cp package.json dist/"
+    "build": "tsc"
   },
   "author": "Sébastien Demanou",
   "types": "typings/index.d.ts",

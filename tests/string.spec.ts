@@ -1,6 +1,6 @@
 /* eslint-disable radar/no-duplicate-string */
 
-import { toKebabCase } from '../lib/String';
+import { toKebabCase } from '../src/String';
 
 describe('XString', () => {
   describe('toKebabCase(str: string): string', () => {

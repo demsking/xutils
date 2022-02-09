@@ -10,10 +10,10 @@ image: node:16.1.0-alpine3.13
 
 stages:
   - test
-  - dependencies
   - security
   - sast
   - build
+  - publish
 
 code quality:
   stage: test
@@ -33,7 +33,7 @@ unit tests:
   coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
 
 dependencies:
-  stage: dependencies
+  stage: test
   script:
     - yarn install
     - yarn outdated
@@ -41,19 +41,37 @@ dependencies:
 
 audit:
   stage: security
-  only:
-    - merge_requests
+  needs:
+    - dependencies
   script:
     - yarn audit --production
 
 sast:
-  stage: sast
+  stage: security
 
-build:
+package:
   stage: build
   script:
     - yarn install
     - yarn build
+    - yarn pack
+  artifacts:
+    paths:
+      - ./*.tgz
+
+publish:
+  stage: publish
+  needs:
+    - package
+  only:
+    - tags
+    - triggers
+  script:
+    - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
+    - npm publish
+  environment:
+    name: npm
+    url: https://www.npmjs.com/package/@formschema/native
 
 include:
   - template: Security/SAST.gitlab-ci.yml
