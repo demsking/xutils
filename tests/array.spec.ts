@@ -1,6 +1,6 @@
 /* eslint-disable radar/no-duplicate-string */
 
-import { equals, include, remove, shuffle, switchItems } from '../src/array';
+import { equals, findIndex, include, remove, shuffle, switchItems } from '../src/array';
 
 describe('array', () => {
   describe('switchItems(array: any[], from: number, to: number): void', () => {
@@ -56,6 +56,15 @@ describe('array', () => {
       [[0, 1, itemToRemove], itemToRemove, 2],
     ])('remove(%s, %s) === %s', (input, item, expected) => {
       expect(remove(input, item)).toEqual(expected);
+    });
+  });
+
+  describe('findIndex<T = unknown>(items: T[], item: T): number', () => {
+    it.only.each([
+      [[0, 1, 2], 3, -1],
+      [[0, 1, 2], 0, 0],
+    ])('remove(%s, %s) === %s', (input, item, expected) => {
+      expect(findIndex(input, item)).toEqual(expected);
     });
   });
 });

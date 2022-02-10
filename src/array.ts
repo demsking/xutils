@@ -45,3 +45,10 @@ export function remove(array: unknown[], itemToRemove: unknown): number {
 
   return index;
 }
+
+/**
+ * Returns the index of the first element in the array, and -1 otherwise.
+ */
+export function findIndex<T = unknown>(items: T[], element: T): number {
+  return items.findIndex((currentItem) => currentItem === element);
+}
