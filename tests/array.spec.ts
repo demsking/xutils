@@ -3,7 +3,7 @@
 import { equals, include, remove, shuffle, switchItems } from '../src/array';
 
 describe('array', () => {
-  describe('switchItems(array: any[], from: number, to: number)', () => {
+  describe('switchItems(array: any[], from: number, to: number): void', () => {
     it.only.each([
       [[0, 1, 2], 0, 2, [2, 1, 0]],
       [[0, 1, 2], 1, 1, [0, 1, 2]],
