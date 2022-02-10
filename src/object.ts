@@ -8,12 +8,43 @@ export class ToStringEscape {
   }
 }
 
-export function isObject(object: Record<string, any>): boolean {
-  return typeof object === 'object' && object !== null && !Array.isArray(object);
+export function isObject(object: Record<string, any>, strict = true): boolean {
+  return typeof object === 'object' && object !== null && (!strict || !Array.isArray(object));
 }
 
-export function isEmpty(a: Record<string, any>): boolean {
-  return Object.keys(a).length === 0;
+export function isEmpty(object: Record<string, any>): boolean {
+  // eslint-disable-next-line no-unreachable-loop
+  for (const key in object) {
+    return false;
+  }
+
+  return true;
+}
+
+export function isEqual(object1: Record<string, any>, object2: Record<string, any>): boolean {
+  if (object1 === object2) {
+    return true;
+  }
+
+  if (isObject(object1, false) && isObject(object2, false)) {
+    if (Object.keys(object1).length !== Object.keys(object2).length) {
+      return false;
+    }
+
+    for (const prop in object1) {
+      if (object2.hasOwnProperty(prop)) {
+        if (!isEqual(object1[prop], object2[prop])) {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  return false;
 }
 
 /**
@@ -23,69 +54,6 @@ export function clear(object: Record<string, any>) {
   for (const key in object) {
     delete object[key];
   }
-}
-
-/**
- * Original code from http://adripofjavascript.com/blog/drips/object-equality-in-javascript.html
- */
-export function isEquivalent(a: Record<string, any>, b: Record<string, any>): boolean {
-  const aProps = Object.getOwnPropertyNames(a);
-  const bProps = Object.getOwnPropertyNames(b);
-
-  if (aProps.length !== bProps.length) {
-    return false;
-  }
-
-  for (let i = 0; i < aProps.length; i++) {
-    const propName = aProps[i];
-
-    if (propName === '__ob__') {
-      continue;
-    }
-
-    if (a[propName] === null && b[propName] !== null) {
-      return false;
-    }
-
-    if (a[propName] instanceof Array) {
-      if (!Array.isArray(b[propName])) {
-        return false;
-      }
-
-      const aArray = a[propName];
-      const bArray = b[propName];
-
-      if (aArray.length !== bArray.length) {
-        return false;
-      }
-
-      for (let j = 0; j < aArray.length; j++) {
-        if (typeof aArray[j] === 'object' && !isEquivalent(aArray[j], bArray[j])) {
-          return false;
-        }
-
-        if (a[propName] !== b[propName]) {
-          return false;
-        }
-      }
-
-      continue;
-    }
-
-    if (typeof a[propName] === 'object') {
-      if (!this.isEquivalent(a[propName], b[propName])) {
-        return false;
-      }
-
-      continue;
-    }
-
-    if (a[propName] !== b[propName]) {
-      return false;
-    }
-  }
-
-  return true;
 }
 
 export function copy<T extends Record<string, any> = Record<string, any>>(object: T): T {

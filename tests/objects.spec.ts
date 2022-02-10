@@ -1,19 +1,23 @@
 /* eslint-disable func-names */
 
-import { clear, copy, del, get, isEmpty, isEquivalent, isObject, merge, set, toString, ToStringEscape } from '../src/object';
+import { clear, copy, del, get, isEmpty, isEqual, isObject, merge, set, toString, ToStringEscape } from '../src/object';
 
 describe('object', () => {
-  describe('isObject(object: Record<string, any>): boolean', () => {
+  describe('isObject(object: Record<string, any>, strict = true): boolean', () => {
     it.only.each([
-      ['', false],
-      [null, false],
-      [true, false],
-      [false, false],
-      [12, false],
-      [[], false],
-      [{}, true],
-    ])('isObject(%j) === %s', (object: unknown, expectedResult: boolean) => {
-      expect(isObject(object)).toBe(expectedResult);
+      ['', undefined, false],
+      [null, undefined, false],
+      [true, undefined, false],
+      [false, undefined, false],
+      [12, undefined, false],
+      [[], undefined, false],
+      [[], true, false],
+      [[], false, true],
+      [{}, undefined, true],
+      [{}, true, true],
+      [{}, false, true],
+    ])('isObject(%j, %j) === %s', (object: unknown, strict, expectedResult: boolean) => {
+      expect(isObject(object, strict)).toBe(expectedResult);
     });
   });
 
@@ -28,7 +32,7 @@ describe('object', () => {
     });
   });
 
-  describe('isEquivalent(a: Record<string, any>, b: Record<string, any>): boolean', () => {
+  describe('isEqual(a: Record<string, any>, b: Record<string, any>): boolean', () => {
     it.only.each([
       [[1], [], false],
       [[], [1], false],
@@ -37,9 +41,11 @@ describe('object', () => {
       [[], [], true],
       [[1], [1], true],
       [{ a: 1 }, { a: 1 }, true],
+      [{ a: 1, b: 3 }, { a: 2, b: 3 }, false],
+      [{ a: 2, x: 3 }, { a: 2, b: 3 }, false],
       [{}, {}, true],
-    ])('isEquivalent(%j, %j) === %s', (a, b, expectedResult) => {
-      expect(isEquivalent(a, b)).toBe(expectedResult);
+    ])('isEqual(%j, %j) === %s', (a, b, expectedResult) => {
+      expect(isEqual(a, b)).toBe(expectedResult);
     });
   });
 
@@ -52,7 +58,7 @@ describe('object', () => {
       [{ a: 1 }, { a: 1 }],
       [{ a: 1, b: [2] }, { a: 1, b: [2] }],
       [{ a: 1, b: { x: 1 } }, { a: 1, b: { x: 1 } }],
-    ])('isEquivalent(%j, %j) === %s', (object, expectedResult) => {
+    ])('isEqual(%j, %j) === %s', (object, expectedResult) => {
       expect(copy(object)).toEqual(expectedResult);
     });
   });
