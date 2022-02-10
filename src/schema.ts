@@ -1,6 +1,6 @@
 /* eslint-disable radar/cognitive-complexity */
 
-import { Objects } from './Objects';
+import { merge } from './object';
 
 const Filters = {
   object: (item: unknown) => typeof item === 'object' && item !== null,
@@ -24,7 +24,7 @@ export function generateEmptyValue<T = unknown>(schema: Record<string, any>, use
     if (hasObject) {
       return dataItems
         .filter(Filters.object)
-        .reduce((data: T, item: T) => Objects.merge(data, item) as T, {} as T);
+        .reduce((data: T, item: T) => merge(data, item) as T, {} as T);
     }
 
     return dataItems[0] as T;
