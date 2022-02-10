@@ -6,7 +6,7 @@ describe('number', () => {
   describe('random(min: number, max: number): number', () => {
     it.only.each([
       [5, 9],
-    ])('random(%i, %i) includes in [%0, %1]', (min, max) => {
+    ])('result should be includes in [%i, %i]', (min, max) => {
       const result = random(min, max);
 
       expect(result).toBeGreaterThanOrEqual(min);
