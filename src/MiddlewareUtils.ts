@@ -19,13 +19,22 @@ export default {
         logger?.error(`${err.statusCode} - ${err.message}`);
       }
     } else if (err.statusCode) {
-      res.sendStatus(err.statusCode);
+      res.status(err.statusCode).json({
+        error: err.message,
+      });
+
       logger?.error(`${err.statusCode} - ${err.message}`);
     } else if (err.status) {
-      res.sendStatus(err.status);
+      res.status(err.status).json({
+        error: err.message,
+      });
+
       logger?.error(`${err.status} - ${err.message}`);
     } else {
-      res.sendStatus(500);
+      res.status(500).json({
+        error: err.message,
+      });
+
       logger?.error(`500 - ${err.message} - ${err.stack}`);
     }
   },
