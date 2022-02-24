@@ -12,10 +12,10 @@ export default {
       res.status(err.statusCode);
 
       if (err.body) {
-        res.json(err.body);
-        logger?.error(`${err.statusCode} - Body: ${JSON.stringify(err.body)}`);
+        res.json({ error: err.message, body: err.body });
+        logger?.error(`${err.statusCode} - ${err.message} - Body: ${JSON.stringify(err.body)}`);
       } else {
-        res.end();
+        res.json({ error: err.message });
         logger?.error(`${err.statusCode} - ${err.message}`);
       }
     } else if (err.statusCode) {
