@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "allowJs": false,
-    "target": "es6",
+    "target": "ES2020",
     "module": "commonjs",
     "strict": false,
     "importHelpers": true,
@@ -29,7 +29,8 @@
     ]
   },
   "include": [
-    "src/**/*.ts"
+    "src/*.ts",
+    "src/**/*.node.ts"
   ],
   "exclude": [
     "lib",

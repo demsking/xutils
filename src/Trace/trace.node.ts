@@ -1,5 +1,6 @@
+import color from 'cli-color';
+
 import { ITrace } from '../../typings';
-import { ConsoleColor } from '../ConsoleColor';
 
 export class Trace implements ITrace {
   name: string;
@@ -19,10 +20,10 @@ export class Trace implements ITrace {
   }
 
   warn(msg: string, prefix = 'WARN'): void {
-    process.stderr.write(this.parse(ConsoleColor.yellow(prefix), msg));
+    process.stderr.write(this.parse(color.yellow(prefix), msg));
   }
 
   error(msg: string, prefix = 'ERROR'): void {
-    process.stderr.write(this.parse(ConsoleColor.red(prefix), msg));
+    process.stderr.write(this.parse(color.red(prefix), msg));
   }
 }

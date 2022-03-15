@@ -1,18 +1,31 @@
 {
   "name": "@b613/utils",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.0-alpha",
+  "description": "Set of utility methods for common operations",
   "license": "MIT",
-  "private": true,
   "scripts": {
     "lint": "eslint .",
     "test": "jest --detectOpenHandles --coverage",
     "watch": "jest --detectOpenHandles --no-coverage --watchAll",
-    "build": "tsc"
+    "build": "tsc && tsc -p tsconfig.browser.json"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/demsking/xutils.git"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/demsking/xutils/issues"
+  },
+  "homepage": "https://gitlab.com/demsking/xutils",
+  "keywords": [
+    "image",
+    "download",
+    "downloader",
+    "images"
+  ],
   "author": "Sébastien Demanou",
   "types": "typings/index.d.ts",
-  "peerDependencies": {
+  "dependencies": {
     "axios": "0.26.1",
     "axios-cache-adapter": "^2.7.3",
     "cli-color": "^2.0.0",

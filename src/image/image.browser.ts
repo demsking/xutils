@@ -58,13 +58,11 @@ function compressFromDataurl(dataurl: string, options: CompressOptions): Promise
   });
 }
 
-export const XImage = {
-  async parseBase64(imageUrl: string, resizeWidth?: number) {
-    const result = await compressFromDataurl(imageUrl, {
-      type: 'datauri',
-      width: resizeWidth,
-    });
+export async function parseBase64(imageUrl: string, resizeWidth?: number) {
+  const result = await compressFromDataurl(imageUrl, {
+    type: 'datauri',
+    width: resizeWidth,
+  });
 
-    return result.data;
-  },
-};
+  return result.data;
+}

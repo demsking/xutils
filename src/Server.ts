@@ -1,9 +1,9 @@
-import type { IServer } from '..';
+import type { IServer } from '../typings';
 import type { Express, Request, Response, RequestHandler, Application, Router } from 'express';
 import type { Server as NodeServer } from 'http';
 
 import { ping } from './ping';
-import { Trace } from './Trace';
+import { Trace } from './Trace/trace.node';
 
 import http from 'http';
 import https from 'https';

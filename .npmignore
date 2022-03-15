@@ -9,6 +9,7 @@ jest.config.js
 .eslintignore
 .eslintrc.yaml
 .gitattributes
+tsconfig.*
 *.nix
 *.yml
 *.tgz

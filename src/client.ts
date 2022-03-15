@@ -1,34 +1,27 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
+import color from 'cli-color';
 
-import { ITrace } from '../typings';
-import { setupCache } from 'axios-cache-adapter';
-import { ConsoleColor } from './ConsoleColor/console-color.node';
+import { ITrace } from '..';
+import { IAxiosCacheAdapterOptions, setupCache } from 'axios-cache-adapter';
 
-type Options = {
-  headers?: Record<string, string>;
+type Options = Omit<AxiosRequestConfig, 'baseURL'> & {
   logger?: ITrace;
+  cache?: IAxiosCacheAdapterOptions;
 };
 
-const cache = setupCache({
-  maxAge: 15 * 60 * 1000,
-});
-
-export function createClient(baseURL: string, { headers = {}, logger }: Options) {
-  const instance = axios.create({
-    baseURL,
-    headers,
-    adapter: cache.adapter,
-  });
+export function createClient(baseURL: string, { headers = {}, logger, cache, ...options }: Options = {}) {
+  const adapter = cache ? setupCache(cache).adapter : undefined;
+  const instance = axios.create({ ...options, baseURL, headers, adapter });
 
   instance.interceptors.response.use((response) => {
     const method = response.request.method || 'GET';
     const prefix = `${method.toUpperCase()} ${response.config.url}`;
 
     if (response.status >= 400) {
-      logger?.info(`${prefix} ${ConsoleColor.red(response.status)}`, 'HTTP');
+      logger?.info(`${prefix} ${color.red(response.status)}`, 'HTTP');
       logger?.error(`Error ${response.status}: ${JSON.stringify(response.data, null, 2)}`);
     } else {
-      logger?.info(`${prefix} ${ConsoleColor.green(response.status)}`, 'HTTP');
+      logger?.info(`${prefix} ${color.green(response.status)}`, 'HTTP');
     }
 
     return response;

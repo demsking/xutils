@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 
-export * from './IClient';
+export * from './regex';
+export * from './string';
 export * from './IServer';
 export * from './ITrace';
 

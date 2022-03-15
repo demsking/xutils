@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 
 import { ITrace } from '../../typings';
-import { ConsoleColor } from '../ConsoleColor';
 
 export class Trace implements ITrace {
   name: string;
@@ -21,10 +20,10 @@ export class Trace implements ITrace {
   }
 
   warn(msg: string, prefix = 'WARN'): void {
-    console.info(this.parse(ConsoleColor.yellow(prefix), msg));
+    console.info(this.parse(prefix, msg));
   }
 
   error(msg: string, prefix = 'ERROR'): void {
-    console.error(this.parse(ConsoleColor.red(prefix), msg));
+    console.error(this.parse(prefix, msg));
   }
 }
