@@ -19,9 +19,16 @@
   "homepage": "https://gitlab.com/demsking/xutils",
   "keywords": [
     "image",
-    "download",
-    "downloader",
-    "images"
+    "promise",
+    "array",
+    "client",
+    "number",
+    "string",
+    "regex",
+    "schema",
+    "server",
+    "circular list",
+    "utils"
   ],
   "author": "Sébastien Demanou",
   "types": "typings/index.d.ts",
