@@ -7,6 +7,7 @@ export declare namespace IServer {
     name: string;
     version: string;
     port: number;
+    loggerFormat?: string;
     loader: AppLoader;
     certificat?: SecureContextOptions;
     serviceDependencies?: string[];

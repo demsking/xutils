@@ -1,7 +1,8 @@
-import type { IServer } from '../typings/IServer';
+import type { IServer } from '..';
 import type { Express, Request, Response, RequestHandler, Application, Router } from 'express';
 import type { Server as NodeServer } from 'http';
 
+import { ping } from './ping';
 import { Trace } from './Trace';
 
 import http from 'http';
@@ -9,8 +10,8 @@ import https from 'https';
 import express from 'express';
 import logger from 'morgan';
 
-import Ping from './Ping';
 import MiddlewareUtils from './MiddlewareUtils';
+import { all } from './promise';
 
 export const createApp = express;
 
@@ -24,8 +25,9 @@ export class Server implements IServer.Definition {
   readonly options: IServer.Options;
   server!: NodeServer;
   protected trace: Trace;
+  readonly app: Express;
 
-  static readonly parse = {
+  static readonly parser = {
     /**
      * Parse incoming requests with JSON payloads and is based on body-parser
      */
@@ -56,20 +58,23 @@ export class Server implements IServer.Definition {
 
     this.options = options;
     this.trace = new Trace(options.name);
+    this.app = createApp();
+
+    this.trace.info(`Setting ${this.options.name} server...`);
+    this.app.disable('x-powered-by');
+
+    const loggerFormat = options.loggerFormat
+      ? options.loggerFormat
+      : isProduction
+        ? `:date[iso] ${options.name} HTTP - :remote-addr - :remote-user ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"`
+        : `:date[iso] ${options.name} HTTP - :method :url :status :response-time ms - :res[content-length]`;
+
+
+    this.app.use(logger(loggerFormat));
   }
 
   protected async _start(): Promise<void> {
-    const app: Express = createApp();
-    const loggerFormat = isProduction
-      ? `:date[iso] ${this.options.name} HTTP - :remote-addr - :remote-user ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"`
-      : `:date[iso] ${this.options.name} HTTP - :method :url :status :response-time ms - :res[content-length]`;
-
-    this.trace.info(`Setting ${this.options.name} server...`);
-    app.disable('x-powered-by');
-
-    app.use(logger(loggerFormat));
-
-    app.route('/status')
+    this.app.route('/status')
       .head((req, res) => res.sendStatus(200))
       .get((req, res) => res.json({
         name: this.options.name,
@@ -78,7 +83,7 @@ export class Server implements IServer.Definition {
         uptime: process.uptime(),
       }));
 
-    app.set('port', this.options.port);
+    this.app.set('port', this.options.port);
 
     await this._prepare();
 
@@ -98,14 +103,14 @@ export class Server implements IServer.Definition {
       }
     }
 
-    this.options.loader(app);
+    this.options.loader(this.app);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    app.use((err: Error, req: Request, res: Response, next: () => void) => MiddlewareUtils.handleError(err, res, this.trace));
+    this.app.use((err: Error, req: Request, res: Response, next: () => void) => MiddlewareUtils.handleError(err, res, this.trace));
 
     this.server = this.options.certificat
-      ? https.createServer(this.options.certificat, app)
-      : http.createServer(app);
+      ? https.createServer(this.options.certificat, this.app)
+      : http.createServer(this.app);
 
     this.server.on('error', (error: any) => {
       if (error.syscall !== 'listen') {
@@ -139,12 +144,12 @@ export class Server implements IServer.Definition {
 
     if (this.options.serviceDependencies instanceof Array) {
       try {
-        await Ping.checkAll(this.options.serviceDependencies, {
+        await all(this.options.serviceDependencies, (dependency) => ping(dependency, {
           timeout: 5000,
-          interval: isProduction ? 10000 : 3000,
+          interval: isProduction ? 5000 : 3000,
           retries: isProduction ? 10 : Number.MAX_SAFE_INTEGER,
           logger: this.trace,
-        });
+        }));
       } catch (err: any) {
         this.trace.error(err.message);
         this.trace.error('Starting aborted');
