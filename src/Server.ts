@@ -10,7 +10,8 @@ import https from 'https';
 import express from 'express';
 import logger from 'morgan';
 
-import MiddlewareUtils from './MiddlewareUtils';
+import { ITrace } from '../typings';
+import { HttpError } from './HttpError';
 import { all } from './promise';
 
 export const createApp = express;
@@ -20,6 +21,10 @@ export type { Express, Request, Response, RequestHandler, Application, Router, I
 export * from './HttpError';
 
 const isProduction = process.env.NODE_ENV === 'production';
+
+export type InternalError = Error & {
+  [key: string]: any;
+};
 
 export class Server implements IServer.Definition {
   readonly options: IServer.Options;
@@ -51,6 +56,32 @@ export class Server implements IServer.Definition {
       strict: true,
       caseSensitive: false,
     });
+  }
+
+  static handleError(err: InternalError, res: Response, logger?: ITrace): void {
+    if (err instanceof HttpError) {
+      res.status(err.statusCode);
+
+      if (err.body) {
+        res.json({ error: err.message, body: err.body });
+        logger?.error(`${err.statusCode} - ${err.message} - Body: ${JSON.stringify(err.body)}`);
+      } else {
+        res.json({ error: err.message });
+        logger?.error(`${err.statusCode} - ${err.message}`);
+      }
+    } else if (err.statusCode) {
+      res.status(err.statusCode);
+      res.json({ error: err.message });
+      logger?.error(`${err.statusCode} - ${err.message}`);
+    } else if (err.status) {
+      res.status(err.status);
+      res.json({ error: err.message });
+      logger?.error(`${err.status} - ${err.message}`);
+    } else {
+      res.status(500);
+      res.json({ error: err.message });
+      logger?.error(`500 - ${err.message} - ${err.stack}`);
+    }
   }
 
   constructor(options: IServer.Options) {
@@ -106,7 +137,7 @@ export class Server implements IServer.Definition {
     this.options.loader(this.app);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    this.app.use((err: Error, req: Request, res: Response, next: () => void) => MiddlewareUtils.handleError(err, res, this.trace));
+    this.app.use((err: Error, req: Request, res: Response, next: () => void) => Server.handleError(err, res, this.trace));
 
     this.server = this.options.certificat
       ? https.createServer(this.options.certificat, this.app)
