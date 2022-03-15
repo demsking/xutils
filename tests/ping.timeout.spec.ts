@@ -1,8 +1,10 @@
 /* eslint-disable radar/no-duplicate-string */
+/* eslint-disable jest/no-conditional-expect */
 
 import { ping } from '../src/ping';
 
 const EventEmitter = require('events');
+
 const emitter = new EventEmitter();
 
 emitter.end = jest.fn();
@@ -33,9 +35,9 @@ describe('ping', () => {
       await expect(result).resolves.toBeTruthy();
 
       if (options?.logger) {
-        expect(logger.error).not.toBeCalled();
-        expect(logger.warn).toBeCalledTimes(1);
-        expect(logger.info).toBeCalledTimes(2);
+        expect(logger.error).not.toHaveBeenCalled();
+        expect(logger.warn).toHaveBeenCalledTimes(1);
+        expect(logger.info).toHaveBeenCalledTimes(2);
       }
     });
 
@@ -48,12 +50,12 @@ describe('ping', () => {
 
       const result = ping(url, options);
 
-      await expect(result).rejects.toThrowError(/Service .+ is still not yet available$/);
+      await expect(result).rejects.toThrow(/Service .+ is still not yet available$/);
 
       if (options?.logger) {
-        expect(logger.error).not.toBeCalled();
-        expect(logger.warn).toBeCalledTimes(3);
-        expect(logger.info).toBeCalledTimes(1);
+        expect(logger.error).not.toHaveBeenCalled();
+        expect(logger.warn).toHaveBeenCalledTimes(3);
+        expect(logger.info).toHaveBeenCalledTimes(1);
       }
     });
   });

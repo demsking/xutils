@@ -100,7 +100,6 @@ export class Server implements IServer.Definition {
         ? `:date[iso] ${options.name} HTTP - :remote-addr - :remote-user ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"`
         : `:date[iso] ${options.name} HTTP - :method :url :status :response-time ms - :res[content-length]`;
 
-
     this.app.use(logger(loggerFormat));
   }
 

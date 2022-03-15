@@ -12,8 +12,8 @@ describe('promise', () => {
       const result = await chain(items, mockfn);
 
       expect(result).toEqual(expected);
-      expect(mockfn).toBeCalledTimes(items.length);
-      expect(mockfn).toBeCalledWith(items[0], 0);
+      expect(mockfn).toHaveBeenCalledTimes(items.length);
+      expect(mockfn).toHaveBeenCalledWith(items[0], 0);
       expect(mockfn).toHaveBeenLastCalledWith(items[1], 1);
     });
   });
@@ -27,9 +27,9 @@ describe('promise', () => {
       const result = await all(items, mockfn);
 
       expect(result).toEqual(expected);
-      expect(mockfn).toBeCalledTimes(items.length);
-      expect(mockfn).toBeCalledWith(items[1], 1);
-      expect(mockfn).toBeCalledWith(items[0], 0);
+      expect(mockfn).toHaveBeenCalledTimes(items.length);
+      expect(mockfn).toHaveBeenCalledWith(items[1], 1);
+      expect(mockfn).toHaveBeenCalledWith(items[0], 0);
     });
   });
 });

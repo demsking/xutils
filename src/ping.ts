@@ -8,7 +8,10 @@ export type Options = {
   logger?: ITrace;
 };
 
-export function ping(urlString: string, { timeout = 30000, interval = 10000, retries = 3, logger }: Options = {}): Promise<boolean> {
+export function ping(
+  urlString: string,
+  { timeout = 30000, interval = 10000, retries = 3, logger }: Options = {}
+): Promise<boolean> {
   let count = 1;
   let retrying = true;
   const url = new URL(urlString);
