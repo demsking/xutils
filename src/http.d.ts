@@ -26,7 +26,7 @@ export class HttpError extends Error {
   clone(message: string): HttpError;
 }
 
-export type HTTP = {
+export type Status = {
   // 2xx success
 
   /**
@@ -396,3 +396,5 @@ export type HTTP = {
    */
   NetworkAuthenticationRequired: HttpError;
 };
+
+export const HTTP: Status;
