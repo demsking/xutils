@@ -9,14 +9,14 @@ import logger from 'morgan';
 
 import { ping } from './ping';
 import { Trace } from './Trace';
-import { HttpError } from './HttpError';
+import { HttpError, HttpStatus } from './http';
 import { all } from './promise';
 
 export const createApp = express;
 
 export type { Express, Request, Response, RequestHandler, Application, Router };
 
-export * from './HttpError';
+export * from './http';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -25,10 +25,10 @@ export type InternalError = Error & {
 };
 
 export class Server implements Interface {
-  readonly options: Options;
+  options: Options;
   server!: NodeServer;
-  protected trace: Trace;
-  readonly app: Express;
+  trace: Trace;
+  app: Express;
 
   static readonly parser = {
     /**
@@ -145,13 +145,13 @@ export class Server implements Interface {
     this.server.on('listening', () => this.trace.info(`Listening on ${this.options.port}`));
     this.trace.info(`Starting ${this.options.name} server...`);
     this.server.listen(this.options.port, '0.0.0.0');
+
+    process.on('SIGINT', () => this.server.close(() => process.exit(0)));
   }
 
   protected async _prepare(): Promise<void> {}
 
   async start(): Promise<void> {
-    process.on('SIGINT', () => this.server.close(() => process.exit(0)));
-
     if (this.options.serviceDependencies instanceof Array) {
       try {
         await all(this.options.serviceDependencies, (dependency) => ping(dependency, {

@@ -1,11 +1,12 @@
 import type { Express, Express, Request, Response, RequestHandler, Application, Router } from 'express';
+import type { Trace } from './Trace';
 import express from 'express';
 
 export type createApp = typeof express;
 
 export type { Express, Request, Response, RequestHandler, Application, Router };
 
-export * from './HttpError';
+export * from './http';
 
 export type Options = {
   name: string;
@@ -18,8 +19,7 @@ export type Options = {
 export declare class Server {
   readonly options: Options;
   readonly app: Express;
-
-  start(): Promise<void>;
+  readonly trace: Trace;
 
   static readonly parser: {
     /**
@@ -41,8 +41,10 @@ export declare class Server {
   };
 
   static createRouter(): Router;
-
   static handleError(err: InternalError, res: Response, logger?: ITrace): void;
+
+  constructor(options: Options);
+  start(): Promise<void>;
 }
 
 export interface SecureContextOptions {

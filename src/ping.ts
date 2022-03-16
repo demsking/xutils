@@ -26,7 +26,7 @@ export function ping(
     const check = () => {
       logger?.info(`Checking availability of service ${url.host} (${count})`);
 
-      const socket = createConnection({ host: url.host, port, timeout });
+      const socket = createConnection({ host: url.hostname, port, timeout });
 
       socket.on('connect', () => {
         retrying = false;

@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { HttpError } from '../src/HttpError';
+import { HttpError } from '../src/http';
 import { Server } from '../src/Server';
 import { Trace } from '../src/Trace/trace.node';
 
@@ -32,7 +32,7 @@ describe('Server', () => {
       });
 
       it('res.status should be equal to err.statusCode when err.body is defined', () => {
-        const httpError: HttpError = new HttpError(404, { message: 'Fatal error' });
+        const httpError: HttpError = new HttpError(500, { message: 'Fatal error' });
 
         Server.handleError(httpError, res as unknown as Response, trace);
 
