@@ -48,6 +48,8 @@ export function ping(
       });
 
       socket.on('close', () => socket.destroy());
+
+      socket.end();
     };
 
     check();
