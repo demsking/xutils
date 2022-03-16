@@ -1,5 +1,5 @@
 {
   "name": "trace",
-  "main": "trace.node.ts",
-  "browser": "trace.browser.ts"
+  "main": "trace.node",
+  "browser": "trace.browser"
 }

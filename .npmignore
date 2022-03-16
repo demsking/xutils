@@ -2,6 +2,7 @@ node_modules/
 coverage/
 tests/
 src/
+libtmp/
 .nix-node/
 jest.config.js
 .editorconfig

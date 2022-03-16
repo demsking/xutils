@@ -1,5 +1,5 @@
 {
   "name": "image",
-  "main": "image.node.ts",
-  "browser": "image.browser.ts"
+  "main": "image.node",
+  "browser": "image.browser"
 }

@@ -1,5 +1,6 @@
 node_modules/
 lib/
+libtmp/
 coverage/
 .nix-node/
 jest.config.js

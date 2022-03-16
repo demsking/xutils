@@ -7,7 +7,7 @@
     "lint": "eslint .",
     "test": "jest --detectOpenHandles --coverage",
     "watch": "jest --detectOpenHandles --no-coverage --watchAll",
-    "build": "tsc && tsc -p tsconfig.browser.json && cp src/*.d.ts lib/"
+    "build": "rm -rf lib* && tsc && tsc -p tsconfig.browser.json && cp src/*.d.ts lib/ && mkdir -p libtmp && cp --parents src/*/package.json libtmp/ && cp -r libtmp/src/* lib/"
   },
   "repository": {
     "type": "git",
