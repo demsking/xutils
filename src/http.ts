@@ -30,7 +30,7 @@ export class HttpError extends Error implements Definition.HttpError {
   }
 }
 
-export const HTTP: Definition.HTTP = {
+export const HTTP: Definition.Status = {
   // 2xx success
 
   /**
