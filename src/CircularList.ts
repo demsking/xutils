@@ -1,4 +1,6 @@
-export class CircularList<T> {
+import { CircularList as Interface } from './CircularList.d';
+
+export class CircularList<T> implements Interface<T> {
   private items: T[];
   private gen: Generator<T, T, unknown>;
   index = 0;

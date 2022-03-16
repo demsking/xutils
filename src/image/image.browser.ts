@@ -1,3 +1,5 @@
+export { base64MimeType } from './common';
+
 type CompressFileOptions = {
   width?: number;
   height?: number;

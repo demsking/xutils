@@ -3,7 +3,7 @@ import { HttpError } from '../src/HttpError';
 import { Server } from '../src/Server';
 import { Trace } from '../src/Trace/trace.node';
 
-jest.mock('../src/Trace');
+jest.mock('../src/Trace/trace.node');
 
 const trace = new Trace('@platform/core');
 

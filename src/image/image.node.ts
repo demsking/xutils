@@ -2,6 +2,8 @@ import os from 'os';
 import fs from 'fs/promises';
 import Jimp from 'jimp';
 
+export { base64MimeType } from './common';
+
 const download = require('image-downloader');
 
 export async function parseBase64(imageUrl: string, resizeWidth?: number) {

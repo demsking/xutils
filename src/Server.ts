@@ -1,22 +1,20 @@
-import type { IServer } from '../typings';
+import type { Options, Server as Interface } from './Server.d';
 import type { Express, Request, Response, RequestHandler, Application, Router } from 'express';
 import type { Server as NodeServer } from 'http';
-
-import { ping } from './ping';
-import { Trace } from './Trace/trace.node';
 
 import http from 'http';
 import https from 'https';
 import express from 'express';
 import logger from 'morgan';
 
-import { ITrace } from '../typings';
+import { ping } from './ping';
+import { Trace } from './Trace';
 import { HttpError } from './HttpError';
 import { all } from './promise';
 
 export const createApp = express;
 
-export type { Express, Request, Response, RequestHandler, Application, Router, IServer };
+export type { Express, Request, Response, RequestHandler, Application, Router };
 
 export * from './HttpError';
 
@@ -26,8 +24,8 @@ export type InternalError = Error & {
   [key: string]: any;
 };
 
-export class Server implements IServer.Definition {
-  readonly options: IServer.Options;
+export class Server implements Interface {
+  readonly options: Options;
   server!: NodeServer;
   protected trace: Trace;
   readonly app: Express;
@@ -58,7 +56,7 @@ export class Server implements IServer.Definition {
     });
   }
 
-  static handleError(err: InternalError, res: Response, logger?: ITrace): void {
+  static handleError(err: InternalError, res: Response, logger?: Trace): void {
     if (err instanceof HttpError) {
       res.status(err.statusCode);
 
@@ -84,26 +82,26 @@ export class Server implements IServer.Definition {
     }
   }
 
-  constructor(options: IServer.Options) {
+  constructor(options: Options) {
     options.name = options.name.split('/').reverse()[0];
 
     this.options = options;
     this.trace = new Trace(options.name);
     this.app = createApp();
 
-    this.trace.info(`Setting ${this.options.name} server...`);
     this.app.disable('x-powered-by');
 
-    const loggerFormat = options.loggerFormat
-      ? options.loggerFormat
-      : isProduction
-        ? `:date[iso] ${options.name} HTTP - :remote-addr - :remote-user ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"`
-        : `:date[iso] ${options.name} HTTP - :method :url :status :response-time ms - :res[content-length]`;
+    const loggerFormat = isProduction
+      ? `:date[iso] ${options.name} HTTP - :remote-addr - :remote-user ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"`
+      : `:date[iso] ${options.name} HTTP - :method :url :status :response-time ms - :res[content-length]`;
 
     this.app.use(logger(loggerFormat));
   }
 
   protected async _start(): Promise<void> {
+    this.trace.info(`Setting ${this.options.name} server...`);
+
+    this.app.disable('x-powered-by');
     this.app.route('/status')
       .head((req, res) => res.sendStatus(200))
       .get((req, res) => res.json({
@@ -116,24 +114,6 @@ export class Server implements IServer.Definition {
     this.app.set('port', this.options.port);
 
     await this._prepare();
-
-    if (this.options.beforeStart) {
-      try {
-        await this.options.beforeStart(this);
-      } catch (err: any) {
-        this.trace.error('Failed to initialize server');
-
-        if (err.message) {
-          this.trace.error(err.message);
-        }
-
-        this.trace.error(`${err.stack}`);
-
-        process.exit(-6);
-      }
-    }
-
-    this.options.loader(this.app);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     this.app.use((err: Error, req: Request, res: Response, next: () => void) => Server.handleError(err, res, this.trace));

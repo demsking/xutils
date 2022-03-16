@@ -7,7 +7,7 @@
     "lint": "eslint .",
     "test": "jest --detectOpenHandles --coverage",
     "watch": "jest --detectOpenHandles --no-coverage --watchAll",
-    "build": "tsc && tsc -p tsconfig.browser.json"
+    "build": "tsc && tsc -p tsconfig.browser.json && cp src/*.d.ts lib/"
   },
   "repository": {
     "type": "git",
@@ -31,7 +31,7 @@
     "utils"
   ],
   "author": "Sébastien Demanou",
-  "types": "typings/index.d.ts",
+  "types": "typings.d.ts",
   "dependencies": {
     "axios": "0.26.1",
     "axios-cache-adapter": "^2.7.3",

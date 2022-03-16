@@ -30,17 +30,15 @@ function isNullValue(val: object): boolean {
   return val === null || typeof val === 'undefined';
 }
 
-export default {
-  /**
-   * Get a query object from a given object
-   * @param object Object representing search params
-   * @returns string representation of query
-   */
-  stringify(object: Record<string, any>): string {
-    const items: string[] = [];
+/**
+ * Get a query object from a given object
+ * @param object Object representing search params
+ * @returns string representation of query
+ */
+export function stringify(object: Record<string, any>): string {
+  const items: string[] = [];
 
-    pushKeyPairs(items, '', object);
+  pushKeyPairs(items, '', object);
 
-    return items.filter((e) => e !== '').join('&');
-  },
-};
+  return items.filter((e) => e !== '').join('&');
+}

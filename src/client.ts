@@ -1,13 +1,8 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import color from 'cli-color';
 
-import { ITrace } from '..';
-import { IAxiosCacheAdapterOptions, setupCache } from 'axios-cache-adapter';
-
-type Options = Omit<AxiosRequestConfig, 'baseURL'> & {
-  logger?: ITrace;
-  cache?: IAxiosCacheAdapterOptions;
-};
+import { setupCache } from 'axios-cache-adapter';
+import { Options } from './client.d';
 
 export function createClient(baseURL: string, { headers = {}, logger, cache, ...options }: Options = {}) {
   const adapter = cache ? setupCache(cache).adapter : undefined;

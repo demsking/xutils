@@ -1,12 +1,5 @@
 import { createConnection } from 'net';
-import { ITrace } from '../typings';
-
-export type Options = {
-  timeout?: number;
-  interval?: number;
-  retries?: number;
-  logger?: ITrace;
-};
+import { Options } from './ping.d';
 
 export function ping(
   urlString: string,

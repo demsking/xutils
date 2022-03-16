@@ -76,7 +76,7 @@ publish:
     - triggers
   script:
     - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
-    - npm publish
+    - yarn publish
 
 include:
   - template: Security/SAST.gitlab-ci.yml

@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 
-import { ITrace } from '../../typings';
+import type { Trace as Interface } from '../Trace.d';
 
-export class Trace implements ITrace {
+export class Trace implements Interface {
   name: string;
 
   constructor(name: string) {
