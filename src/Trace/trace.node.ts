@@ -1,4 +1,4 @@
-import color from 'cli-color';
+import color from '../color';
 
 import type { Trace as Interface } from '../Trace.d';
 

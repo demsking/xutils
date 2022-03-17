@@ -1,5 +1,5 @@
 import axios from 'axios';
-import color from 'cli-color';
+import color from './color';
 
 import { setupCache } from 'axios-cache-adapter';
 import { Options } from './client.d';
