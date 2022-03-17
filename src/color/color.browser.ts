@@ -1,6 +1,6 @@
 export default {
-  cyan: (str: string) => str,
-  red: (str: string) => str,
-  yellow: (str: string) => str,
-  green: (str: string) => str,
+  cyan: (str: string | number) => str,
+  red: (str: string | number) => str,
+  yellow: (str: string | number) => str,
+  green: (str: string | number) => str,
 };
