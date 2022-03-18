@@ -83,8 +83,6 @@ export class Server implements Interface {
   }
 
   constructor(options: Options) {
-    options.name = options.name.split('/').reverse()[0];
-
     this.options = options;
     this.trace = new Trace(options.name);
     this.app = createApp();
