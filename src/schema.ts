@@ -1,6 +1,6 @@
 /* eslint-disable radar/cognitive-complexity */
 
-import { merge } from './object';
+import { isObject, merge } from './object';
 
 const Filters = {
   object: (item: unknown) => typeof item === 'object' && item !== null,
@@ -48,7 +48,7 @@ export function generateEmptyValue<T = unknown>(schema: Record<string, any>, use
         for (const prop in schema.properties) {
           const propSchema = schema.properties[prop];
 
-          if (schema.required?.includes(prop) || 'default' in propSchema || 'const' in propSchema) {
+          if (isObject(propSchema) && (schema.required?.includes(prop) || 'default' in propSchema || 'const' in propSchema)) {
             object[prop] = generateEmptyValue(propSchema, useDefault);
           }
         }
