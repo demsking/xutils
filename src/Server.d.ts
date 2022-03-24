@@ -8,12 +8,17 @@ export type { Express, Request, Response, RequestHandler, Application, Router };
 
 export * from './http';
 
+export type InternalError = Error & {
+  [key: string]: any;
+};
+
 export type Options = {
   name: string;
   version: string;
   port: number;
   certificat?: SecureContextOptions;
   serviceDependencies?: string[];
+  devMode?: boolean;
 };
 
 export declare class Server {

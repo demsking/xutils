@@ -1,28 +1,21 @@
-import type { Options, Server as Interface } from './Server.d';
-import type { Express, Request, Response, RequestHandler, Application, Router } from 'express';
+import type { InternalError, Options, Server as Interface } from './Server.d';
+import type { Express, Request, Response, Router } from 'express';
 import type { Server as NodeServer } from 'http';
 
 import http from 'http';
 import https from 'https';
 import express from 'express';
 import logger from 'morgan';
+import bodyParser from 'body-parser';
 
 import { ping } from './ping';
 import { Trace } from './Trace';
-import { HttpError, HttpStatus } from './http';
+import { HttpError } from './http';
 import { all } from './promise';
-
-export const createApp = express;
-
-export type { Express, Request, Response, RequestHandler, Application, Router };
 
 export * from './http';
 
-const isProduction = process.env.NODE_ENV === 'production';
-
-export type InternalError = Error & {
-  [key: string]: any;
-};
+export const createApp = express;
 
 export class Server implements Interface {
   options: Options;
@@ -34,19 +27,19 @@ export class Server implements Interface {
     /**
      * Parse incoming requests with JSON payloads and is based on body-parser
      */
-    json: express.json,
+    json: bodyParser.json,
     /**
      * Parse incoming requests with Buffer payloads and is based on body-parser
      */
-    raw: express.raw,
+    raw: bodyParser.raw,
     /**
      * Parse incoming requests with text payloads and is based on body-parser
      */
-    text: express.text,
+    text: bodyParser.text,
     /**
      * Parse incoming requests with urlencoded payloads and is based on body-parser
      */
-    urlencoded: express.urlencoded,
+    urlencoded: bodyParser.urlencoded,
   };
 
   static createRouter(): Router {
@@ -89,9 +82,9 @@ export class Server implements Interface {
 
     this.app.disable('x-powered-by');
 
-    const loggerFormat = isProduction
-      ? `:date[iso] ${options.name} HTTP - :remote-addr - :remote-user ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"`
-      : `:date[iso] ${options.name} HTTP - :method :url :status :response-time ms - :res[content-length]`;
+    const loggerFormat = options.devMode
+      ? `:date[iso] ${options.name} HTTP - :method :url :status :response-time ms - :res[content-length]`
+      : `:date[iso] ${options.name} HTTP - :remote-addr - :remote-user ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"`;
 
     this.app.use(logger(loggerFormat));
   }
@@ -154,8 +147,8 @@ export class Server implements Interface {
       try {
         await all(this.options.serviceDependencies, (dependency) => ping(dependency, {
           timeout: 5000,
-          interval: isProduction ? 5000 : 3000,
-          retries: isProduction ? 10 : Number.MAX_SAFE_INTEGER,
+          interval: this.options.devMode ? 3000 : 5000,
+          retries: this.options.devMode ? Number.MAX_SAFE_INTEGER : 10,
           logger: this.trace,
         }));
       } catch (err: any) {
