@@ -1,3 +1,8 @@
+/**
+ * Array split into groups of specific length
+ */
+export function split<T>(array: T[], limit: number): T[][];
+
 export function switchItems(array: any[], from: number, to: number): void;
 export function shuffle<T>(array: T[]): T[];
 

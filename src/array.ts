@@ -1,3 +1,19 @@
+export function split<T>(array: T[], limit: number): T[][] {
+  const input = [...array];
+  
+  if (limit <= 0) {
+    return [input];
+  }
+  
+  const result = [];
+
+  while (input.length) {
+    result.push(input.splice(0, limit));
+  }
+
+  return result;
+}
+
 export function switchItems(array: any[], from: number, to: number): void {
   [array[from], array[to]] = [array[to], array[from]];
 }

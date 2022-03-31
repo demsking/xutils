@@ -1,8 +1,20 @@
 /* eslint-disable radar/no-duplicate-string */
 
-import { equals, findIndex, include, remove, shuffle, switchItems } from '../src/array';
+import { equals, findIndex, include, remove, shuffle, split, switchItems } from '../src/array';
 
 describe('array', () => {
+  describe('split<T>(array: T[], limit: number): T[][]', () => {
+    it.only.each([
+      [[], 2, []],
+      [[0, 1, 2], 0, [[0, 1, 2]]],
+      [[0, 1, 2], 5, [[0, 1, 2]]],
+      [[0, 1, 2], 2, [[0, 1], [2]]],
+      [[0, 1, 2], 1, [[0], [1], [2]]],
+    ])('split(%s, %i) === %s', (input, limit, expected) => {
+      expect(split(input, limit)).toEqual(expected);
+    });
+  });
+
   describe('switchItems(array: any[], from: number, to: number): void', () => {
     it.only.each([
       [[0, 1, 2], 0, 2, [2, 1, 0]],
