@@ -87,14 +87,18 @@ export function copy<T extends Record<string, any> = Record<string, any>>(object
 /**
  * Deep assign implementation (merge)
  */
-export function merge(dest: Record<string, any>, src: Record<string, any>) {
+export function merge(dest: Record<string, any>, src: Record<string, any>, strategy = 'append') {
   if (isObject(dest) && isObject(src)) {
     for (const key in src) {
       if (isObject(src[key])) {
         dest[key] = key in dest && isObject(dest[key])
-          ? merge(dest[key], src[key])
+          ? merge(dest[key], src[key], strategy)
           : copy(src[key]);
       } else if (dest[key] instanceof Array) {
+        if (strategy === 'replace') {
+          dest[key].splice(0);
+        }
+
         dest[key].push(...copy(src[key]));
       } else {
         Object.assign(dest, { [key]: src[key] });

@@ -9,29 +9,37 @@ export declare class ToStringEscape {
  * @param object
  * @param strict Default `true`
  */
-export function isObject(object: Record<string, any>, strict?: boolean): boolean;
+export function isObject(object: object, strict?: boolean): boolean;
 
-export function isEmpty(object: Record<string, any>): boolean;
+export function isEmpty(object: object): boolean;
 
-export function isEqual(object1: Record<string, any>, object2: Record<string, any>): boolean;
+export function isEqual(object1: object, object2: object): boolean;
 
 /**
  * Delete all object's properties
  */
-export function clear(object: Record<string, any>): void;
+export function clear(object: object): void;
 
-export function copy<T extends Record<string, any> = Record<string, any>>(object: T): T;
+export function copy<T extends object>(object: T): T;
 
 /**
  * Deep assign implementation (merge)
+ *
+ * @param dest The target object — what to apply the sources' properties to
+ * @param src The source object(s) — objects containing the properties you want to apply
+ * @param [strategy='append'] The merge strategy of array properties. By default `'append'`
  */
-export function merge(dest: Record<string, any>, src: Record<string, any>): Record<string, any>;
+export function merge<T extends object, U extends object>(
+  dest: T,
+  src: U,
+  strategy?: 'append' | 'replace'
+): T & U;
 
-export function get<T = unknown>(object: Record<string, any>, path: string): T | undefined;
+export function get<T>(object: object, path: string): T | undefined;
 
-export function set(object: Record<string, any>, path: string, value: unknown): boolean;
+export function set(object: object, path: string, value: unknown): boolean;
 
-export function del(object: Record<string, any>, path: string): boolean;
+export function del(object: object, path: string): boolean;
 
 /**
  * Converts a JavaScript object or value to a JSON string with support of function value

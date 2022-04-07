@@ -63,20 +63,24 @@ describe('object', () => {
     });
   });
 
-  describe('merge(dest: Record<string, any>, src: Record<string, any>)', () => {
+  describe('merge(dest: Record<string, any>, src: Record<string, any>, strategy?: number)', () => {
     it.only.each([
-      [[], [], []],
-      [[1], [0], [1, 0]],
-      [[1], [0, { a: 1 }], [1, 0, { a: 1 }]],
-      [{ a: 1 }, { b: 2 }, { a: 1, b: 2 }],
-      [{ a: 1 }, { a: 2 }, { a: 2 }],
-      [{ a: 1 }, { a: 2, b: { x: 1 } }, { a: 2, b: { x: 1 } }],
-      [{ a: 1, b: { x: 3, y: 2 } }, { a: 2, b: { x: 1 } }, { a: 2, b: { x: 1, y: 2 } }],
-      [{ a: 1, b: [] }, { a: 2, b: [1] }, { a: 2, b: [1] }],
-      [{ a: 1, b: [1] }, { a: 2, b: [2, 3] }, { a: 2, b: [1, 2, 3] }],
-      [{ a: 1, b: [{ x: 1 }] }, { a: 2, b: [{ y: 2 }] }, { a: 2, b: [{ x: 1 }, { y: 2 }] }],
-    ])('merge(%j, %j) === %j', (src, dest, expectedResult) => {
-      expect(merge(src, dest)).toEqual(expectedResult);
+      [[], [], undefined, []],
+      [[1], [0], undefined, [1, 0]],
+      [[1], [0, { a: 1 }], undefined, [1, 0, { a: 1 }]],
+      [{ a: 1 }, { b: 2 }, undefined, { a: 1, b: 2 }],
+      [{ a: 1 }, { a: 2 }, undefined, { a: 2 }],
+      [{ a: 1 }, { a: 2, b: { x: 1 } }, undefined, { a: 2, b: { x: 1 } }],
+      [{ a: 1, b: { x: 3, y: 2 } }, { a: 2, b: { x: 1 } }, undefined, { a: 2, b: { x: 1, y: 2 } }],
+      [{ a: 1, b: [] }, { a: 2, b: [1] }, undefined, { a: 2, b: [1] }],
+      [{ a: 1 }, { a: 2, b: [1] }, undefined, { a: 2, b: [1] }],
+      [{ a: 1, b: [1] }, { a: 2, b: [2, 3] }, undefined, { a: 2, b: [1, 2, 3] }],
+      [{ a: 1, b: [1] }, { a: 2, b: [2, 3] }, 'append', { a: 2, b: [1, 2, 3] }],
+      [{ a: 1, b: [1] }, { a: 2, b: [2, 3] }, 'replace', { a: 2, b: [2, 3] }],
+      [{ a: 1 }, { a: 2, b: [2, 3] }, 'replace', { a: 2, b: [2, 3] }],
+      [{ a: 1, b: [{ x: 1 }] }, { a: 2, b: [{ y: 2 }] }, undefined, { a: 2, b: [{ x: 1 }, { y: 2 }] }],
+    ])('merge(%j, %j, %j) === %j', (src, dest, strategy, expectedResult) => {
+      expect(merge(src, dest, strategy)).toEqual(expectedResult);
     });
   });
 
