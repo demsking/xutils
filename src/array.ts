@@ -1,10 +1,10 @@
 export function split<T>(array: T[], limit: number): T[][] {
   const input = [...array];
-  
+
   if (limit <= 0) {
     return [input];
   }
-  
+
   const result = [];
 
   while (input.length) {
