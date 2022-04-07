@@ -1,6 +1,6 @@
 {
   "name": "@b613/utils",
-  "version": "1.0.0-alpha12",
+  "version": "1.0.0-alpha13",
   "description": "Set of utility methods for common operations",
   "license": "MIT",
   "scripts": {
