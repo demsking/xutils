@@ -14,7 +14,7 @@ export function split<T>(array: T[], limit: number): T[][] {
   return result;
 }
 
-export function switchItems(array: any[], from: number, to: number): void {
+export function swapItems(array: any[], from: number, to: number): void {
   [array[from], array[to]] = [array[to], array[from]];
 }
 
@@ -44,7 +44,15 @@ export function include<T>(array: Readonly<T>[], item: Readonly<T>): T[] {
   }, [] as T[]);
 }
 
-export function equals(array1: any[], array2: any[]): boolean {
+export function identical(array1: any, array2: any): boolean {
+  if (!Array.isArray(array1) || !Array.isArray(array2)) {
+    return false;
+  }
+
+  if (array1 === array2) {
+    return true;
+  }
+
   if (array1.length !== array2.length) {
     return false;
   }

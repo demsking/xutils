@@ -1,6 +1,6 @@
 /* eslint-disable radar/no-duplicate-string */
 
-import { equals, findIndex, include, remove, shuffle, split, switchItems } from '../src/array';
+import { identical, findIndex, include, remove, shuffle, split, swapItems } from '../src/array';
 
 describe('array', () => {
   describe('split<T>(array: T[], limit: number): T[][]', () => {
@@ -10,17 +10,17 @@ describe('array', () => {
       [[0, 1, 2], 5, [[0, 1, 2]]],
       [[0, 1, 2], 2, [[0, 1], [2]]],
       [[0, 1, 2], 1, [[0], [1], [2]]],
-    ])('split(%s, %i) === %s', (input, limit, expected) => {
+    ])('split(%j, %i) === %j', (input, limit, expected) => {
       expect(split(input, limit)).toEqual(expected);
     });
   });
 
-  describe('switchItems(array: any[], from: number, to: number): void', () => {
+  describe('swapItems(array: any[], from: number, to: number): void', () => {
     it.only.each([
       [[0, 1, 2], 0, 2, [2, 1, 0]],
       [[0, 1, 2], 1, 1, [0, 1, 2]],
-    ])('switchItems(%s, %i, %i) === %s', (input, from, to, expected) => {
-      switchItems(input, from, to);
+    ])('swapItems(%j, %i, %i) === %j', (input, from, to, expected) => {
+      swapItems(input, from, to);
       expect(input).toEqual(expected);
     });
   });
@@ -38,15 +38,22 @@ describe('array', () => {
   describe('include<T>(array: Readonly<T>[], item: Readonly<T>): T[]', () => {
     it.only.each([
       [[0, 1, 2], 3, [0, 3, 1, 3, 2]],
-    ])('include(%s, %i) === %s', (input, item, expected) => {
+    ])('include(%j, %i) === %j', (input, item, expected) => {
       expect(include(input, item)).toEqual(expected);
     });
   });
 
-  describe('equals(array1: any[], array2: any[]): boolean', () => {
+  describe('identical(array1: any[], array2: any[]): boolean', () => {
     const item = { a: 2 };
+    const a = [2, 5];
 
     it.only.each([
+      [null, null, false],
+      [true, true, false],
+      [1, 1, false],
+      [a, a, true],
+      [undefined, [], false],
+      [[], {}, false],
       [[], [], true],
       [[0, 1, 2], [], false],
       [[0, 1, 2], [0, 1, 3], false],
@@ -54,8 +61,8 @@ describe('array', () => {
       [[0, 1, 2], [0, 2, 1], false],
       [[0, 1, item], [0, 1, item], true],
       [[0, 1, item], [0, 1, { ...item }], false],
-    ])('remove(%s, %s) === %s', (array1, array2, expected) => {
-      expect(equals(array1, array2)).toEqual(expected);
+    ])('identical(%j, %j) === %j', (array1, array2, expected) => {
+      expect(identical(array1, array2)).toEqual(expected);
     });
   });
 
@@ -66,7 +73,7 @@ describe('array', () => {
       [[0, 1, 2], 3, -1],
       [[0, 1, 2], 0, 0],
       [[0, 1, itemToRemove], itemToRemove, 2],
-    ])('remove(%s, %s) === %s', (input, item, expected) => {
+    ])('remove(%j, %j) === %j', (input, item, expected) => {
       expect(remove(input, item)).toEqual(expected);
     });
   });
@@ -75,7 +82,7 @@ describe('array', () => {
     it.only.each([
       [[0, 1, 2], 3, -1],
       [[0, 1, 2], 0, 0],
-    ])('remove(%s, %s) === %s', (input, item, expected) => {
+    ])('findIndex(%j, %j) === %j', (input, item, expected) => {
       expect(findIndex(input, item)).toEqual(expected);
     });
   });
