@@ -1,5 +1,9 @@
 # Common Utils
 
+[![npm](https://img.shields.io/npm/v/xutils.svg)](https://www.npmjs.com/package/xutils)
+[![Build status](https://gitlab.com/demsking/xutils/badges/main/pipeline.svg)](https://gitlab.com/demsking/xutils/pipelines)
+[![Test coverage](https://gitlab.com/demsking/xutils/badges/main/coverage.svg)](https://gitlab.com/demsking/xutils/pipelines)
+
 This package provides utility methods for common operations which cover a wide
 range of use cases and helps in avoiding writing boilerplate code.
 
