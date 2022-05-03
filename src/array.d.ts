@@ -8,7 +8,6 @@ export function split<T>(array: T[], limit: number): T[][];
  */
 export function swapItems(array: any[], fromIndex: number, toIndex: number): void;
 
-
 /**
  * Shuffle elements of the given `array`
  */
