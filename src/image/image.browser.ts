@@ -1,4 +1,4 @@
-import { Base64MimeTypeResult } from '../image.d';
+import { Base64MimeTypeResult, PullBrowserOptions } from '../image.d';
 
 type CompressFileOptions = {
   width?: number;
@@ -21,17 +21,13 @@ const EventOptions = {
 
 const REGEX = /^data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+);base64,(.+)/;
 
-export function base64MimeType(encoded: string | null): Base64MimeTypeResult {
-  if (typeof encoded !== 'string') {
-    return null;
-  }
-
-  const matches = encoded.match(REGEX);
+export function parseMimeType(base64: string): Base64MimeTypeResult | null {
+  const matches = base64.match(REGEX);
 
   if (matches?.length) {
     return {
       mime: matches[1],
-      data: encoded,
+      data: base64,
       raw: matches[2],
     };
   }
@@ -39,52 +35,47 @@ export function base64MimeType(encoded: string | null): Base64MimeTypeResult {
   return null;
 }
 
-/**
- * Compress an input image's dataurl with resizing & image quality compression
- */
-function compressFromDataurl(dataurl: string, options: CompressOptions): Promise<CompressionResult> {
+export async function parseBase64(image: HTMLImageElement) {
+  const result = parseCanvas(image, image.width, image.height);
+
+  return result.toDataURL();
+}
+
+export function pull({ url }: PullBrowserOptions) {
   return new Promise((resolve, reject) => {
     const image = new Image();
 
-    image.addEventListener('load', () => {
-      const canvas = document.createElement('canvas');
+    image.addEventListener('load', () => resolve(image), EventOptions);
+    image.addEventListener('error', reject, EventOptions);
 
-      canvas.width = options.width
-        ? Math.min(image.width, options.width)
-        : image.width;
-
-      if (options.height) {
-        canvas.height = options.height;
-      } else {
-        const scaleFactor = canvas.width / image.width;
-
-        canvas.height = image.height * scaleFactor;
-      }
-
-      const context = canvas.getContext('2d');
-
-      if (context) {
-        context.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-        resolve({
-          data: context.canvas.toDataURL(),
-          width: canvas.width,
-          height: canvas.height,
-        });
-      } else {
-        reject(new Error('Unable to get canvas context'));
-      }
-    }, EventOptions);
-
-    image.src = dataurl;
+    image.src = url;
   });
 }
 
-export async function parseBase64(imageUrl: string, resizeWidth?: number) {
-  const result = await compressFromDataurl(imageUrl, {
-    type: 'datauri',
-    width: resizeWidth,
-  });
+export async function resize(image: HTMLImageElement, width: number, height?: number) {
+  return parseCanvas(image, width, height);
+}
 
-  return result.data;
+function parseCanvas(image: HTMLImageElement, width: number, height?: number): HTMLCanvasElement {
+  const canvas = document.createElement('canvas');
+
+  canvas.width = width;
+
+  if (height) {
+    canvas.height = height;
+  } else {
+    const scaleFactor = canvas.width / image.width;
+
+    canvas.height = image.height * scaleFactor;
+  }
+
+  const context = canvas.getContext('2d');
+
+  if (context) {
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+    return context.canvas;
+  }
+
+  throw new Error('Unable to get canvas context');
 }

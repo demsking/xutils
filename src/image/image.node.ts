@@ -3,21 +3,17 @@ import fs from 'fs/promises';
 import Jimp from 'jimp';
 import download from 'image-downloader';
 
-import { Base64MimeTypeResult } from '../image.d';
+import { Base64MimeTypeResult, PullNodeOptions } from '../image.d';
 
 const REGEX = /^data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+);base64,(.+)/;
 
-export function base64MimeType(encoded: string | null): Base64MimeTypeResult {
-  if (typeof encoded !== 'string') {
-    return null;
-  }
-
-  const matches = encoded.match(REGEX);
+export function parseMimeType(base64: string): Base64MimeTypeResult | null {
+  const matches = base64.match(REGEX);
 
   if (matches?.length) {
     return {
       mime: matches[1],
-      data: encoded,
+      data: base64,
       raw: matches[2],
     };
   }
@@ -25,23 +21,23 @@ export function base64MimeType(encoded: string | null): Base64MimeTypeResult {
   return null;
 }
 
-export async function parseBase64(imageUrl: string, resizeWidth?: number) {
-  let { filename } = await download.image({ url: imageUrl, dest: os.tmpdir() });
-
-  if (resizeWidth) {
-    const image = await Jimp.read(filename);
-    const newFilename = `${filename}.resized`;
-
-    await image.resize(resizeWidth, Jimp.AUTO, Jimp.RESIZE_BEZIER).writeAsync(newFilename);
-    await fs.unlink(filename);
-
-    filename = newFilename;
-  }
-
+export async function parseBase64(filename: string) {
   const image = await fs.readFile(filename);
-  const base64 = 'data:image/jpeg;base64,' + Buffer.from(image).toString('base64');
 
-  await fs.unlink(filename);
+  return 'data:image/jpeg;base64,' + Buffer.from(image).toString('base64');
+}
 
-  return base64;
+export function pull({ dest = os.tmpdir(), extractFilename = true, ...options }: PullNodeOptions) {
+  return download.image({ dest, extractFilename, ...options });
+}
+
+export async function resize(filename: string, width: number, height = Jimp.AUTO): Promise<download.DownloadResult> {
+  const image = await Jimp.read(filename);
+  const newFilename = `${filename}.resized`;
+
+  await image.resize(width, height, Jimp.RESIZE_BEZIER).writeAsync(newFilename);
+
+  return {
+    filename: newFilename,
+  };
 }
