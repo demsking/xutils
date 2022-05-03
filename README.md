@@ -1,6 +1,6 @@
 # Common Utils
 
-[![npm](https://img.shields.io/npm/v/xutils.svg)](https://www.npmjs.com/package/xutils)
+[![npm](https://img.shields.io/npm/v/@b613/utils.svg)](https://www.npmjs.com/package/@b613/utils)
 [![Build status](https://gitlab.com/demsking/xutils/badges/main/pipeline.svg)](https://gitlab.com/demsking/xutils/pipelines)
 [![Test coverage](https://gitlab.com/demsking/xutils/badges/main/coverage.svg)](https://gitlab.com/demsking/xutils/pipelines)
 
