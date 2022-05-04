@@ -26,6 +26,7 @@ describe('string', () => {
       ['Hello-world', 'hello-world'],
       ['Hello_world', 'hello-world'],
       ['Hello@world', 'hello-world'],
+      ['showOnUpDown', 'show-on-up-down'],
     ])('toKebabCase("%s") === "%s"', (input, expected) => {
       expect(toKebabCase(input)).toBe(expected);
     });

@@ -34,7 +34,7 @@ export function toKebabCase(str: string): string {
     const code = str.charCodeAt(index);
 
     if (code >= CHAR_CODE_A && code <= CHAR_CODE_Z) {
-      if (index && tokens[index - 1] !== '-') {
+      if (index && tokens.at(-1) !== '-') {
         tokens.push('-');
       }
 
