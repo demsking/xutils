@@ -57,7 +57,7 @@ sast:
 publish:
   stage: publish
   needs:
-    - package
+    - audit
   only:
     - tags
     - triggers
