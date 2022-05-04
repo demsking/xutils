@@ -12,7 +12,6 @@ stages:
   - test
   - security
   - sast
-  - build
   - publish
 
 code quality:
@@ -55,18 +54,6 @@ sast:
     - unit tests
     - dependencies
 
-package:
-  stage: build
-  needs:
-    - audit
-  script:
-    - yarn install
-    - yarn build
-    - yarn pack
-  artifacts:
-    paths:
-      - ./*.tgz
-
 publish:
   stage: publish
   needs:
@@ -75,8 +62,14 @@ publish:
     - tags
     - triggers
   script:
+    - yarn install
+    - yarn build
     - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
     - yarn publish
+    - yarn pack
+  artifacts:
+    paths:
+      - ./*.tgz
 
 include:
   - template: Security/SAST.gitlab-ci.yml
