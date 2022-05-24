@@ -1,6 +1,6 @@
 /* eslint-disable radar/cognitive-complexity */
 
-import { isObject, merge } from './object';
+import { isObject, merge } from './object.js';
 
 const Filters = {
   object: (item: unknown) => typeof item === 'object' && item !== null,

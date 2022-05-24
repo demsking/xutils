@@ -6,7 +6,7 @@ describe('promise', () => {
   describe('async function chain<T, X>(items: X[], fn: (item: X, index: number) => Promise<T>): Promise<T[]>', () => {
     const fnIncrement = async (x: number) => x + 1;
 
-    it.only.each([
+    it.each([
       [[2, 3], fnIncrement, [3, 4], jest.fn().mockImplementation(fnIncrement)],
     ])('chain(%j, %s) === %j', async (items, fn, expected, mockfn) => {
       const result = await chain(items, mockfn);
@@ -21,7 +21,7 @@ describe('promise', () => {
   describe('async function all<T, X>(items: X[], fn: (item: X, index: number) => Promise<T>): Promise<T[]>', () => {
     const fnIncrement = async (x: number) => x + 1;
 
-    it.only.each([
+    it.each([
       [[2, 3], fnIncrement, [3, 4], jest.fn().mockImplementation(fnIncrement)],
     ])('all(%j, %s) === %j', async (items, fn, expected, mockfn) => {
       const result = await all(items, mockfn);

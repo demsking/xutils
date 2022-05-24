@@ -1,19 +1,19 @@
 import type { InternalError, Options, Server as Interface } from './Server.d';
 import type { Express, Request, Response, Router } from 'express';
-import type { Server as NodeServer } from 'http';
+import type { Server as NodeServer } from 'node:http';
 
-import http from 'http';
-import https from 'https';
+import http from 'node:http';
+import https from 'node:https';
 import express from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 
-import { ping } from './ping';
-import { Trace } from './Trace';
-import { HttpError } from './http';
-import { all } from './promise';
+import { ping } from './ping.js';
+import { Trace } from './Trace/trace.node.js';
+import { HttpError } from './http.js';
+import { all } from './promise.js';
 
-export * from './http';
+export * from './http.js';
 
 export const createApp = express;
 
@@ -24,21 +24,9 @@ export class Server implements Interface {
   app: Express;
 
   static readonly parser = {
-    /**
-     * Parse incoming requests with JSON payloads and is based on body-parser
-     */
     json: bodyParser.json,
-    /**
-     * Parse incoming requests with Buffer payloads and is based on body-parser
-     */
     raw: bodyParser.raw,
-    /**
-     * Parse incoming requests with text payloads and is based on body-parser
-     */
     text: bodyParser.text,
-    /**
-     * Parse incoming requests with urlencoded payloads and is based on body-parser
-     */
     urlencoded: bodyParser.urlencoded,
   };
 

@@ -5,8 +5,7 @@ import { Trace } from '../src/Trace/trace.node';
 
 jest.mock('../src/Trace/trace.node');
 
-const trace = new Trace('@platform/core');
-
+const trace = new Trace('test');
 const res = {
   sendStatus: jest.fn(),
   status: jest.fn(),

@@ -4,7 +4,7 @@ import { clear, copy, del, get, isEmpty, isEqual, isObject, merge, set, toString
 
 describe('object', () => {
   describe('isObject(object: Record<string, any>, strict = true): boolean', () => {
-    it.only.each([
+    it.each([
       ['', undefined, false],
       [null, undefined, false],
       [true, undefined, false],
@@ -22,7 +22,7 @@ describe('object', () => {
   });
 
   describe('isEmpty(a: Record<string, any>): boolean', () => {
-    it.only.each([
+    it.each([
       [[1], false],
       [{ a: 1 }, false],
       [[], true],
@@ -33,7 +33,7 @@ describe('object', () => {
   });
 
   describe('isEqual(a: Record<string, any>, b: Record<string, any>): boolean', () => {
-    it.only.each([
+    it.each([
       [[1], [], false],
       [[], [1], false],
       [{ a: 1 }, {}, false],
@@ -50,7 +50,7 @@ describe('object', () => {
   });
 
   describe('copy<T extends Record<string, any> = Record<string, any>>(object: T): T', () => {
-    it.only.each([
+    it.each([
       [[], []],
       [[1], [1]],
       [[1, { a: 2 }], [1, { a: 2 }]],
@@ -64,7 +64,7 @@ describe('object', () => {
   });
 
   describe('merge(dest: Record<string, any>, src: Record<string, any>, strategy?: number)', () => {
-    it.only.each([
+    it.each([
       [[], [], undefined, []],
       [[1], [0], undefined, [1, 0]],
       [[1], [0, { a: 1 }], undefined, [1, 0, { a: 1 }]],
@@ -85,7 +85,7 @@ describe('object', () => {
   });
 
   describe('clear(object: Record<string, any>): void', () => {
-    it.only.each([
+    it.each([
       [{}, {}],
       [{ a: 1 }, {}],
       [{ a: 1, b: 2 }, {}],
@@ -96,7 +96,7 @@ describe('object', () => {
   });
 
   describe('toString(object: object, space?: string | number): string', () => {
-    it.only.each([
+    it.each([
       [{}, undefined, '{}'],
       [{}, '', '{}'],
       [{}, ' ', '{}'],
@@ -115,7 +115,7 @@ describe('object', () => {
   });
 
   describe('get<T extends unknown = unknown>(object: Record<string, any>, path: string): T | undefined', () => {
-    it.only.each([
+    it.each([
       [{}, '.', {}],
       [{ a: 1 }, '.', { a: 1 }],
       [{ a: 1 }, '', { a: 1 }],
@@ -133,7 +133,7 @@ describe('object', () => {
   });
 
   describe('set(object: Record<string, any>, path: string, value: unknown): boolean', () => {
-    describe.only.each([
+    describe.each([
       [{ a: 2 }, '.a', 1, true, { a: 1 }],
       [{ a: 2 }, '.b', 1, true, { a: 2, b: 1 }],
       [{ a: 2 }, '.b.c', 1, true, { a: 2, b: { c: 1 } }],
@@ -148,7 +148,7 @@ describe('object', () => {
   });
 
   describe('del(object: Record<string, any>, path: string): boolean', () => {
-    describe.only.each([
+    describe.each([
       [{ a: 2 }, '.a', true, {}],
       [{ a: 2 }, '.b', false, { a: 2 }],
       [{ a: 2, d: [{ b: 1, x: 0 }] }, 'd.x', true, { a: 2, d: [{ b: 1 }] }],

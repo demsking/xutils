@@ -4,7 +4,7 @@ import { identical, findIndex, include, remove, shuffle, split, swapItems } from
 
 describe('array', () => {
   describe('split<T>(array: T[], limit: number): T[][]', () => {
-    it.only.each([
+    it.each([
       [[], 2, []],
       [[0, 1, 2], 0, [[0, 1, 2]]],
       [[0, 1, 2], 5, [[0, 1, 2]]],
@@ -16,7 +16,7 @@ describe('array', () => {
   });
 
   describe('swapItems(array: any[], from: number, to: number): void', () => {
-    it.only.each([
+    it.each([
       [[0, 1, 2], 0, 2, [2, 1, 0]],
       [[0, 1, 2], 1, 1, [0, 1, 2]],
     ])('swapItems(%j, %i, %i) === %j', (input, from, to, expected) => {
@@ -26,7 +26,7 @@ describe('array', () => {
   });
 
   describe('shuffle<T>(array: T[]): T[]', () => {
-    it.only.each([
+    it.each([
       [[0, 1, 2, 3, 4, 5, 6, 7]],
     ])('should shuffle items randomly', (input) => {
       const expected = [...input];
@@ -36,7 +36,7 @@ describe('array', () => {
   });
 
   describe('include<T>(array: Readonly<T>[], item: Readonly<T>): T[]', () => {
-    it.only.each([
+    it.each([
       [[0, 1, 2], 3, [0, 3, 1, 3, 2]],
     ])('include(%j, %i) === %j', (input, item, expected) => {
       expect(include(input, item)).toEqual(expected);
@@ -47,7 +47,7 @@ describe('array', () => {
     const item = { a: 2 };
     const a = [2, 5];
 
-    it.only.each([
+    it.each([
       [null, null, false],
       [true, true, false],
       [1, 1, false],
@@ -69,7 +69,7 @@ describe('array', () => {
   describe('remove(array: unknown[], itemToRemove: unknown): number', () => {
     const itemToRemove = { a: 2 };
 
-    it.only.each([
+    it.each([
       [[0, 1, 2], 3, -1],
       [[0, 1, 2], 0, 0],
       [[0, 1, itemToRemove], itemToRemove, 2],
@@ -79,7 +79,7 @@ describe('array', () => {
   });
 
   describe('findIndex<T = unknown>(items: T[], item: T): number', () => {
-    it.only.each([
+    it.each([
       [[0, 1, 2], 3, -1],
       [[0, 1, 2], 0, 0],
     ])('findIndex(%j, %j) === %j', (input, item, expected) => {

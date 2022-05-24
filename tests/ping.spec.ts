@@ -1,4 +1,3 @@
-/* eslint-disable radar/no-duplicate-string */
 /* eslint-disable jest/no-conditional-expect */
 
 import { ping } from '../src/ping';
@@ -21,7 +20,7 @@ describe('ping', () => {
   describe('async function ping(urlString: string, { timeout = 30000, interval = 10000, retries = 3, logger }: Options = {}): Promise<void>', () => {
     beforeEach(() => jest.resetAllMocks());
 
-    it.only.each([
+    it.each([
       ['http://www.example1.com', undefined],
       ['http://www.example2.com', { logger }],
     ])('ping(%j, %j) === true', async (url, options) => {
@@ -42,7 +41,7 @@ describe('ping', () => {
       }
     });
 
-    it.only.each([
+    it.each([
       ['http://www.example.with.error1.com', { logger: undefined, timeout: 500, interval: 100 }],
       ['http://www.example.with.error22.com', { logger, timeout: 500, interval: 100 }],
     ])('ping(%j, %j) with error', async (url, options) => {

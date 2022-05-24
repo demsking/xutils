@@ -1,7 +1,7 @@
 import { CircularList } from '../src/CircularList';
 
 describe('CircularList', () => {
-  it.only.each([
+  it.each([
     [[], undefined, [undefined, undefined, undefined]],
     [[], [], [undefined, undefined, undefined]],
     [[0], [], [0, 0, 0]],

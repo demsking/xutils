@@ -4,7 +4,7 @@ import { toKebabCase, trimlines, unCamelCase } from '../src/string';
 
 describe('string', () => {
   describe('trimlines(str: string, separator = \'\'): string', () => {
-    it.only.each([
+    it.each([
       ['hello', undefined, 'hello'],
       ['hello\nworld', undefined, 'helloworld'],
       ['hello\nworld', '', 'helloworld'],
@@ -15,7 +15,7 @@ describe('string', () => {
   });
 
   describe('toKebabCase(str: string): string', () => {
-    it.only.each([
+    it.each([
       ['hello', 'hello'],
       ['Hello', 'hello'],
       ['H1ello', 'h1ello'],
@@ -33,7 +33,7 @@ describe('string', () => {
   });
 
   describe('unCamelCase(str: string, separator = \' \')', () => {
-    it.only.each([
+    it.each([
       ['hello', 'hello', undefined],
       ['Hello', 'hello', undefined],
       ['H1ello', 'h1ello', undefined],

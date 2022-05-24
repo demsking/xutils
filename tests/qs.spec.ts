@@ -1,7 +1,7 @@
 import { stringify } from '../src/qs';
 
 describe('qs', () => {
-  describe.only.each([
+  describe.each([
     [{}, ''],
     [{ key: null }, ''],
     [{ key: undefined }, ''],

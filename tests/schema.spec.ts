@@ -4,7 +4,7 @@ import { generateEmptyValue } from '../src/schema';
 
 describe('schema', () => {
   describe('generateEmptyValue<T = unknown>(schema: Record<string, any>, useDefault = false): T', () => {
-    it.only.each([
+    it.each([
       // number
       [{ type: 'number' }, undefined, undefined],
       [{ type: 'number' }, false, undefined],

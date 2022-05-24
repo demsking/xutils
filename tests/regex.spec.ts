@@ -4,7 +4,7 @@ import { escapePattern } from '../src/regex';
 
 describe('regex', () => {
   describe('escapePattern(pattern: string): string', () => {
-    it.only.each([
+    it.each([
       ['a-z.', 'a-z\\.'],
       ['a-z+', 'a-z\\+'],
       ['a-z?', 'a-z\\?'],

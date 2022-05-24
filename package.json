@@ -3,10 +3,28 @@
   "version": "1.0.0-beta4",
   "description": "Set of utility methods for common operations",
   "license": "MIT",
+  "exports": {
+    "./array": "./lib/array.js",
+    "./color": "./lib/color/color.node.js",
+    "./CircularList": "./lib/CircularList.js",
+    "./client": "./lib/client.js",
+    "./http": "./lib/http.js",
+    "./image": "./lib/image/image.node.js",
+    "./number": "./lib/number.js",
+    "./object": "./lib/object.js",
+    "./ping": "./lib/ping.js",
+    "./promise": "./lib/promise.js",
+    "./qs": "./lib/qs.js",
+    "./regex": "./lib/regex.js",
+    "./schema": "./lib/schema.js",
+    "./Server": "./lib/Server.js",
+    "./string": "./lib/string.js",
+    "./Trace": "./lib/Trace/trace.node.js"
+  },
   "scripts": {
     "lint": "eslint .",
-    "test": "jest --detectOpenHandles --coverage",
-    "watch": "jest --detectOpenHandles --no-coverage --watchAll",
+    "test": "NODE_OPTIONS=--experimental-vm-modules node_modules/.bin/jest --coverage",
+    "watch": "NODE_OPTIONS=--experimental-vm-modules node_modules/.bin/jest --no-coverage --watchAll",
     "build": "rm -rf lib* && tsc && tsc -p tsconfig.browser.json && cp src/*.d.ts lib/ && mkdir -p libtmp && cp --parents src/*/package.json libtmp/ && cp -r libtmp/src/* lib/"
   },
   "repository": {
@@ -31,7 +49,7 @@
     "utils"
   ],
   "author": "Sébastien Demanou",
-  "types": "typings.d.ts",
+  "types": "./typings.d.ts",
   "dependencies": {
     "axios": "0.27.2",
     "axios-cache-adapter": "^2.7.3",
@@ -56,9 +74,9 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jest": "^26.1.5",
     "eslint-plugin-radar": "^0.2.1",
-    "jest": "28.0.3",
+    "jest": "^28.1.0",
     "nock": "^13.2.4",
-    "ts-jest": "28.0.1",
+    "ts-jest": "28.0.2",
     "typescript": "^4.6.4"
   },
   "engines": {
