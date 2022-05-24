@@ -1,5 +1,5 @@
-import os from 'node:os';
-import fs from 'node:fs/promises';
+import os from 'os';
+import fs from 'fs/promises';
 import Jimp from 'jimp';
 import download from 'image-downloader';
 

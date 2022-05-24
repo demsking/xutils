@@ -1,4 +1,4 @@
-import { createConnection } from 'node:net';
+import { createConnection } from 'net';
 import { Options } from './ping.d';
 
 export function ping(

@@ -2,7 +2,7 @@
 /* eslint-disable jest/no-conditional-expect */
 
 import { ping } from '../src/ping';
-import { EventEmitter } from 'node:events';
+import { EventEmitter } from 'events';
 
 const emitter = new EventEmitter();
 
@@ -14,7 +14,7 @@ const logger = {
   error: jest.fn(),
 };
 
-jest.mock('node:net', () => ({
+jest.mock('net', () => ({
   createConnection: () => emitter,
 }));
 

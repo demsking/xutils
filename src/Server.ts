@@ -1,9 +1,9 @@
 import type { InternalError, Options, Server as Interface } from './Server.d';
 import type { Express, Request, Response, Router } from 'express';
-import type { Server as NodeServer } from 'node:http';
+import type { Server as NodeServer } from 'http';
 
-import http from 'node:http';
-import https from 'node:https';
+import http from 'http';
+import https from 'https';
 import express from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
