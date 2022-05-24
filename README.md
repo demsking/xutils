@@ -25,7 +25,6 @@ npm install @b613/utils
 | `@b613/utils/CircularList`  | [CircularList.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/CircularList.d.ts) |
 | `@b613/utils/client`        | [client.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/client.d.ts)             |
 | `@b613/utils/color`         | [color.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/color.d.ts)               |
-| `@b613/utils/http`          | [http.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/http.d.ts)                 |
 | `@b613/utils/image`         | [image.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/image.d.ts)               |
 | `@b613/utils/number`        | [number.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/number.d.ts)             |
 | `@b613/utils/object`        | [object.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/object.d.ts)             |

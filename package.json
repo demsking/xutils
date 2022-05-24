@@ -8,7 +8,6 @@
     "./color": "./lib/color/color.node.js",
     "./CircularList": "./lib/CircularList.js",
     "./client": "./lib/client.js",
-    "./http": "./lib/http.js",
     "./image": "./lib/image/image.node.js",
     "./number": "./lib/number.js",
     "./object": "./lib/object.js",
