@@ -19,23 +19,23 @@ npm install @b613/utils
 
 ## Libraries
 
-| Module                      | Documentation                                                                             |
-| --------------------------- | ----------------------------------------------------------------------------------------- |
-| `@b613/utils/array`         | [array.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/array.d.ts)               |
-| `@b613/utils/CircularList`  | [CircularList.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/CircularList.d.ts) |
-| `@b613/utils/client`        | [client.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/client.d.ts)             |
-| `@b613/utils/color`         | [color.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/color.d.ts)               |
-| `@b613/utils/image`         | [image.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/image.d.ts)               |
-| `@b613/utils/number`        | [number.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/number.d.ts)             |
-| `@b613/utils/object`        | [object.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/object.d.ts)             |
-| `@b613/utils/ping`          | [ping.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/ping.d.ts)                 |
-| `@b613/utils/promise`       | [promise.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/promise.d.ts)           |
-| `@b613/utils/qs`            | [qs.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/qs.d.ts)                     |
-| `@b613/utils/regex`         | [regex.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/regex.d.ts)               |
-| `@b613/utils/schema`        | [schema.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/schema.d.ts)             |
-| `@b613/utils/Server`        | [Server.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/Server.d.ts)             |
-| `@b613/utils/string`        | [string.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/string.d.ts)             |
-| `@b613/utils/Trace`         | [Trace.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/Trace.d.ts)               |
+| Module                | Documentation                                                                             |
+| --------------------- | ----------------------------------------------------------------------------------------- |
+| `@b613/utils/array`   | [array.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/array.d.ts)               |
+| `@b613/utils/clist`   | [CircularList.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/CircularList.d.ts) |
+| `@b613/utils/client`  | [client.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/client.d.ts)             |
+| `@b613/utils/color`   | [color.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/color.d.ts)               |
+| `@b613/utils/image`   | [image.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/image.d.ts)               |
+| `@b613/utils/number`  | [number.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/number.d.ts)             |
+| `@b613/utils/object`  | [object.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/object.d.ts)             |
+| `@b613/utils/ping`    | [ping.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/ping.d.ts)                 |
+| `@b613/utils/promise` | [promise.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/promise.d.ts)           |
+| `@b613/utils/qs`      | [qs.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/qs.d.ts)                     |
+| `@b613/utils/regex`   | [regex.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/regex.d.ts)               |
+| `@b613/utils/schema`  | [schema.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/schema.d.ts)             |
+| `@b613/utils/server`  | [Server.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/Server.d.ts)             |
+| `@b613/utils/string`  | [string.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/string.d.ts)             |
+| `@b613/utils/trace`   | [Trace.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/Trace.d.ts)               |
 
 ## Development Setup
 

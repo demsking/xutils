@@ -3,10 +3,11 @@
   "version": "1.0.0-beta6",
   "description": "Set of utility methods for common operations",
   "license": "MIT",
+  "type": "module",
   "exports": {
     "./array": "./lib/array.js",
     "./color": "./lib/color/color.node.js",
-    "./CircularList": "./lib/CircularList.js",
+    "./clist": "./lib/CircularList.js",
     "./client": "./lib/client.js",
     "./image": "./lib/image/image.node.js",
     "./number": "./lib/number.js",
@@ -16,9 +17,9 @@
     "./qs": "./lib/qs.js",
     "./regex": "./lib/regex.js",
     "./schema": "./lib/schema.js",
-    "./Server": "./lib/Server.js",
+    "./server": "./lib/Server.js",
     "./string": "./lib/string.js",
-    "./Trace": "./lib/Trace/trace.node.js"
+    "./trace": "./lib/Trace/trace.node.js"
   },
   "scripts": {
     "lint": "eslint .",

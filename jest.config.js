@@ -1,5 +1,5 @@
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
-module.exports = {
+export default {
   expand: true,
   detectOpenHandles: true,
   preset: 'ts-jest',
