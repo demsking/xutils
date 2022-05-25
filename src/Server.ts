@@ -13,8 +13,6 @@ import { Trace } from './Trace/trace.node.js';
 import { HttpError } from './http.js';
 import { all } from './promise.js';
 
-export { HttpStatus, HttpError, HTTP } from './http.js';
-
 export const createApp = express;
 
 export class Server implements Interface {
