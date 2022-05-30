@@ -1,10 +1,20 @@
 import axios from 'axios';
-import color from './color';
 
 import { setupCache } from 'axios-cache-adapter';
 import { Options } from './client.d';
+import { Color } from './color.d';
 
-export function createClient(baseURL: string, { headers = {}, logger, cache, ...options }: Options = {}) {
+const fallbackColor: Color = {
+  cyan: (str: string | number) => `${str}`,
+  red: (str: string | number) => `${str}`,
+  yellow: (str: string | number) => `${str}`,
+  green: (str: string | number) => `${str}`,
+};
+
+export function createClient(
+  baseURL: string,
+  { headers = {}, logger, cache, color = fallbackColor, ...options }: Options = {}
+) {
   const adapter = cache ? setupCache(cache).adapter : undefined;
   const instance = axios.create({ ...options, baseURL, headers, adapter });
 
