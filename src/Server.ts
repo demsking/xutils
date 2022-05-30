@@ -1,4 +1,4 @@
-import type { InternalError, Options, Server as Interface } from './Server.d';
+import type { InternalError, Options, Server as Interface } from './server';
 import type { Express, Request, Response, Router } from 'express';
 import type { Server as NodeServer } from 'http';
 
@@ -9,7 +9,7 @@ import logger from 'morgan';
 import bodyParser from 'body-parser';
 
 import { ping } from './ping.js';
-import { Trace } from './Trace/trace.node.js';
+import { Trace } from './trace/trace.node.js';
 import { HttpError } from './http.js';
 import { all } from './promise.js';
 

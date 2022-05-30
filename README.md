@@ -34,9 +34,9 @@ npm install @b613/utils
 | `@b613/utils/qs`      | [qs.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/qs.d.ts)                     |
 | `@b613/utils/regex`   | [regex.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/regex.d.ts)               |
 | `@b613/utils/schema`  | [schema.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/schema.d.ts)             |
-| `@b613/utils/server`  | [Server.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/Server.d.ts)             |
+| `@b613/utils/server`  | [Server.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/server.d.ts)             |
 | `@b613/utils/string`  | [string.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/string.d.ts)             |
-| `@b613/utils/trace`   | [Trace.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/Trace.d.ts)               |
+| `@b613/utils/trace`   | [trace.d.ts](https://gitlab.com/demsking/xutils/-/blob/main/src/trace.d.ts)               |
 
 ## Development Setup
 

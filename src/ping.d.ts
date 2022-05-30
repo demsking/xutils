@@ -1,4 +1,4 @@
-import { Trace } from './Trace';
+import { Trace } from './trace';
 
 export type Options = {
   timeout?: number;

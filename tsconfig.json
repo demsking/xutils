@@ -1,17 +1,19 @@
 {
   "compilerOptions": {
     "allowJs": false,
-    "target": "ES2018",
+    "target": "ES2019",
     "module": "ESNext",
     "strict": false,
     "importHelpers": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": false,
     "experimentalDecorators": true,
     "sourceMap": true,
     "skipLibCheck": true,
+    "listEmittedFiles": true,
     "baseUrl": ".",
     "rootDir": "src",
     "outDir": "lib",
@@ -25,12 +27,12 @@
       "DOM.Iterable"
     ],
     "typeRoots": [
-      "./typings",
       "node_modules/@types"
     ]
   },
   "include": [
     "src/*.ts",
+    "src/**/package.json",
     "src/**/*.browser.ts",
     "src/**/*.node.ts"
   ],

@@ -18,7 +18,7 @@ export default {
     './object.js': './object.ts',
     './ping.js': './ping.ts',
     './promise.js': './promise.ts',
-    './Trace/trace.node.js': './Trace/trace.node.ts',
+    './trace/trace.node.js': './trace/trace.node.ts',
     '../color/color.node.js': '../color/color.node.ts',
   },
   moduleFileExtensions: [

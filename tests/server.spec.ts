@@ -1,9 +1,9 @@
 import { Response } from 'express';
 import { HttpError } from '../src/http';
 import { Server } from '../src/Server';
-import { Trace } from '../src/Trace/trace.node';
+import { Trace } from '../src/trace/trace.node';
 
-jest.mock('../src/Trace/trace.node');
+jest.mock('../src/trace/trace.node');
 
 const trace = new Trace('test');
 const res = {

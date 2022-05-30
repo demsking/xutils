@@ -18,15 +18,15 @@
     "./qs": "./lib/qs.js",
     "./regex": "./lib/regex.js",
     "./schema": "./lib/schema.js",
-    "./server": "./lib/Server.js",
+    "./server": "./lib/server.js",
     "./string": "./lib/string.js",
-    "./trace": "./lib/Trace/trace.node.js"
+    "./trace": "./lib/trace/trace.node.js"
   },
   "scripts": {
     "lint": "eslint .",
     "test": "NODE_OPTIONS=--experimental-vm-modules node_modules/.bin/jest --coverage",
     "watch": "NODE_OPTIONS=--experimental-vm-modules node_modules/.bin/jest --no-coverage --watchAll",
-    "build": "rm -rf lib* && tsc && tsc -p tsconfig.browser.json && cp src/*.d.ts lib/ && mkdir -p libtmp && cp --parents src/*/package.json libtmp/ && cp -r libtmp/src/* lib/"
+    "build": "tsc && tsc -p tsconfig.browser.json"
   },
   "repository": {
     "type": "git",

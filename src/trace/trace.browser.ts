@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import type { Trace as Interface } from '../Trace.d';
+import type { Trace as Interface } from '../trace';
 
 export class Trace implements Interface {
   name: string;

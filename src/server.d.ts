@@ -1,12 +1,10 @@
 import type { Express, Express, Request, Response, RequestHandler, Application, Router } from 'express';
-import type { Trace } from './Trace';
+import type { Trace } from './trace';
 import express from 'express';
 
 export type createApp = typeof express;
 
 export type { Express, Request, Response, RequestHandler, Application, Router };
-
-export * from './http';
 
 export type InternalError = Error & {
   [key: string]: any;
