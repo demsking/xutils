@@ -1,6 +1,5 @@
-import type { Express, Express, Request, Response, RequestHandler, Application, Router } from 'express';
-import type { Trace } from './trace';
-import express from 'express';
+import express, { Express, Request, Response, RequestHandler, Application, Router } from 'express';
+import { Trace } from './trace';
 
 export type createApp = typeof express;
 

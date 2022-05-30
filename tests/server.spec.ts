@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import { HttpError } from '../src/http';
-import { Server } from '../src/Server';
+import { Server } from '../src/server';
 import { Trace } from '../src/trace/trace.node';
 
 jest.mock('../src/trace/trace.node');

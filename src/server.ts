@@ -1,4 +1,4 @@
-import type { InternalError, Options, Server as Interface } from './server';
+import type { InternalError, Options, Server as Interface } from './server.d';
 import type { Express, Request, Response, Router } from 'express';
 import type { Server as NodeServer } from 'http';
 
