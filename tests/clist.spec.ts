@@ -1,4 +1,4 @@
-import { CircularList } from '../src/CircularList';
+import { CircularList } from '../src/clist';
 
 describe('CircularList', () => {
   it.each([

@@ -19,6 +19,7 @@ export default {
     './ping.js': './ping.ts',
     './promise.js': './promise.ts',
     './trace/trace.node.js': './trace/trace.node.ts',
+    '../color': '../color/color.node.ts',
     '../color/color.node.js': '../color/color.node.ts',
   },
   moduleFileExtensions: [

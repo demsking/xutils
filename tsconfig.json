@@ -16,7 +16,7 @@
     "listEmittedFiles": true,
     "baseUrl": ".",
     "rootDir": "src",
-    "outDir": "lib",
+    "outDir": "esm",
     "types": [
       "jest",
       "node"
@@ -32,12 +32,11 @@
   },
   "include": [
     "src/*.ts",
-    "src/**/package.json",
-    "src/**/*.browser.ts",
     "src/**/*.node.ts"
   ],
   "exclude": [
     "lib",
+    "esm",
     "coverage",
     "node_modules",
     "**/__mocks__"

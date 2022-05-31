@@ -5,28 +5,28 @@
   "license": "MIT",
   "type": "module",
   "exports": {
-    "./array": "./lib/array.js",
-    "./color": "./lib/color/color.node.js",
-    "./clist": "./lib/CircularList.js",
-    "./client": "./lib/client.js",
-    "./http": "./lib/http.js",
-    "./image": "./lib/image/image.node.js",
-    "./number": "./lib/number.js",
-    "./object": "./lib/object.js",
-    "./ping": "./lib/ping.js",
-    "./promise": "./lib/promise.js",
-    "./qs": "./lib/qs.js",
-    "./regex": "./lib/regex.js",
-    "./schema": "./lib/schema.js",
-    "./server": "./lib/server.js",
-    "./string": "./lib/string.js",
-    "./trace": "./lib/trace/trace.node.js"
+    "./lib/array": "./esm/array.js",
+    "./lib/color": "./esm/color/color.node.js",
+    "./lib/clist": "./esm/clist.js",
+    "./lib/client": "./esm/client.js",
+    "./lib/http": "./esm/http.js",
+    "./lib/image": "./esm/image/image.node.js",
+    "./lib/number": "./esm/number.js",
+    "./lib/object": "./esm/object.js",
+    "./lib/ping": "./esm/ping.js",
+    "./lib/promise": "./esm/promise.js",
+    "./lib/qs": "./esm/qs.js",
+    "./lib/regex": "./esm/regex.js",
+    "./lib/schema": "./esm/schema.js",
+    "./lib/server": "./esm/server.js",
+    "./lib/string": "./esm/string.js",
+    "./lib/trace": "./esm/trace/trace.node.js"
   },
   "scripts": {
     "lint": "eslint .",
     "test": "NODE_OPTIONS=--experimental-vm-modules node_modules/.bin/jest --coverage",
     "watch": "NODE_OPTIONS=--experimental-vm-modules node_modules/.bin/jest --no-coverage --watchAll",
-    "build": "tsc && tsc -p tsconfig.browser.json"
+    "build": "tsc && tsc -p tsconfig.browser.json && tsc -p tsconfig.commonjs.json"
   },
   "repository": {
     "type": "git",
@@ -50,7 +50,6 @@
     "utils"
   ],
   "author": "Sébastien Demanou",
-  "types": "./typings.d.ts",
   "dependencies": {
     "axios": "0.27.2",
     "axios-cache-adapter": "^2.7.3",

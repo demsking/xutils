@@ -1,4 +1,4 @@
-import color from '../color/color.node.js';
+import color from '../color';
 
 import type { Trace as Interface } from '../trace';
 

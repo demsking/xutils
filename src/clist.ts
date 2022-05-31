@@ -1,4 +1,4 @@
-import { CircularList as Interface } from './CircularList.d';
+import { CircularList as Interface } from './clist.d';
 
 export class CircularList<T> implements Interface<T> {
   private items: T[];
