@@ -2,7 +2,7 @@
   "compilerOptions": {
     "allowJs": false,
     "target": "ES2019",
-    "module": "ESNext",
+    "module": "CommonJS",
     "strict": false,
     "importHelpers": true,
     "moduleResolution": "node",
@@ -16,7 +16,7 @@
     "listEmittedFiles": true,
     "baseUrl": ".",
     "rootDir": "src",
-    "outDir": "esm",
+    "outDir": "lib",
     "types": [
       "jest",
       "node"
@@ -32,6 +32,7 @@
   },
   "include": [
     "src/*.ts",
+    "src/*.d.ts",
     "src/**/*.node.ts"
   ],
   "exclude": [

@@ -3,30 +3,12 @@
   "version": "1.0.0-beta15",
   "description": "Set of utility methods for common operations",
   "license": "MIT",
-  "type": "module",
-  "exports": {
-    "./lib/array": "./esm/array.js",
-    "./lib/color": "./esm/color/color.node.js",
-    "./lib/clist": "./esm/clist.js",
-    "./lib/client": "./esm/client.js",
-    "./lib/http": "./esm/http.js",
-    "./lib/image": "./esm/image/image.node.js",
-    "./lib/number": "./esm/number.js",
-    "./lib/object": "./esm/object.js",
-    "./lib/ping": "./esm/ping.js",
-    "./lib/promise": "./esm/promise.js",
-    "./lib/qs": "./esm/qs.js",
-    "./lib/regex": "./esm/regex.js",
-    "./lib/schema": "./esm/schema.js",
-    "./lib/server": "./esm/server.js",
-    "./lib/string": "./esm/string.js",
-    "./lib/trace": "./esm/trace/trace.node.js"
-  },
+  "type": "commonjs",
   "scripts": {
     "lint": "eslint .",
     "test": "NODE_OPTIONS=--experimental-vm-modules node_modules/.bin/jest --coverage",
     "watch": "NODE_OPTIONS=--experimental-vm-modules node_modules/.bin/jest --no-coverage --watchAll",
-    "build": "tsc && tsc -p tsconfig.browser.json && tsc -p tsconfig.commonjs.json"
+    "build": "tsc && tsc -p tsconfig.browser.json && cp src/*.d.ts lib/"
   },
   "repository": {
     "type": "git",
