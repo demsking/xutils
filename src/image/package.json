@@ -1,6 +1,5 @@
 {
   "name": "image",
-  "type": "module",
-  "exports": "./image.node.js",
+  "main": "./image.node.js",
   "browser": "./image.browser.js"
 }

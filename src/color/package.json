@@ -1,6 +1,5 @@
 {
   "name": "color",
-  "type": "module",
-  "exports": "./color.node.js",
+  "main": "./color.node.js",
   "browser": "./color.browser.js"
 }
