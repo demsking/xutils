@@ -14,21 +14,24 @@ describe('string', () => {
     });
   });
 
-  describe('toKebabCase(str: string): string', () => {
-    it.each([
-      ['hello', 'hello'],
-      ['Hello', 'hello'],
-      ['H1ello', 'h1ello'],
-      ['camelCase', 'camel-case'],
-      ['PascalCase', 'pascal-case'],
-      ['Hello World', 'hello-world'],
-      ['Hello_World', 'hello-world'],
-      ['Hello-world', 'hello-world'],
-      ['Hello_world', 'hello-world'],
-      ['Hello@world', 'hello-world'],
-      ['showOnUpDown', 'show-on-up-down'],
-    ])('toKebabCase("%s") === "%s"', (input, expected) => {
-      expect(toKebabCase(input)).toBe(expected);
+  describe('toKebabCase(str: string, escapedChars?: string[]): string', () => {
+    it.only.each([
+      ['hello', undefined, 'hello'],
+      ['Hello', undefined, 'hello'],
+      ['H1ello', undefined, 'h1ello'],
+      ['camelCase', undefined, 'camel-case'],
+      ['PascalCase', undefined, 'pascal-case'],
+      ['Hello World', undefined, 'hello-world'],
+      ['Hello_World', undefined, 'hello-world'],
+      ['Hello-world', undefined, 'hello-world'],
+      ['Hello_world', undefined, 'hello-world'],
+      ['Hello@world', undefined, 'hello-world'],
+      ['Hello@world', [], 'hello-world'],
+      ['Hello@world', ['@'], 'hello@world'],
+      ['Hello@world:', [':'], 'hello-world:'],
+      ['=Hello@world', ['='], '=hello-world'],
+    ])('toKebabCase(%j, %j) === %j', (input, escapedChars, expected) => {
+      expect(toKebabCase(input, escapedChars)).toBe(expected);
     });
   });
 
