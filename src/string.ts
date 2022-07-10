@@ -26,24 +26,34 @@ export function trimlines(str: string, separator = ''): string {
   return output.join(separator);
 }
 
-export function toKebabCase(str: string): string {
+// eslint-disable-next-line radar/cognitive-complexity
+export function toKebabCase(str: string, escapedChars: string[] = []): string {
   const tokens: string[] = [];
 
   for (let index = 0; index < str.length; index++) {
     const char = str.charAt(index);
-    const code = str.charCodeAt(index);
 
-    if (code >= CHAR_CODE_A && code <= CHAR_CODE_Z) {
-      if (index && tokens.at(-1) !== '-') {
-        tokens.push('-');
-      }
-
-      tokens.push(String.fromCharCode(code + 32));
-    // eslint-disable-next-line camelcase
-    } else if ((code >= CHAR_CODE_a && code <= CHAR_CODE_z) || (code >= CHAR_CODE_0 && code <= CHAR_CODE_9)) {
+    if (escapedChars.includes(char)) {
       tokens.push(char);
     } else {
-      tokens.push('-');
+      const code = str.charCodeAt(index);
+
+      if (code >= CHAR_CODE_A && code <= CHAR_CODE_Z) {
+        if (index) {
+          const previousToken = tokens[index - 1];
+
+          if (previousToken !== '-' && !escapedChars.includes(previousToken)) {
+            tokens.push('-');
+          }
+        }
+
+        tokens.push(String.fromCharCode(code + 32));
+      // eslint-disable-next-line camelcase
+      } else if ((code >= CHAR_CODE_a && code <= CHAR_CODE_z) || (code >= CHAR_CODE_0 && code <= CHAR_CODE_9)) {
+        tokens.push(char);
+      } else {
+        tokens.push('-');
+      }
     }
   }
 
