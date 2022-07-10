@@ -28,59 +28,62 @@ export function trimlines(str: string, separator = ''): string {
   return output.join(separator);
 }
 
+function isLowerCode(code: number) {
+  // eslint-disable-next-line camelcase
+  return code >= CHAR_CODE_a && code <= CHAR_CODE_z;
+}
+
+function isNumberCode(code: number) {
+  // eslint-disable-next-line camelcase
+  return code >= CHAR_CODE_0 && code <= CHAR_CODE_9;
+}
+
+export type ParseCaseOptions = {
+  escapedChars?: string[];
+  separator: string;
+};
+
 // eslint-disable-next-line radar/cognitive-complexity
-export function toKebabCase(str: string, escapedChars: string[] = []): string {
-  const tokens: string[] = [];
+export function parseCase(str: string, { escapedChars = [], separator }: ParseCaseOptions): string {
+  let output = '';
 
   for (let index = 0; index < str.length; index++) {
     const char = str.charAt(index);
 
     if (escapedChars.includes(char)) {
-      tokens.push(char);
+      output += char;
     } else {
       const code = str.charCodeAt(index);
 
       if (code >= CHAR_CODE_A && code <= CHAR_CODE_Z) {
         if (index) {
-          const previousToken = tokens.at(-1);
+          const previousToken = output.at(-1);
 
-          if (previousToken !== KEBAB_SEPARATOR && !escapedChars.includes(previousToken)) {
-            tokens.push(KEBAB_SEPARATOR);
+          if (previousToken !== separator && !escapedChars.includes(previousToken)) {
+            const previousCode = str.charCodeAt(index - 1);
+
+            if (isLowerCode(previousCode) || isNumberCode(previousCode)) {
+              output += separator;
+            }
           }
         }
 
-        tokens.push(String.fromCharCode(code + 32));
-      // eslint-disable-next-line camelcase
-      } else if ((code >= CHAR_CODE_a && code <= CHAR_CODE_z) || (code >= CHAR_CODE_0 && code <= CHAR_CODE_9)) {
-        tokens.push(char);
+        output += String.fromCharCode(code + 32);
+      } else if (isLowerCode(code) || isNumberCode(code)) {
+        output += char;
       } else {
-        tokens.push(KEBAB_SEPARATOR);
+        output += separator;
       }
     }
   }
 
-  return tokens.join('');
+  return output;
 }
 
-export function unCamelCase(str: string, separator = ' ') {
-  const tokens: string[] = [];
+export function toKebabCase(str: string, escapedChars: string[] = []): string {
+  return parseCase(str, { escapedChars, separator: '-' });
+}
 
-  for (let index = 0; index < str.length; index++) {
-    const code = str.charCodeAt(index);
-
-    // eslint-disable-next-line camelcase
-    if ((code >= CHAR_CODE_a && code <= CHAR_CODE_z) || (code >= CHAR_CODE_0 && code <= CHAR_CODE_9)) {
-      tokens.push(str.charAt(index));
-    } else if (code >= CHAR_CODE_A && code <= CHAR_CODE_Z) {
-      if (index && tokens[index - 1] !== separator) {
-        tokens.push(separator);
-      }
-
-      tokens.push(String.fromCharCode(code + 32));
-    } else if (index) {
-      tokens.push(separator);
-    }
-  }
-
-  return tokens.join('');
+export function unCamelCase(str: string, escapedChars: string[] = []) {
+  return parseCase(str, { escapedChars, separator: ' ' });
 }
