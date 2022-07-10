@@ -1,6 +1,6 @@
 /* eslint-disable radar/no-duplicate-string */
 
-import { toKebabCase, trimlines, unCamelCase } from '../src/string';
+import { parseCase, toKebabCase, trimlines, unCamelCase } from '../src/string';
 
 describe('string', () => {
   describe('trimlines(str: string, separator = \'\'): string', () => {
@@ -14,9 +14,20 @@ describe('string', () => {
     });
   });
 
+  describe('parseCase(str: string, options: ParseCaseOptions): string', () => {
+    it.each([
+      ['heLlo', { separator: '$' }, 'he$llo'],
+      ['heLlo', { separator: '$', escapedChars: ['$'] }, 'he$llo'],
+      ['heLlo', { separator: '-', escapedChars: ['$'] }, 'he-llo'],
+    ])('parseCase("%s", %j) === "%s" with separator "%s"', (input, options, expected) => {
+      expect(parseCase(input, options)).toBe(expected);
+    });
+  });
+
   describe('toKebabCase(str: string, escapedChars?: string[]): string', () => {
     it.each([
       ['hello', undefined, 'hello'],
+      ['HELLO', undefined, 'hello'],
       ['Hello', undefined, 'hello'],
       ['H1ello', undefined, 'h1ello'],
       ['camelCase', undefined, 'camel-case'],
@@ -38,20 +49,13 @@ describe('string', () => {
 
   describe('unCamelCase(str: string, separator = \' \')', () => {
     it.each([
-      ['hello', 'hello', undefined],
-      ['Hello', 'hello', undefined],
-      ['H1ello', 'h1ello', undefined],
-      ['camelCase', 'camel case', undefined],
-      ['camelCase', 'camel case', ' '],
-      ['camelCase', 'camelcase', ''],
-      ['PascalCase', 'pascal-case', '-'],
-      ['Hello World', 'hello-world', '-'],
-      ['Hello_World', 'hello-world', '-'],
-      ['Hello-world', 'hello*world', '*'],
-      ['Hello_world', 'hello-world', '-'],
-      ['Hello@world', 'hello-world', '-'],
-    ])('unCamelCase("%s") === "%s" with separator "%s"', (input, expected, separator) => {
-      expect(unCamelCase(input, separator)).toBe(expected);
+      ['hello', 'hello'],
+      ['Hello', 'hello'],
+      ['H1ello', 'h1ello'],
+      ['camelCase', 'camel case'],
+      ['PascalCase', 'pascal case'],
+    ])('unCamelCase("%s") === "%s"', (input, expected) => {
+      expect(unCamelCase(input)).toBe(expected);
     });
   });
 });
