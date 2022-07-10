@@ -45,7 +45,7 @@ audit:
     - unit tests
     - dependencies
   script:
-    - yarn audit --production
+    - yarn audit --level high --groups dependencies
   allow_failure: true
 
 sast:
