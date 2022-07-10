@@ -46,6 +46,7 @@ audit:
     - dependencies
   script:
     - yarn audit --production
+  allow_failure: true
 
 sast:
   stage: security
