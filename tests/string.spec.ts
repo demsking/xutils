@@ -15,7 +15,7 @@ describe('string', () => {
   });
 
   describe('toKebabCase(str: string, escapedChars?: string[]): string', () => {
-    it.only.each([
+    it.each([
       ['hello', undefined, 'hello'],
       ['Hello', undefined, 'hello'],
       ['H1ello', undefined, 'h1ello'],
@@ -26,6 +26,7 @@ describe('string', () => {
       ['Hello-world', undefined, 'hello-world'],
       ['Hello_world', undefined, 'hello-world'],
       ['Hello@world', undefined, 'hello-world'],
+      ['showOnUpDown', undefined, 'show-on-up-down'],
       ['Hello@world', [], 'hello-world'],
       ['Hello@world', ['@'], 'hello@world'],
       ['Hello@world:', [':'], 'hello-world:'],
