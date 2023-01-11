@@ -1,20 +1,8 @@
 import color from '../color/color.node';
 
-import type { Trace as Interface } from '../trace';
+import { AbstractTrace } from './AbstractTrace';
 
-export class Trace implements Interface {
-  name: string;
-
-  constructor(name: string) {
-    this.name = name;
-  }
-
-  protected parse(type: string, msg: string): string {
-    const timestamp = new Date().toISOString();
-
-    return `${timestamp} ${this.name} ${type} - ${msg}\n`;
-  }
-
+export class Trace extends AbstractTrace {
   info(msg: string, prefix = 'INFO'): void {
     process.stdout.write(this.parse(prefix, msg));
   }
