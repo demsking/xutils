@@ -13,7 +13,7 @@ export abstract class AbstractTrace implements Interface {
     return `${timestamp} ${this.prefix} ${type} - ${msg}\n`;
   }
 
-  abstract info(msg: string, prefix = 'INFO'): void;
-  abstract warn(msg: string, prefix = 'WARN'): void;
-  abstract error(msg: string, prefix = 'ERROR'): void;
+  abstract info(msg: string, prefix?: string): void;
+  abstract warn(msg: string, prefix?: string): void;
+  abstract error(msg: string, prefix?: string): void;
 }
