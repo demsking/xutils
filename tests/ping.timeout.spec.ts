@@ -9,6 +9,7 @@ const emitter = new EventEmitter();
 (emitter as any).end = jest.fn();
 
 const logger = {
+  prefix: 'xxx',
   info: jest.fn(),
   warn: jest.fn(),
   error: jest.fn(),
