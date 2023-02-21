@@ -48,7 +48,7 @@ describe('ping', () => {
     ])('ping(%j, %j) with error', async (url, options) => {
       const result = ping(url, options);
 
-      await expect(result).rejects.toThrow(/Service .+ is still not yet available \(/);
+      await expect(result).rejects.toThrow(/Service .+ is still not yet available/);
 
       if (options?.logger) {
         expect(logger.error).not.toHaveBeenCalled();
