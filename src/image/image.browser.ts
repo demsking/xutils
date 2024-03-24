@@ -1,4 +1,4 @@
-import { Base64MimeTypeResult, PullBrowserOptions } from '../image.d';
+import { Base64MimeTypeResult, Input, PullBrowserOptions } from '../image.d';
 
 type CompressFileOptions = {
   width?: number;
@@ -52,6 +52,10 @@ export function pull({ url }: PullBrowserOptions) {
   });
 }
 
+export async function convert(input: Input, format: string): Promise<Input> {
+  throw Error('Not Yet Supported');
+}
+
 export async function resize(image: HTMLImageElement, width: number, height?: number) {
   return parseCanvas(image, width, height);
 }
@@ -78,4 +82,21 @@ function parseCanvas(image: HTMLImageElement, width: number, height?: number): H
   }
 
   throw new Error('Unable to get canvas context');
+}
+
+export function parseInput(input: string | Input): Input {
+  if (typeof input === 'string') {
+    const result = parseMimeType(input);
+
+    if (!result) {
+      throw new Error('Unsupported content type');
+    }
+
+    return {
+      data: Buffer.from(result.data, 'base64'),
+      contentType: result.mime,
+    };
+  }
+
+  return input;
 }

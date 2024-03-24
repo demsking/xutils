@@ -24,7 +24,8 @@ test:
 	yarn test
 
 declarations: lib
-	tsc --declaration --emitDeclarationOnly --skipLibCheck --allowJs --outDir lib src/*.ts >/dev/null 2>&1
+	tsc --declaration --emitDeclarationOnly --skipLibCheck --allowJs --outDir lib src/*.ts src/*/*.ts >/dev/null 2>&1
+	cp -f src/*.d.ts lib/ >/dev/null 2>&1
 
 .PHONY: lib
 lib:

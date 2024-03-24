@@ -18,8 +18,7 @@ function scan(path, filter, prefix = '') {
       types: `./lib/${name}.d.ts`,
     }]),
     ...subdirs.map((item) => [item, {
-      import: `./lib/${item}/${item}.browser.js`,
-      node: `./lib/${item}/${item}.node.js`,
+      import: `./lib/${item}/${item}.node.js`,
       types: `./lib/${item}/${item}.node.d.ts`,
     }]),
   ];
