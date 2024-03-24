@@ -1,5 +1,4 @@
-/* eslint-disable radar/no-duplicate-string */
-
+import { describe, expect, it } from 'vitest';
 import { random } from '../src/number';
 
 describe('number', () => {

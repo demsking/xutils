@@ -10,7 +10,6 @@ plugins:
   - import
   - '@typescript-eslint'
   - radar
-  - jest
 extends:
   - eslint:recommended
   - airbnb-base
@@ -18,8 +17,6 @@ extends:
   - plugin:import/typescript
   - plugin:@typescript-eslint/recommended
   - plugin:radar/recommended
-  - plugin:jest/recommended
-  - plugin:jest/style
 settings:
   import/extensions:
     - .js
@@ -70,16 +67,9 @@ rules:
   import/no-named-as-default: 'off'
   import/no-named-as-default-member: 'off'
   import/no-relative-packages: 'off'
-  import/no-unresolved:
-    - 2
-    - ignore:
-      - ^@platform/
-      - ^@/
-      - ^..
+  import/no-unresolved: 'off'
   import/order: 'off'
   import/prefer-default-export: 'off'
-  jest/expect-expect: 'off'
-  jest/no-focused-tests: 'off'
   lines-between-class-members: 'off'
   no-console: error
   no-continue: 'off'
@@ -97,16 +87,7 @@ rules:
   no-useless-constructor: 'off'
   no-var: error
   max-classes-per-file: 'off'
-  max-len:
-    - error
-    - code: 128
-      comments: 128
-      tabWidth: 2
-      ignoreUrls: true
-      ignoreStrings: true
-      ignoreRegExpLiterals: true
-      ignoreTemplateLiterals: true
-      ignorePattern: '(@returns|@param)'
+  max-len: 'off'
   object-curly-newline: 'off'
   object-shorthand: 'off'
   padding-line-between-statements:

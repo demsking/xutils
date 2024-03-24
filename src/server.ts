@@ -1,33 +1,80 @@
-import type { InternalError, Options, Server as Interface } from './server.d';
-import type { Express, Request, Response, Router } from 'express';
-import type { Server as NodeServer } from 'http';
+import type { Server as NodeServer } from 'node:http';
+import type { SecureContextOptions } from 'node:tls';
+import type { Express, Request, Response, RequestHandler, Application, Router } from 'express';
+import type { Trace } from './trace/trace.node.js';
 
-import http from 'http';
-import https from 'https';
+import { createServer as createHttpServer } from 'node:http';
+import { createServer as createHttpsServer } from 'node:https';
+
 import express from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 
 import { ping } from './ping.js';
-import { Trace } from './trace/trace.node.js';
 import { HttpError } from './http.js';
 import { all } from './promise.js';
 
+export type { Express, Request, Response, RequestHandler, Application, Router };
+
+/**
+ * Represents an internal error with additional properties.
+ */
+export type InternalError = Error & {
+  [key: string]: any;
+};
+
+/**
+ * Represents options for server initialization.
+ */
+export type Options = {
+  name: string;
+  version: string;
+  port: number;
+  certificat?: SecureContextOptions;
+  serviceDependencies?: string[];
+  devMode?: boolean;
+  logger?: Trace;
+};
+
+/**
+ * Creates an Express application instance.
+ */
 export const createApp = express;
 
-export class Server implements Interface {
+/**
+ * Represents a server.
+ */
+export class Server {
   options: Options;
   server!: NodeServer;
-  trace: Trace;
   app: Express;
 
+  /**
+   * A collection of request body parsers.
+   */
   static readonly parser = {
+    /**
+     * Parse incoming requests with JSON payloads and is based on body-parser
+     */
     json: bodyParser.json,
+    /**
+     * Parse incoming requests with Buffer payloads and is based on body-parser
+     */
     raw: bodyParser.raw,
+    /**
+     * Parse incoming requests with text payloads and is based on body-parser
+     */
     text: bodyParser.text,
+    /**
+     * Parse incoming requests with urlencoded payloads and is based on body-parser
+     */
     urlencoded: bodyParser.urlencoded,
   };
 
+  /**
+   * Creates an Express router instance.
+   * @returns {Router} The Express router.
+   */
   static createRouter(): Router {
     return express.Router({
       strict: true,
@@ -35,6 +82,12 @@ export class Server implements Interface {
     });
   }
 
+  /**
+   * Handles errors and sends appropriate responses.
+   * @param {InternalError} err - The error to handle.
+   * @param {Response} res - The Express response object.
+   * @param {Trace} [logger] - Optional logger instance.
+   */
   static handleError(err: InternalError, res: Response, logger?: Trace): void {
     if (err instanceof HttpError) {
       res.status(err.statusCode);
@@ -61,27 +114,32 @@ export class Server implements Interface {
     }
   }
 
+  /**
+   * Constructs a new Server instance.
+   * @param {Options} options - The options for server initialization.
+   */
   constructor(options: Options) {
     this.options = options;
-    this.trace = new Trace(options.name);
     this.app = createApp();
 
     this.app.disable('x-powered-by');
 
-    const loggerFormat = options.devMode
-      ? `:date[iso] ${options.name} HTTP - :method :url :status :response-time ms - :res[content-length]`
-      : `:date[iso] ${options.name} HTTP - :remote-addr - :remote-user ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"`;
+    if (options.logger) {
+      const loggerFormat = options.devMode
+        ? `:date[iso] ${options.name} HTTP - :method :url :status :response-time ms - :res[content-length]`
+        : `:date[iso] ${options.name} HTTP - :remote-addr - :remote-user ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"`;
 
-    this.app.use(logger(loggerFormat));
+      this.app.use(logger(loggerFormat));
+    }
   }
 
   protected async _start(): Promise<void> {
-    this.trace.info(`Setting ${this.options.name} server...`);
+    this.options.logger?.info(`Setting ${this.options.name} server...`);
 
     this.app.disable('x-powered-by');
     this.app.route('/status')
-      .head((req, res) => res.sendStatus(200))
-      .get((req, res) => res.json({
+      .head((_req, res) => res.sendStatus(200))
+      .get((_req, res) => res.json({
         name: this.options.name,
         version: this.options.version,
         status: 'up',
@@ -92,12 +150,13 @@ export class Server implements Interface {
 
     await this._prepare();
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    this.app.use((err: Error, req: Request, res: Response, next: () => void) => Server.handleError(err, res, this.trace));
+    this.app.use((err: Error, _req: Request, res: Response, _next: () => void) => {
+      Server.handleError(err, res, this.options.logger);
+    });
 
     this.server = this.options.certificat
-      ? https.createServer(this.options.certificat, this.app)
-      : http.createServer(this.app);
+      ? createHttpsServer(this.options.certificat, this.app)
+      : createHttpServer(this.app);
 
     this.server.on('error', (error: any) => {
       if (error.syscall !== 'listen') {
@@ -107,11 +166,11 @@ export class Server implements Interface {
       // handle specific listen errors with friendly messages
       switch (error.code) {
         case 'EACCES':
-          this.trace.error(`${this.options.port} requires elevated privileges`);
+          this.options.logger?.error(`${this.options.port} requires elevated privileges`);
           process.exit(-3);
 
         case 'EADDRINUSE':
-          this.trace.error(`${this.options.port} is already in use`);
+          this.options.logger?.error(`${this.options.port} is already in use`);
           process.exit(-4);
 
         default:
@@ -119,8 +178,8 @@ export class Server implements Interface {
       }
     });
 
-    this.server.on('listening', () => this.trace.info(`Listening on ${this.options.port}`));
-    this.trace.info(`Starting ${this.options.name} server...`);
+    this.server.on('listening', () => this.options.logger?.info(`Listening on ${this.options.port}`));
+    this.options.logger?.info(`Starting ${this.options.name} server...`);
     this.server.listen(this.options.port, '0.0.0.0');
 
     process.on('SIGINT', () => this.server.close(() => process.exit(0)));
@@ -128,6 +187,10 @@ export class Server implements Interface {
 
   protected async _prepare(): Promise<void> {}
 
+  /**
+   * Starts the server.
+   * @returns {Promise<void>} A promise that resolves when the server has started.
+   */
   async start(): Promise<void> {
     if (this.options.serviceDependencies instanceof Array) {
       try {
@@ -135,11 +198,11 @@ export class Server implements Interface {
           timeout: 5000,
           interval: this.options.devMode ? 3000 : 5000,
           retries: this.options.devMode ? Number.MAX_SAFE_INTEGER : 10,
-          logger: this.trace,
+          logger: this.options.logger,
         }));
       } catch (err: any) {
-        this.trace.error(err.message);
-        this.trace.error('Starting aborted');
+        this.options.logger?.error(err.message);
+        this.options.logger?.error('Starting aborted');
 
         process.exit(-5);
       }

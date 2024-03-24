@@ -1,27 +1,29 @@
 /* eslint-disable radar/no-duplicate-string */
-/* eslint-disable jest/no-conditional-expect */
 
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ping } from '../src/ping';
 import { EventEmitter } from 'events';
 
 const emitter = new EventEmitter();
 
-(emitter as any).end = jest.fn();
+(emitter as any).end = vi.fn();
 
 const logger = {
   prefix: 'xxx',
-  info: jest.fn(),
-  warn: jest.fn(),
-  error: jest.fn(),
+  info: vi.fn(),
+  warn: vi.fn(),
+  error: vi.fn(),
 };
 
-jest.mock('net', () => ({
+vi.mock('net', () => ({
   createConnection: () => emitter,
 }));
 
 describe('ping', () => {
   describe('async function ping(urlString: string, { timeout = 30000, interval = 10000, retries = 3, logger }: Options = {}): Promise<void>', () => {
-    beforeEach(() => jest.resetAllMocks());
+    beforeEach(() => {
+      vi.resetAllMocks();
+    });
 
     it.each([
       ['http://www.example.with.timeout.com', { logger: undefined, timeout: 500, interval: 100 }],

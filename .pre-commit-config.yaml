@@ -1,0 +1,25 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: check-json
+      - id: check-merge-conflict
+  - repo: local
+    hooks:
+      - id: editorconfig-checker
+        name: 'Check .editorconfig Rules'
+        description: 'Runs `editorconfig-checker` to lint text files according to `.editorconfig` rules.'
+        language: system
+        entry: editorconfig-checker
+        types: [text]
+        require_serial: true
+      - id: lint
+        name: 'Lint Code'
+        description: 'Runs yarn lint to lint and fix code.'
+        entry: yarn
+        args: [lint, --fix]
+        language: system
+        pass_filenames: false

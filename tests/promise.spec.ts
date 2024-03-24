@@ -1,5 +1,4 @@
-/* eslint-disable radar/no-duplicate-string */
-
+import { describe, expect, it, vi } from 'vitest';
 import { chain, all } from '../src/promise';
 
 describe('promise', () => {
@@ -7,7 +6,7 @@ describe('promise', () => {
     const fnIncrement = async (x: number) => x + 1;
 
     it.each([
-      [[2, 3], fnIncrement, [3, 4], jest.fn().mockImplementation(fnIncrement)],
+      [[2, 3], fnIncrement, [3, 4], vi.fn().mockImplementation(fnIncrement)],
     ])('chain(%j, %s) === %j', async (items, fn, expected, mockfn) => {
       const result = await chain(items, mockfn);
 
@@ -22,7 +21,7 @@ describe('promise', () => {
     const fnIncrement = async (x: number) => x + 1;
 
     it.each([
-      [[2, 3], fnIncrement, [3, 4], jest.fn().mockImplementation(fnIncrement)],
+      [[2, 3], fnIncrement, [3, 4], vi.fn().mockImplementation(fnIncrement)],
     ])('all(%j, %s) === %j', async (items, fn, expected, mockfn) => {
       const result = await all(items, mockfn);
 

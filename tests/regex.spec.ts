@@ -1,5 +1,6 @@
 /* eslint-disable radar/no-duplicate-string */
 
+import { describe, expect, it } from 'vitest';
 import { escapePattern } from '../src/regex';
 
 describe('regex', () => {

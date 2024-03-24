@@ -8,8 +8,12 @@ const CHAR_CODE_z = 'z'.charCodeAt(0);
 const CHAR_CODE_A = 'A'.charCodeAt(0);
 const CHAR_CODE_Z = 'Z'.charCodeAt(0);
 
-const KEBAB_SEPARATOR = '-';
-
+/**
+ * Trims each line in a string and joins them using the specified separator.
+ * @param {string} str - The input string containing lines to trim.
+ * @param {string} [separator=''] - The separator to use when joining trimmed lines.
+ * @returns {string} The trimmed and joined string.
+ */
 export function trimlines(str: string, separator = ''): string {
   let index = 0;
   const output: string[] = [];
@@ -43,6 +47,12 @@ export type ParseCaseOptions = {
   separator: string;
 };
 
+/**
+ * Parses a string into a specified case format.
+ * @param {string} str - The input string to parse.
+ * @param {ParseCaseOptions} options - The options for parsing.
+ * @returns {string} The parsed string.
+ */
 // eslint-disable-next-line radar/cognitive-complexity
 export function parseCase(str: string, { escapedChars = [], separator }: ParseCaseOptions): string {
   let output = '';
@@ -59,7 +69,7 @@ export function parseCase(str: string, { escapedChars = [], separator }: ParseCa
         if (index) {
           const previousToken = output.at(-1);
 
-          if (previousToken !== separator && !escapedChars.includes(previousToken)) {
+          if (previousToken !== separator && !escapedChars.includes(previousToken!)) {
             const previousCode = str.charCodeAt(index - 1);
 
             if (isLowerCode(previousCode) || isNumberCode(previousCode)) {
@@ -80,10 +90,22 @@ export function parseCase(str: string, { escapedChars = [], separator }: ParseCa
   return output;
 }
 
+/**
+ * Converts a string to kebab case.
+ * @param {string} str - The input string to convert.
+ * @param {string[]} [escapedChars=[]] - The characters to escape from conversion.
+ * @returns {string} The string converted to kebab case.
+ */
 export function toKebabCase(str: string, escapedChars: string[] = []): string {
   return parseCase(str, { escapedChars, separator: '-' });
 }
 
+/**
+ * Converts a camel case string to a space-separated string.
+ * @param {string} str - The camel case string to convert.
+ * @param {string[]} [escapedChars=[]] - The characters to escape from conversion.
+ * @returns {string} The camel case string converted to space-separated string.
+ */
 export function unCamelCase(str: string, escapedChars: string[] = []) {
   return parseCase(str, { escapedChars, separator: ' ' });
 }

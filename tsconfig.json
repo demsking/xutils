@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "allowJs": false,
-    "target": "ES2019",
-    "module": "CommonJS",
+    "target": "ES2022",
+    "module": "ES2022",
     "strict": false,
     "importHelpers": true,
     "moduleResolution": "node",
@@ -18,11 +18,10 @@
     "rootDir": "src",
     "outDir": "lib",
     "types": [
-      "jest",
       "node"
     ],
     "lib": [
-      "ES2019",
+      "ES2022",
       "DOM",
       "DOM.Iterable"
     ],
@@ -33,7 +32,8 @@
   "include": [
     "src/*.ts",
     "src/*.d.ts",
-    "src/**/*.node.ts"
+    "src/**/*.json",
+    "src/**/*.ts"
   ],
   "exclude": [
     "lib",

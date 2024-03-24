@@ -2,19 +2,22 @@ import { Response } from 'express';
 import { HttpError } from '../src/http';
 import { Server } from '../src/server';
 import { Trace } from '../src/trace/trace.node';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-jest.mock('../src/trace/trace.node');
+vi.mock('../src/trace/trace.node');
 
 const trace = new Trace('test');
 const res = {
-  sendStatus: jest.fn(),
-  status: jest.fn(),
-  json: jest.fn(),
-  end: jest.fn(),
+  sendStatus: vi.fn(),
+  status: vi.fn(),
+  json: vi.fn(),
+  end: vi.fn(),
 };
 
 describe('Server', () => {
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
 
   describe('Server.handleError(err: InternalError, res: Response): void', () => {
     describe('When err instanceof HttpError', () => {

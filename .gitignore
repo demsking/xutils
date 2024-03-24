@@ -9,7 +9,8 @@ coverage
 
 *.log*
 
-/.nix-node
+.nix-node/
+.direnv/
 
 /core
 *.tar.gz

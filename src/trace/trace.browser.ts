@@ -1,8 +1,6 @@
 /* eslint-disable no-console */
 
-import type { Trace as Interface } from '../trace';
-
-export class Trace implements Interface {
+export class Trace {
   prefix: string;
 
   constructor(prefix: string) {
@@ -20,10 +18,14 @@ export class Trace implements Interface {
   }
 
   warn(msg: string, prefix = 'WARN'): void {
-    console.info(this.parse(prefix, msg));
+    console.warn(this.parse(prefix, msg));
   }
 
   error(msg: string, prefix = 'ERROR'): void {
     console.error(this.parse(prefix, msg));
+  }
+
+  debug(msg: string, prefix = 'DEBUG'): void {
+    console.log(this.parse(prefix, msg));
   }
 }

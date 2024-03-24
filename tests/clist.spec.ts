@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { CircularList } from '../src/clist';
 
 describe('CircularList', () => {

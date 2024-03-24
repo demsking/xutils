@@ -1,5 +1,6 @@
 /* eslint-disable radar/no-duplicate-string */
 
+import { describe, expect, it } from 'vitest';
 import { parseCase, toKebabCase, trimlines, unCamelCase } from '../src/string';
 
 describe('string', () => {

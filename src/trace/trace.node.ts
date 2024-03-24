@@ -1,8 +1,6 @@
-import color from '../color/color.node';
+import color from '../color/color.node.js';
 
-import type { Trace as Interface } from '../trace';
-
-export class Trace implements Interface {
+export class Trace {
   prefix: string;
 
   constructor(prefix: string) {
@@ -25,5 +23,9 @@ export class Trace implements Interface {
 
   error(msg: string, prefix = 'ERROR'): void {
     process.stderr.write(this.parse(color.red(prefix), msg));
+  }
+
+  debug(msg: string, prefix = 'DEBUG'): void {
+    process.stderr.write(this.parse(color.cyan(prefix), msg));
   }
 }

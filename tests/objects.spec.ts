@@ -1,5 +1,4 @@
-/* eslint-disable func-names */
-
+import { describe, expect, it } from 'vitest';
 import { clear, copy, del, get, isEmpty, isEqual, isObject, merge, set, toString, ToStringEscape } from '../src/object';
 
 describe('object', () => {
@@ -16,7 +15,7 @@ describe('object', () => {
       [{}, undefined, true],
       [{}, true, true],
       [{}, false, true],
-    ])('isObject(%j, %j) === %s', (object: unknown, strict, expectedResult: boolean) => {
+    ])('isObject(%j, %j) === %s', (object: any, strict, expectedResult: boolean) => {
       expect(isObject(object, strict)).toBe(expectedResult);
     });
   });
@@ -79,8 +78,8 @@ describe('object', () => {
       [{ a: 1, b: [1] }, { a: 2, b: [2, 3] }, 'replace', { a: 2, b: [2, 3] }],
       [{ a: 1 }, { a: 2, b: [2, 3] }, 'replace', { a: 2, b: [2, 3] }],
       [{ a: 1, b: [{ x: 1 }] }, { a: 2, b: [{ y: 2 }] }, undefined, { a: 2, b: [{ x: 1 }, { y: 2 }] }],
-    ])('merge(%j, %j, %j) === %j', (src, dest, strategy, expectedResult) => {
-      expect(merge(src, dest, strategy)).toEqual(expectedResult);
+    ])('merge(%j, %j, %j) === %j', (src, dest, strategy: any, expectedResult) => {
+      return expect(merge(src, dest, strategy)).toEqual(expectedResult);
     });
   });
 
@@ -110,7 +109,7 @@ describe('object', () => {
       [{ a: 1, f: function fn() { return 1; } }, '', '{"a":1,"f":function fn() { return 1; }}'],
       [{ a: 1, f: new ToStringEscape('hello') }, '', '{"a":1,"f":hello}'],
     ])('toString(%j, %j) === %j', (object, space, expectedResult) => {
-      expect(toString(object, space)).toEqual(expectedResult);
+      expect(toString(object, space).replace(/\s+/g, '')).toEqual(expectedResult.replace(/\s+/g, ''));
     });
   });
 

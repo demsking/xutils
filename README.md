@@ -18,9 +18,8 @@ npm install @b613/utils
 
 | Module                    | Peer Dependencies                                  |
 | ------------------------- | -------------------------------------------------- |
-| `@b613/utils/lib/client`  | `npm install axios axios-cache-adapter`            |
 | `@b613/utils/lib/color`   | `npm install cli-color` (only for Node.js usage)   |
-| `@b613/utils/lib/image`   | `npm install image-downloader jimp`                |
+| `@b613/utils/lib/image`   | `npm install image-downloader sharp`               |
 | `@b613/utils/lib/server`  | `npm install body-parser express morgan`           |
 | `@b613/utils/lib/trace`   | `npm install cli-color` (only for Node.js usage)   |
 
@@ -47,20 +46,34 @@ npm install @b613/utils
 
 ## Development Setup
 
-1. [Install Nix Package Manager](https://nixos.org/manual/nix/stable/installation/installing-binary.html)
+1. [Install The Determinate Nix Installer](https://github.com/DeterminateSystems/nix-installer)
 
 2. [Install `direnv` with your OS package manager](https://direnv.net/docs/installation.html#from-system-packages)
 
 3. [Hook it `direnv` into your shell](https://direnv.net/docs/hook.html)
 
-4. At the top-level of your project run:
+4. **Load environment**
+
+   At the top-level of your project run:
 
    ```sh
    direnv allow
    ```
 
-   The next time your launch your terminal and enter the top-level of your
-   project, `direnv` will check for changes.
+5. **Install dependencies**
+
+   ```sh
+   make install
+   ```
+
+6. **Start dev environment**
+
+   ```sh
+   make env
+   ```
+
+   This will starts a preconfigured Tmux session.
+   Please see the [.tmuxinator.yml](.tmuxinator.yml) file.
 
 ## License
 
