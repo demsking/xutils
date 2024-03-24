@@ -1,5 +1,6 @@
 {
   "name": "color",
+  "type": "module",
   "main": "./color.node.js",
   "browser": "./color.browser.js"
 }

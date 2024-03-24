@@ -3,14 +3,9 @@ import fs from 'node:fs/promises';
 import download from 'image-downloader';
 import sharp from 'sharp';
 
-import { Base64MimeTypeResult, PullNodeOptions } from '../image.d';
+import { Base64MimeTypeResult, Input, PullNodeOptions } from '../image.d';
 
 const REGEX = /^data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+);base64,(.+)/;
-
-export type Input = {
-  data: Buffer;
-  contentType: string | null;
-};
 
 export function parseMimeType(base64: string): Base64MimeTypeResult | null {
   // Extract the content type from the Base64 URL

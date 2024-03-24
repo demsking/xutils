@@ -1,5 +1,10 @@
 import download from 'image-downloader';
 
+export type Input = {
+  data: Buffer;
+  contentType: string | null;
+};
+
 export type Base64MimeTypeResult = {
   mime: string;
   data: string;

@@ -1,81 +1,78 @@
 {
   "name": "@b613/utils",
-  "version": "1.0.0-beta26",
+  "version": "1.0.0-beta28",
   "description": "Set of utility methods for common operations",
   "license": "MIT",
   "type": "module",
   "types": "./typings.d.ts",
   "exports": {
     "./package.json": "./package.json",
-    "./lib/array": {
+    "./array": {
       "import": "./lib/array.js",
       "types": "./lib/array.d.ts"
     },
-    "./lib/client": {
+    "./client": {
       "import": "./lib/client.js",
       "types": "./lib/client.d.ts"
     },
-    "./lib/clist": {
+    "./clist": {
       "import": "./lib/clist.js",
       "types": "./lib/clist.d.ts"
     },
-    "./lib/http": {
+    "./http": {
       "import": "./lib/http.js",
       "types": "./lib/http.d.ts"
     },
-    "./lib/image": {
-      "import": "./lib/image/image.browser.js",
-      "node": "./lib/image/image.node.js",
+    "./image": {
+      "import": "./lib/image/image.node.js",
       "types": "./lib/image/image.node.d.ts"
     },
-    "./lib/json": {
+    "./json": {
       "import": "./lib/json.js",
       "types": "./lib/json.d.ts"
     },
-    "./lib/number": {
+    "./number": {
       "import": "./lib/number.js",
       "types": "./lib/number.d.ts"
     },
-    "./lib/object": {
+    "./object": {
       "import": "./lib/object.js",
       "types": "./lib/object.d.ts"
     },
-    "./lib/ping": {
+    "./ping": {
       "import": "./lib/ping.js",
       "types": "./lib/ping.d.ts"
     },
-    "./lib/promise": {
+    "./promise": {
       "import": "./lib/promise.js",
       "types": "./lib/promise.d.ts"
     },
-    "./lib/qs": {
+    "./qs": {
       "import": "./lib/qs.js",
       "types": "./lib/qs.d.ts"
     },
-    "./lib/regex": {
+    "./regex": {
       "import": "./lib/regex.js",
       "types": "./lib/regex.d.ts"
     },
-    "./lib/schema": {
+    "./schema": {
       "import": "./lib/schema.js",
       "types": "./lib/schema.d.ts"
     },
-    "./lib/server": {
+    "./server": {
       "import": "./lib/server.js",
       "types": "./lib/server.d.ts"
     },
-    "./lib/string": {
+    "./string": {
       "import": "./lib/string.js",
       "types": "./lib/string.d.ts"
     },
-    "./lib/color": {
-      "import": "./lib/color/color.browser.js",
-      "node": "./lib/color/color.node.js",
+    "./color": {
+      "import": "./lib/color/color.node.js",
       "types": "./lib/color/color.node.d.ts"
     },
-    "./lib/trace": {
-      "import": "./lib/trace/trace.browser.js",
-      "node": "./lib/trace/trace.node.js",
+    "./trace": {
+      "import": "./lib/trace/trace.node.js",
       "types": "./lib/trace/trace.node.d.ts"
     }
   },

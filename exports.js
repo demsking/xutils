@@ -18,8 +18,7 @@ function scan(path, filter, prefix = '') {
       types: `./lib/${name}.d.ts`,
     }]),
     ...subdirs.map((item) => [item, {
-      import: `./lib/${item}/${item}.browser.js`,
-      node: `./lib/${item}/${item}.node.js`,
+      import: `./lib/${item}/${item}.node.js`,
       types: `./lib/${item}/${item}.node.d.ts`,
     }]),
   ];
@@ -36,7 +35,7 @@ packageObject.exports = {
 };
 
 for (const [name, exports] of files) {
-  packageObject.exports[`./lib/${name}`] = exports;
+  packageObject.exports[`./${name}`] = exports;
 }
 
 await writeFile(packageFilename, JSON.stringify(packageObject, null, 2), 'utf-8');
