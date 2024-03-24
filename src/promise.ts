@@ -1,5 +1,9 @@
 /**
- * Sequential promise execution
+ * Executes asynchronous functions sequentially over each item in the array and returns an array of results.
+ * @param {X[]} items - The array of items.
+ * @param {(item: X, index: number) => Promise<T>} fn - The asynchronous function to execute over each item.
+ * @returns {Promise<T[]>} A promise that resolves to an array of results.
+ * @template T, X
  */
 export async function chain<T, X>(items: X[], fn: (item: X, index: number) => Promise<T>): Promise<T[]> {
   const results: any[] = [];
@@ -15,7 +19,11 @@ export async function chain<T, X>(items: X[], fn: (item: X, index: number) => Pr
 }
 
 /**
- * Parallel promise execution
+ * Executes asynchronous functions in parallel over each item in the array and returns an array of results.
+ * @param {X[]} items - The array of items.
+ * @param {(item: X, index: number) => Promise<T>} fn - The asynchronous function to execute over each item.
+ * @returns {Promise<T[]>} A promise that resolves to an array of results.
+ * @template T, X
  */
 export async function all<T, X>(items: X[], fn: (item: X, index: number) => Promise<T>): Promise<T[]> {
   return Promise.all(items.map((item, index) => fn(item, index)));

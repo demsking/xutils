@@ -1,5 +1,6 @@
 {
   "name": "trace",
-  "main": "./trace.node.js",
+  "type": "module",
+  "exports": "./trace.node.js",
   "browser": "./trace.browser.js"
 }

@@ -1,15 +1,23 @@
 /* eslint-disable max-len */
 
-export type Nullable<T> = T | null;
+type Nullable<T> = T | null;
 
-export type PropType<TObj, TProp extends keyof TObj> = TObj[TProp];
+type PropType<TObj, TProp extends keyof TObj> = TObj[TProp];
+
+// Create a type that generates a union of prefixed keys
+type PrefixedKeys<T, Prefix extends string> = {
+  [K in keyof T as `${Prefix}${Extract<K, string | number>}`]: K;
+};
+
+// type ReturnTypeAsync<T> = ReturnType<T extends (...args: any[]) => Promise<infer U> ? () => U : T>;
+type ReturnTypeAsync<T extends (...args: any) => any> = ReturnType<T extends (...args: any[]) => Promise<infer U> ? () => U : T>;
 
 /**
  * ObjectKeyPaths declaration
  */
 type Join<T extends unknown[], D extends string, Prefix extends string = ''> = T extends []
   ? never
-  : T extends [infer F]
+  : T extends [infer F extends string | number | bigint | boolean | null | undefined]
     ? `${Prefix}${F}`
     : T extends [infer F, ...infer R]
       ? F extends string[]
@@ -25,9 +33,9 @@ type LeafPathTree<T> = {
     : [P];
 };
 
-export type LeafPath<T> = LeafPathTree<T>[keyof LeafPathTree<T>];
+type LeafPath<T> = LeafPathTree<T>[keyof LeafPathTree<T>];
 
-export type ObjectKeyPaths<T, Prefix extends string = ''> = Join<LeafPath<T>, '.', Prefix>;
+type ObjectKeyPaths<T, Prefix extends string = ''> = Join<LeafPath<T>, '.', Prefix>;
 
 type ObjectKeysTree<T> = {
   [P in keyof T]-?: P;
@@ -36,7 +44,7 @@ type ObjectKeysTree<T> = {
 /**
  * Get object keys as union
  */
-export type ObjectKeys<T> = ObjectKeysTree<T>[keyof ObjectKeysTree<T>];
+type ObjectKeys<T> = ObjectKeysTree<T>[keyof ObjectKeysTree<T>];
 
 type ObjectKeysArrayTree<T> = {
   [P in keyof T]-?: [P];
@@ -45,9 +53,9 @@ type ObjectKeysArrayTree<T> = {
 /**
  * Get object keys as array
  */
-export type ObjectKeysArray<T> = ObjectKeysArrayTree<T>[keyof ObjectKeysArrayTree<T>];
+type ObjectKeysArray<T> = ObjectKeysArrayTree<T>[keyof ObjectKeysArrayTree<T>];
 
-export type JoinArray<T extends unknown[], Separator extends string, Prefix extends string, Suffix extends unknown | unknown[]> = T extends []
+type JoinArray<T extends unknown[], Separator extends string, Prefix extends string, Suffix extends unknown | unknown[]> = T extends []
   ? never
   : T extends [infer F]
     ? F extends string
@@ -74,4 +82,4 @@ type Upper = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | '
 type Kebab<T extends string> = T extends `${infer L}${Upper}${infer R}` ?
   T extends `${L}${infer U}${R}` ? `${L}-${Lowercase<U>}${Kebab<R>}` : T : T;
 
-export type KebabKeys<T> = { [K in keyof T as K extends string ? Kebab<K> : K]: T[K] };
+type KebabKeys<T> = { [K in keyof T as K extends string ? Kebab<K> : K]: T[K] };

@@ -3,5 +3,5 @@ lib/
 esm/
 coverage/
 .nix-node/
-jest.config.js
+.direnv/
 *.min.js

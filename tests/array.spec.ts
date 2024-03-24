@@ -1,5 +1,4 @@
-/* eslint-disable radar/no-duplicate-string */
-
+import { describe, expect, it } from 'vitest';
 import { identical, findIndex, include, remove, shuffle, split, swapItems } from '../src/array';
 
 describe('array', () => {

@@ -1,5 +1,4 @@
-/* eslint-disable jest/no-conditional-expect */
-
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ping } from '../src/ping';
 
 import nock from 'nock';
@@ -8,18 +7,20 @@ const EventEmitter = require('events');
 
 const emitter = new EventEmitter();
 
-emitter.end = jest.fn();
+emitter.end = vi.fn();
 
 const logger = {
   prefix: 'xxx',
-  info: jest.fn(),
-  warn: jest.fn(),
-  error: jest.fn(),
+  info: vi.fn(),
+  warn: vi.fn(),
+  error: vi.fn(),
 };
 
 describe('ping', () => {
   describe('async function ping(urlString: string, { timeout = 30000, interval = 10000, retries = 3, logger }: Options = {}): Promise<void>', () => {
-    beforeEach(() => jest.resetAllMocks());
+    beforeEach(() => {
+      vi.resetAllMocks();
+    });
 
     it.each([
       ['http://www.example1.com', undefined],

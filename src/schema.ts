@@ -2,10 +2,24 @@
 
 import { isObject, merge } from './object.js';
 
-const Filters = {
-  object: (item: unknown) => typeof item === 'object' && item !== null,
+/**
+ * Filters for objects.
+ */
+export const Filters = {
+  /**
+   * Checks if the item is an object.
+   * @param {unknown} item - The item to check.
+   * @returns {boolean} True if the item is an object, false otherwise.
+   */
+  object: (item: unknown): boolean => typeof item === 'object' && item !== null,
 };
 
+/**
+ * Generates an empty value based on a schema.
+ * @param {Record<string, any>} schema - The schema to generate the empty value from.
+ * @param {boolean} [useDefault=false] - Whether to use the default value defined in the schema.
+ * @returns {T} The generated empty value.
+ */
 export function generateEmptyValue<T = unknown>(schema: Record<string, any>, useDefault = false): T {
   if (useDefault) {
     if (typeof schema.default !== 'undefined') {
@@ -24,7 +38,7 @@ export function generateEmptyValue<T = unknown>(schema: Record<string, any>, use
     if (hasObject) {
       return dataItems
         .filter(Filters.object)
-        .reduce((data: T, item: T) => merge(data, item) as T, {} as T);
+        .reduce((data: object, item: object) => merge(data, item) as T, {} as T);
     }
 
     return dataItems[0] as T;

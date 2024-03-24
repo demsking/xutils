@@ -1,36 +1,94 @@
-import * as Definition from './http.d';
+/**
+ * Creates an HTTP exception with the specified status code and message.
+ * @param {number} statusCode - The status code of the HTTP exception.
+ * @param {string} message - The message describing the HTTP exception.
+ * @param {*} [body] - The optional body of the HTTP exception.
+ * @returns {HttpError} The HTTP exception object.
+ */
+export function createHttpException(statusCode: number, message: string, body?: any): HttpError {
+  const error = new HttpError(statusCode, body);
 
-export class HttpStatus implements Definition.HttpStatus {
+  error.message = message;
+
+  return error;
+}
+
+/**
+ * Represents an HTTP status with a status code and an optional body.
+ */
+export class HttpStatus {
+  /**
+   * The status code of the HTTP status.
+   * @type {number}
+   */
   statusCode: number;
+  /**
+   * The body of the HTTP status.
+   * @type {*}
+   */
   body: any;
 
+  /**
+   * Constructs an instance of HttpStatus.
+   * @param {number} status - The status code of the HTTP status.
+   * @param {*} [body=null] - The optional body of the HTTP status.
+   */
   constructor(status: number, body: any = null) {
     this.statusCode = status;
     this.body = body;
   }
 
-  clone(message: string): HttpError {
-    return new HttpError(this.statusCode, message);
+  /**
+   * Clones the HTTP status with a new message and body.
+   * @param {string} message - The new message for the cloned HTTP status.
+   * @param {*} [body=null] - The new body for the cloned HTTP status.
+   * @returns {HttpError} A new HttpError object cloned from this HTTP status with the provided message and body.
+   */
+  clone(message: string, body: any): HttpError {
+    return new HttpError(this.statusCode, message, body);
   }
 }
 
-export class HttpError extends Error implements Definition.HttpError {
+/**
+ * Represents an HTTP error with a status code, message, and an optional body.
+ */
+export class HttpError extends Error {
+  /**
+   * The status code of the HTTP error.
+   * @type {number}
+   */
   statusCode: number;
+  /**
+   * The body of the HTTP error.
+   * @type {*}
+   */
   body: any;
 
-  constructor(status: number, body: any = null) {
-    super();
+  /**
+   * Constructs an instance of HttpError.
+   * @param {number} status - The status code of the HTTP error.
+   * @param {string} message - The message describing the HTTP error.
+   * @param {*} [body=null] - The optional body of the HTTP error.
+   */
+  constructor(status: number, message: string, body: any = null) {
+    super(message);
 
     this.statusCode = status;
     this.body = body;
   }
 
-  clone(message: string): HttpError {
-    return new HttpError(this.statusCode, message);
+  /**
+   * Clones the HTTP error with a new message and body.
+   * @param {string} message - The new message for the cloned HTTP error.
+   * @param {*} [body=null] - The new body for the cloned HTTP error.
+   * @returns {HttpError} A new HttpError object cloned from this HTTP error with the provided message and body.
+   */
+  clone(message: string, body: any = null): HttpError {
+    return new HttpError(this.statusCode, message, body);
   }
 }
 
-export const HTTP: Definition.Status = {
+export const HTTP = {
   // 2xx success
 
   /**

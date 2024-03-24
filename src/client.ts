@@ -1,36 +1,129 @@
-import axios from 'axios';
-import axiosCacheAdapter from 'axios-cache-adapter';
+/* eslint-disable max-len */
+import { createHttpException } from './http.js';
+import { stringify } from './qs.js';
 
-import { Options } from './client.d';
-import { Color } from './color.d';
+export type Method =
+  | 'GET'
+  | 'HEAD'
+  | 'POST'
+  | 'PUT'
+  | 'DELETE'
+  | 'PATCH'
+  | 'OPTIONS'
+  | 'TRACE';
 
-const fallbackColor: Color = {
-  cyan: (str: string | number) => `${str}`,
-  red: (str: string | number) => `${str}`,
-  yellow: (str: string | number) => `${str}`,
-  green: (str: string | number) => `${str}`,
+export type RequestAuth = {
+  token?: string;
+  username?: string;
+  roles?: string;
 };
 
-export function createClient(
-  baseURL: string,
-  { headers = {}, logger, cache, color = fallbackColor, ...options }: Options = {}
-) {
-  const adapter = cache ? axiosCacheAdapter.setupCache(cache).adapter : undefined;
-  const instance = axios.create({ ...options, baseURL, headers, adapter });
+export type RequestOptions<T extends Record<string, any> = object> = RequestInit & {
+  params?: T;
+  data?: any;
+};
 
-  instance.interceptors.response.use((response) => {
-    const method = response.request.method || 'GET';
-    const prefix = `${method.toUpperCase()} ${response.config.url}`;
+export type Options<
+  AdditionalOptions extends Record<string, any> = never
+> = RequestInit & {
+  logger?(message: string, type: string): void;
+  beforeEach?: <T extends Record<string, any>>(
+    method: Method,
+    path: string,
+    request: RequestOptions<T> & Partial<AdditionalOptions>,
+  ) => void;
+};
 
-    if (response.status >= 400) {
-      logger?.info(`${prefix} ${color.red(response.status)}`, 'HTTP');
-      logger?.error(`Error ${response.status}: ${JSON.stringify(response.data, null, 2)}`);
-    } else {
-      logger?.info(`${prefix} ${color.green(response.status)}`, 'HTTP');
-    }
+export interface RequestInit {
+  /** A string indicating how the request will interact with the browser's cache to set request's cache. */
+  cache?: RequestCache;
+  /** A string indicating whether credentials will be sent with the request always, never, or only when sent to a same-origin URL. Sets request's credentials. */
+  credentials?: RequestCredentials;
+  /** A Headers object, an object literal, or an array of two-item arrays to set request's headers. */
+  headers?: HeadersInit;
+  /** A cryptographic hash of the resource to be fetched by request. Sets request's integrity. */
+  integrity?: string;
+  /** A boolean to set request's keepalive. */
+  keepalive?: boolean;
+  /** A string to indicate whether the request will use CORS, or will be restricted to same-origin URLs. Sets request's mode. */
+  mode?: RequestMode;
+  /** A string indicating whether request follows redirects, results in an error upon encountering a redirect, or returns the redirect (in an opaque fashion). Sets request's redirect. */
+  redirect?: RequestRedirect;
+  /** A string whose value is a same-origin URL, "about:client", or the empty string, to set request's referrer. */
+  referrer?: string;
+  /** A referrer policy to set request's referrerPolicy. */
+  referrerPolicy?: ReferrerPolicy;
+  /** An AbortSignal to set request's signal. */
+  signal?: AbortSignal | null;
+  /** Can only be null. Used to disassociate request from any Window. */
+  window?: null;
+}
 
-    return response;
-  });
+/**
+ * Creates an HTTP client to make requests.
+ * @template AdditionalOptions
+ * @param {string} baseUrl - The base URL for requests.
+ * @param {Options<AdditionalOptions>} [options={}] - Additional options for the client.
+ * @returns {{
+*   options: Options<AdditionalOptions>,
+*   execute<T>(method: Method, path: string, request?: RequestOptions & Partial<AdditionalOptions>): Promise<T>
+* }} The HTTP client.
+*/
+export function createClient<
+  AdditionalOptions extends Record<string, any> = never
+>(baseUrl: string, options: Options<AdditionalOptions> = {}) {
+  const mainHeaders = options.headers ?? {};
 
-  return instance;
+  return {
+    options,
+    async execute<T>(
+      method: Method,
+      path: string,
+      request: RequestOptions & Partial<AdditionalOptions> = {}
+    ): Promise<T> {
+      if (options.beforeEach) {
+        options.beforeEach(method, path, request);
+      }
+
+      const { params, data, ...rest } = request;
+
+      let url = baseUrl + path;
+      const requestHeaders = rest.headers ?? {};
+      const requestOptions = { ...options, ...request, headers: { ...mainHeaders, ...requestHeaders } };
+
+      if (params) {
+        const q = stringify(params);
+
+        if (q) {
+          url += `?${q}`;
+        }
+      }
+
+      const response = await fetch(url, { ...requestOptions, method, body: data });
+
+      if (options.logger) {
+        options.logger(`${method} ${url} ${response.status}`, 'HTTP');
+      }
+
+      if (response.ok) {
+        const contentType = response.headers.get('content-type');
+
+        if (contentType?.includes('application/json')) {
+          return response.json();
+        }
+
+        if (contentType?.includes('application/octet-stream') || contentType?.includes('image/') || contentType?.includes('audio/') || contentType?.includes('video/')) {
+          return Buffer.from(await response.arrayBuffer()) as T;
+        }
+
+        if (contentType?.includes('text')) {
+          return await response.text() as T;
+        }
+
+        return response as T;
+      }
+
+      throw createHttpException(response.status, response.statusText);
+    },
+  };
 }
