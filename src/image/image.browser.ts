@@ -53,7 +53,47 @@ export function pull({ url }: PullBrowserOptions) {
 }
 
 export async function convert(input: Input, format: string): Promise<Input> {
-  throw Error('Not Yet Supported');
+  // Check if the browser supports the required format
+  if (!['image/png', 'image/jpeg', 'image/webp'].includes(format)) {
+    throw Error('Format not supported');
+  }
+
+  // Create a canvas element to draw the image
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+
+  // Create an image element and load the input image from the Blob
+  const image = new Image();
+
+  image.src = URL.createObjectURL(input.data as Blob);
+
+  await new Promise((resolve, reject) => {
+    image.onload = resolve;
+    image.onerror = reject;
+  });
+
+  // Set canvas size to match the image
+  canvas.width = image.width;
+  canvas.height = image.height;
+
+  // Draw the image onto the canvas
+  ctx.drawImage(image, 0, 0);
+
+  // Convert the canvas to the desired format and create a new Input object
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => {
+      if (blob) {
+        const output: Input = {
+          data: blob,
+          contentType: format,
+        };
+
+        resolve(output);
+      } else {
+        reject(new Error('Conversion failed'));
+      }
+    }, format);
+  });
 }
 
 export async function resize(image: HTMLImageElement, width: number, height?: number) {

@@ -33,7 +33,7 @@ export function pull({ dest = os.tmpdir(), extractFilename = true, ...options }:
 }
 
 export async function convert(input: Input, format: keyof sharp.FormatEnum): Promise<Input> {
-  const pipeline = sharp(input.data);
+  const pipeline = sharp(input.data as Buffer);
 
   return {
     data: await pipeline.toFormat(format).toBuffer(),
@@ -42,7 +42,7 @@ export async function convert(input: Input, format: keyof sharp.FormatEnum): Pro
 }
 
 export async function resize(input: Input, options: sharp.ResizeOptions) {
-  const pipeline = sharp(input.data);
+  const pipeline = sharp(input.data as Buffer);
 
   const { width, height } = await pipeline.metadata();
 

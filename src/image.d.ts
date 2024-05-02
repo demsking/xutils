@@ -1,7 +1,7 @@
 import download from 'image-downloader';
 
 export type Input = {
-  data: Buffer;
+  data: Buffer | Blob;
   contentType: string | null;
 };
 

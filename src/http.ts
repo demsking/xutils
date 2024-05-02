@@ -6,7 +6,7 @@
  * @returns {HttpError} The HTTP exception object.
  */
 export function createHttpException(statusCode: number, message: string, body?: any): HttpError {
-  const error = new HttpError(statusCode, body);
+  const error = new HttpError(statusCode, message, body);
 
   error.message = message;
 

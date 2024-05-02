@@ -1,6 +1,6 @@
-.PHONY: env lint outdated update build
+.PHONY: shell lint outdated update build
 
-env:
+shell:
 	tmuxinator
 
 lint:
