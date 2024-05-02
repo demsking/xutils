@@ -31,7 +31,8 @@ declarations: lib
 lib:
 	yarn build
 
-build: declarations
+publish: declarations
+	yarn publish
 
 readme-toc:
 	gimtoc --file README.md --section 'Table of Contents' --output README.md
