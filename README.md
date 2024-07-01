@@ -45,7 +45,7 @@ npm install @b613/utils
 
 ## Development Setup
 
-1. [Install The Determinate Nix Installer](https://github.com/DeterminateSystems/nix-installer)
+1. [Install Devbox](https://www.jetify.com/devbox/docs/installing_devbox/)
 
 2. [Install `direnv` with your OS package manager](https://direnv.net/docs/installation.html#from-system-packages)
 

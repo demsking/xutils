@@ -1,0 +1,19 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.12.0/.schema/devbox.schema.json",
+  "packages": [
+    "gnumake@latest",
+    "tmux@latest",
+    "tmuxinator@latest",
+    "pre-commit@latest",
+    "nodejs@20",
+    "editorconfig-checker@latest"
+  ],
+  "env": {
+    "DEVBOX_COREPACK_ENABLED": "true"
+  },
+  "shell": {
+    "init_hook": [
+      "pre-commit install -f > /dev/null"
+    ]
+  }
+}

@@ -17,8 +17,8 @@ outdated:
 
 update:
 	yarn upgrade
+	devbox update
 	pre-commit autoupdate
-	nix flake update
 
 test:
 	yarn test
