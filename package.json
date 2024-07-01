@@ -78,6 +78,7 @@
   },
   "files": [
     "lib",
+    "src",
     "typings.d.ts"
   ],
   "scripts": {

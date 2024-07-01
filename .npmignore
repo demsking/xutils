@@ -3,7 +3,6 @@ coverage/
 tests/
 libtmp/
 .direnv/
-.nix-node/
 .editorconfig
 .envrc
 .eslintignore
