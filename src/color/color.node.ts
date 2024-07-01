@@ -1,3 +1,3 @@
-import * as color from 'cli-color';
+import color from 'cli-color';
 
 export default color;

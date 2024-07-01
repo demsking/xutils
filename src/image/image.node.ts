@@ -1,6 +1,6 @@
 import { tmpdir } from 'node:os';
 import { readFile } from 'node:fs/promises';
-import * as download from 'image-downloader';
+import download from 'image-downloader';
 import sharp from 'sharp';
 
 import { Base64MimeTypeResult, Input, PullNodeOptions } from '../image.d';
