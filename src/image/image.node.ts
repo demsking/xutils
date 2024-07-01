@@ -1,6 +1,6 @@
-import os from 'node:os';
-import fs from 'node:fs/promises';
-import download from 'image-downloader';
+import { tmpdir } from 'node:os';
+import { readFile } from 'node:fs/promises';
+import * as download from 'image-downloader';
 import sharp from 'sharp';
 
 import { Base64MimeTypeResult, Input, PullNodeOptions } from '../image.d';
@@ -23,12 +23,12 @@ export function parseMimeType(base64: string): Base64MimeTypeResult | null {
 }
 
 export async function parseBase64(filename: string) {
-  const image = await fs.readFile(filename);
+  const image = await readFile(filename);
 
   return 'data:image/jpeg;base64,' + Buffer.from(image).toString('base64');
 }
 
-export function pull({ dest = os.tmpdir(), extractFilename = true, ...options }: PullNodeOptions) {
+export function pull({ dest = tmpdir(), extractFilename = true, ...options }: PullNodeOptions) {
   return download.image({ dest, extractFilename, ...options });
 }
 
@@ -37,7 +37,7 @@ export async function convert(input: Input, format: keyof sharp.FormatEnum): Pro
 
   return {
     data: await pipeline.toFormat(format).toBuffer(),
-    contentType: `image/${format}`,
+    contentType: `image/${format as string}`,
   };
 }
 

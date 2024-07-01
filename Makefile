@@ -24,12 +24,15 @@ test:
 	yarn test
 
 declarations: lib
-	tsc --declaration --emitDeclarationOnly --skipLibCheck --allowJs --outDir lib src/*.ts src/*/*.ts >/dev/null 2>&1
-	cp -f src/*.d.ts lib/ >/dev/null 2>&1
+	npx tsc --declaration --esModuleInterop --emitDeclarationOnly --skipLibCheck --allowJs --outDir lib src/*.ts src/*/*.ts
+	cp -f src/*.d.ts lib/
 
 .PHONY: lib
 lib:
 	yarn build
+
+package: declarations
+	yarn pack
 
 publish: declarations
 	yarn publish

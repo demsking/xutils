@@ -5,10 +5,10 @@ import type { Trace } from './trace/trace.node.js';
 
 import { createServer as createHttpServer } from 'node:http';
 import { createServer as createHttpsServer } from 'node:https';
+import { json, raw, text, urlencoded } from 'body-parser';
 
 import express from 'express';
-import logger from 'morgan';
-import bodyParser from 'body-parser';
+import createLoggerMiddleware from 'morgan';
 
 import { ping } from './ping.js';
 import { HttpError } from './http.js';
@@ -56,19 +56,19 @@ export class Server {
     /**
      * Parse incoming requests with JSON payloads and is based on body-parser
      */
-    json: bodyParser.json,
+    json,
     /**
      * Parse incoming requests with Buffer payloads and is based on body-parser
      */
-    raw: bodyParser.raw,
+    raw,
     /**
      * Parse incoming requests with text payloads and is based on body-parser
      */
-    text: bodyParser.text,
+    text,
     /**
      * Parse incoming requests with urlencoded payloads and is based on body-parser
      */
-    urlencoded: bodyParser.urlencoded,
+    urlencoded,
   };
 
   /**
@@ -129,7 +129,7 @@ export class Server {
         ? `:date[iso] ${options.name} HTTP - :method :url :status :response-time ms - :res[content-length]`
         : `:date[iso] ${options.name} HTTP - :remote-addr - :remote-user ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"`;
 
-      this.app.use(logger(loggerFormat));
+      this.app.use(createLoggerMiddleware(loggerFormat));
     }
   }
 
