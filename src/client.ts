@@ -100,30 +100,26 @@ export function createClient<
       }
 
       const response = await fetch(url, { ...requestOptions, method, body: data });
+      const contentType = response.headers.get('content-type');
+      let contentBody = null;
 
       if (options.logger) {
         options.logger(`${method} ${url} ${response.status}`, 'HTTP');
       }
 
-      if (response.ok) {
-        const contentType = response.headers.get('content-type');
-
-        if (contentType?.includes('application/json')) {
-          return response.json();
-        }
-
-        if (contentType?.includes('application/octet-stream') || contentType?.includes('image/') || contentType?.includes('audio/') || contentType?.includes('video/')) {
-          return Buffer.from(await response.arrayBuffer()) as T;
-        }
-
-        if (contentType?.includes('text')) {
-          return await response.text() as T;
-        }
-
-        return response as T;
+      if (contentType?.includes('application/json')) {
+        contentBody = await response.json();
+      } else if (contentType?.includes('application/octet-stream') || contentType?.includes('image/') || contentType?.includes('audio/') || contentType?.includes('video/')) {
+        contentBody = Buffer.from(await response.arrayBuffer());
+      } else if (contentType?.includes('text')) {
+        contentBody = await response.text();
       }
 
-      throw createHttpException(response.status, response.statusText);
+      if (response.ok) {
+        return contentBody;
+      }
+
+      throw createHttpException(response.status, response.statusText, contentBody);
     },
   };
 }
