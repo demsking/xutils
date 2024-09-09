@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import { createHttpException } from './http.js';
 import { stringify } from './qs.js';
+import type { Trace } from './trace/trace.node.js';
 
 export type Method =
   | 'GET'
@@ -71,7 +72,7 @@ export interface RequestInit {
 */
 export function createClient<
   AdditionalOptions extends Record<string, any> = never
->(baseUrl: string, options: Options<AdditionalOptions> = {}) {
+>(baseUrl: string, { trace, ...options }: Options<AdditionalOptions> & { trace?: Trace; } = {}) {
   const mainHeaders = options.headers ?? {};
 
   return {
@@ -113,6 +114,10 @@ export function createClient<
         contentBody = Buffer.from(await response.arrayBuffer());
       } else if (contentType?.includes('text')) {
         contentBody = await response.text();
+      }
+
+      if (trace) {
+        trace.info(`${method} ${url} ${response.status}`);
       }
 
       if (response.ok) {
