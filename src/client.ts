@@ -27,7 +27,7 @@ export type RequestOptions<T extends Record<string, any> = object> = RequestInit
 export type Options<
   AdditionalOptions extends Record<string, any> = never
 > = RequestInit & {
-  logger?(message: string, type: string): void;
+  logger?: Trace;
   beforeEach?: <T extends Record<string, any>>(
     method: Method,
     path: string,
@@ -72,7 +72,7 @@ export interface RequestInit {
 */
 export function createClient<
   AdditionalOptions extends Record<string, any> = never
->(baseUrl: string, { trace, ...options }: Options<AdditionalOptions> & { trace?: Trace; } = {}) {
+>(baseUrl: string, options: Options<AdditionalOptions> = {}) {
   const mainHeaders = options.headers ?? {};
 
   return {
@@ -105,7 +105,11 @@ export function createClient<
       let contentBody = null;
 
       if (options.logger) {
-        options.logger(`${method} ${url} ${response.status}`, 'HTTP');
+        if (response.status < 400) {
+          options.logger.info(`${method} ${url} ${response.status}`, 'HTTP');
+        } else {
+          options.logger.error(`${method} ${url} ${response.status}`, 'HTTP');
+        }
       }
 
       if (contentType?.includes('application/json')) {
@@ -114,10 +118,6 @@ export function createClient<
         contentBody = Buffer.from(await response.arrayBuffer());
       } else if (contentType?.includes('text')) {
         contentBody = await response.text();
-      }
-
-      if (trace) {
-        trace.info(`${method} ${url} ${response.status}`);
       }
 
       if (response.ok) {
