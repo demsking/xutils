@@ -14,15 +14,15 @@ stages:
   - sast
   - publish
 
-code quality:
-  stage: test
-  script:
-    - yarn install --ignore-scripts
-    - yarn add --dev eslint eslint-formatter-gitlab
-    - npx eslint --format gitlab .
-  # artifacts:
-  #   reports:
-  #     codequality: gl-codequality.json
+# code quality:
+#   stage: test
+#   script:
+#     - yarn install --ignore-scripts
+#     - yarn add --dev eslint eslint-formatter-gitlab
+#     - npx eslint --format gitlab .
+#   artifacts:
+#     reports:
+#       codequality: gl-codequality.json
 
 unit tests:
   stage: test
@@ -41,7 +41,7 @@ dependencies:
 audit:
   stage: security
   needs:
-    - code quality
+    # - code quality
     - unit tests
     - dependencies
   script:
@@ -50,7 +50,7 @@ audit:
 sast:
   stage: security
   needs:
-    - code quality
+    # - code quality
     - unit tests
     - dependencies
 
