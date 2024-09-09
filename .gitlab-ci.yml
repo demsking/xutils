@@ -20,9 +20,9 @@ code quality:
     - yarn install --ignore-scripts
     - yarn add --dev eslint eslint-formatter-gitlab
     - npx eslint --format gitlab .
-  artifacts:
-    reports:
-      codequality: gl-codequality.json
+  # artifacts:
+  #   reports:
+  #     codequality: gl-codequality.json
 
 unit tests:
   stage: test
